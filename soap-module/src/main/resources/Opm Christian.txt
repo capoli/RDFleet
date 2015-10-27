@@ -1,0 +1,113 @@
+
+De feature list is veel, maar niet gedetailleerd. Er staat heel veel informatie op de portal, en in de documenten die jullie gekopieerd hebben
+
+Werk Agile! Elke feature die een meerwaarde heeft, moet compleet en deployable zijn.
+
+bijvoorbeeld: als je de car application form online kan doen, is al een plus ipv Word Document.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+JAX-WS met Spring MVC frontend, 
+wsl 2 servers (JBoss + Tomcat), 
+enkel TomCat mag (met pojo, geen ejb)---> keuze motiveren!
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+LEVELS-
+Huidig level staat op uw loonbrief, je kan upgraden/downgraden
+levels 2-7  (+hidden)
+
+Als iemand de firma verlaat, dan blijft zijn wagen beschikbaar
+Die wagen mag je kiezen zonder leve voorwaarden, en zonder opleg!
+Dan kan je dus met een A4 rijden of meer, zonder opleg, alleen wel Voordeel Alle Aard (belasting)
+
+
+Soms leuk, soms minder
+Soms moet je wachten op de bestelling van je wagen... dan krijg je 'tijdelijke' wagen van de free pool
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Er MOET ergens JAX-WS in zitten... bijvoorbeeld: je mag je eigen back-end erin schrijven en Spring controllers 
+daarnaar laten delegeren via WebService Template
+
+Leuk? Naaahhh! Super traag!
+
+Interessanter is functionliteit aanbieden aan third-party!
+
+Let op! Het MOET erin zitten! Als je dus een keuze maakt van features, laat het dan niet weg...
+
+
+Suggestie van Sam: Invoer van nieuwe wagens via JAX-WS 
+Het bestellen van wagens kan dan via Spring MVC etc
+Dat kan, maar je moet zien dat je geen duplicatie hebt
+
+
+Wat kan een indicatie zijn? Is het intern gebruikt? Of zet je dit open naar een systeem/klant extern?
+Mag iemand extern hier iets mee doen?
+Bvb. input van km tankbeurten?
+Komt de informatie van een externe partij? Bied je ze dan een API/Contract aan? 
+
+
+Bedenk dat er verschillende features zijn die er gebruik van "kunnen" maken.
+Als je vermoedt dat er informatie van externe bronnen wordt ingevoerd, kan een Web Service passend zijn.
+
+Ander voorbeeld: invoer van nieuwe wagens/opties van een car dealer.
+Voer je dit zelf in? Of zet je een Web Service open? Leaseplan?
+
+Bij VAG heb je ook Lamborghini, Bentley? 
+CEO heeft een A7? Je mag nooit een hogere wagen kiezen dan je directe chef.
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Vraag van Thomas:
+Spring Web App en dan zelfde functionaliteit in JAX-WS?
+
+Nee, geen duplicatie van business!
+Als de hele backend in JAX-WS zet, dan moet de Spring App al deze business hergebruiken. 
+
+Kies best de meest nuttige service uit voor JAX-WS, maar zorg dat die functionaliteit ook door de Spring App wordt gebruikt.
+
+In SOA zou je een reusable service hebben, dat door verschillende apps kan worden aangesproken
+
+Selecteer gewoon de meest nuttige
+Vraag van Thomas: Spring Data REST?
+
+Ja, dat mag!
+Spring Data REST is modular
+
+Begin met Spring Data REST op je Repositories (- entity services)
+Andeze business services maak je apart. Zet er dan een REST Controller voor. 
+RequestMappings mogen niet overlappen.
+
+Dan mag de Spring Data REST voor User Create niet bestaan. In Spring Data REST kan je excluden.
+
+Spring Data REST = HAL JSON! Verschillend van JSON standaard. 
+
+Je kan ook Spring Data REST instellen met Spring Boot (application.properties) om gewone JSON te returnen. 
+Tenzij je je eigen REST Controller ook HAL JSON laat returnen...(lijkt me moeilijk...)
+
+
+HAL JSON is wel super nuttig voor paging, en de échte REST (= Hypermedia = link).
+
+
+Dat gaat wel, met de PagingRepository.
+URL= http://.../app/users?page=2&count=50
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
