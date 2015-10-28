@@ -1,0 +1,34 @@
+package com.realdolmen.rdfleet.repositories;
+
+import com.realdolmen.rdfleet.config.JpaConfig;
+import com.realdolmen.rdfleet.domain.Car;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.Assert.assertNotNull;
+
+/**
+ * Created by JSTAX29 on 27/10/2015.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = JpaConfig.class)
+@ActiveProfiles("test")
+public class CarRepositoryTest {
+    @Autowired
+    private CarRepository carRepository;
+
+    @Test
+    public void testCarRepository(){
+        Car car = new Car();
+        car.setFunctionalLevel(2);
+        car.setMake("Audi");
+        car.setModel("A1");
+        carRepository.save(car);
+        assertNotNull(car.getId());
+    }
+}
