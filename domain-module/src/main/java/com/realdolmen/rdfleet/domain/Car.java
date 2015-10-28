@@ -1,11 +1,9 @@
 package com.realdolmen.rdfleet.domain;
 
+import com.realdolmen.rdfleet.converters.DurationPersistenceConverter;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -61,8 +59,9 @@ public class Car extends BaseEntity {
     private int co2;
     @Min(value = 0)
     private int fiscHp;
-//    @NotNull
-//    private Duration timeOfDelivery;
+    @NotNull
+    @Convert(converter = DurationPersistenceConverter.class)
+    private Duration timeOfDeliveryInDays;
 
     public String getMake() {
         return make;
@@ -206,5 +205,13 @@ public class Car extends BaseEntity {
 
     public void setFiscHp(int fiscHp) {
         this.fiscHp = fiscHp;
+    }
+
+    public Duration getTimeOfDeliveryInDays() {
+        return timeOfDeliveryInDays;
+    }
+
+    public void setTimeOfDeliveryInDays(Duration timeOfDeliveryInDays) {
+        this.timeOfDeliveryInDays = timeOfDeliveryInDays;
     }
 }

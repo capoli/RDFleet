@@ -1,14 +1,13 @@
 package com.realdolmen.rdfleet;
 
-import com.realdolmen.rdfleet.domain.Car;
-import com.realdolmen.rdfleet.domain.CarStatus;
-import com.realdolmen.rdfleet.domain.EmployeeCar;
-import com.realdolmen.rdfleet.domain.CarOption;
+import com.realdolmen.rdfleet.domain.*;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Arrays;
 
 /**
@@ -22,6 +21,12 @@ public class Main {
         car.setFunctionalLevel(2);
         car.setMake("Audi");
         car.setModel("A1");
+        car.setAmountDowngrade(BigDecimal.valueOf(2315.25));
+        car.setFuelType(FuelType.DIESEL);
+        car.setAmountUpgrade(BigDecimal.valueOf(0));
+        car.setListPrice(BigDecimal.valueOf(25343.22));
+        car.setTyreType(TyreType.ALUMINIUM);
+        car.setTimeOfDeliveryInDays(Duration.ofDays(150));
 
         EmployeeCar employeeCar = new EmployeeCar();
         employeeCar.setSelectedCar(car);

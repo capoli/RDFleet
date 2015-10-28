@@ -20,6 +20,7 @@ public class RdEmployee extends User {
     private Order currentOrder;
     @OneToMany
     private List<Order> orderHistory = new ArrayList<>();
+    private boolean inService;
 
     public int getFunctionalLevel() {
         return functionalLevel;
@@ -43,5 +44,13 @@ public class RdEmployee extends User {
 
     public void setOrderHistory(List<Order> orderHistory) {
         this.orderHistory = orderHistory;
+    }
+
+    public boolean isInService() {
+        return inService;
+    }
+
+    public void setInService(boolean inService) {
+        this.inService = inService;
     }
 }

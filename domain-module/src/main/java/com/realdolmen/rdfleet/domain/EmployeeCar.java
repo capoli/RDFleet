@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.domain;
 
 import com.realdolmen.rdfleet.converters.LocalDatePersistenceConverter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -23,6 +24,9 @@ public class EmployeeCar extends BaseEntity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @NotNull
     private Car selectedCar;
+    @NotNull
+    @NotBlank
+    private String licensePlate;
 
     public int getMileage() {
         return mileage;
@@ -54,5 +58,13 @@ public class EmployeeCar extends BaseEntity {
 
     public void setSelectedCar(Car selectedCar) {
         this.selectedCar = selectedCar;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 }
