@@ -1,5 +1,6 @@
 package com.realdolmen.rdfleet.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -16,9 +17,9 @@ public class RdEmployee extends User {
     @Min(2)
     @Max(7)
     private int functionalLevel;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Order currentOrder;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Order> orderHistory = new ArrayList<>();
     private boolean inService;
 

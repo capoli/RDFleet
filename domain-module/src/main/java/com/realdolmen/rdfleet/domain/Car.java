@@ -10,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +28,8 @@ public class Car extends BaseEntity {
     @Max(7)
     private int functionalLevel;
     private String description;
-    @ManyToMany
-    private List<Pack> packs;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Pack> packs = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     @NotNull
     private TyreType tyreType;
@@ -213,5 +214,87 @@ public class Car extends BaseEntity {
 
     public void setTimeOfDeliveryInDays(Duration timeOfDeliveryInDays) {
         this.timeOfDeliveryInDays = timeOfDeliveryInDays;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car car = (Car) o;
+
+        if (functionalLevel != car.functionalLevel) return false;
+        if (towingBracketPossibility != car.towingBracketPossibility) return false;
+        if (gps != car.gps) return false;
+        if (bluetooth != car.bluetooth) return false;
+        if (idealKm != car.idealKm) return false;
+        if (maxKm != car.maxKm) return false;
+        if (Double.compare(car.benefit, benefit) != 0) return false;
+        if (co2 != car.co2) return false;
+        if (fiscHp != car.fiscHp) return false;
+        if (make != null ? !make.equals(car.make) : car.make != null) return false;
+        if (model != null ? !model.equals(car.model) : car.model != null) return false;
+        if (description != null ? !description.equals(car.description) : car.description != null) return false;
+//        if (packs != null ? !packs.equals(car.packs) : car.packs != null) return false;
+        if (tyreType != car.tyreType) return false;
+        if (fuelType != car.fuelType) return false;
+        if (listPrice != null ? !listPrice.equals(car.listPrice) : car.listPrice != null) return false;
+        if (amountUpgrade != null ? !amountUpgrade.equals(car.amountUpgrade) : car.amountUpgrade != null) return false;
+        if (amountDowngrade != null ? !amountDowngrade.equals(car.amountDowngrade) : car.amountDowngrade != null)
+            return false;
+        return !(timeOfDeliveryInDays != null ? !timeOfDeliveryInDays.equals(car.timeOfDeliveryInDays) : car.timeOfDeliveryInDays != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = make != null ? make.hashCode() : 0;
+        result = 31 * result + (model != null ? model.hashCode() : 0);
+        result = 31 * result + functionalLevel;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (packs != null ? packs.hashCode() : 0);
+        result = 31 * result + (tyreType != null ? tyreType.hashCode() : 0);
+        result = 31 * result + (fuelType != null ? fuelType.hashCode() : 0);
+        result = 31 * result + (towingBracketPossibility ? 1 : 0);
+        result = 31 * result + (gps ? 1 : 0);
+        result = 31 * result + (bluetooth ? 1 : 0);
+        result = 31 * result + idealKm;
+        result = 31 * result + maxKm;
+        result = 31 * result + (listPrice != null ? listPrice.hashCode() : 0);
+        temp = Double.doubleToLongBits(benefit);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (amountUpgrade != null ? amountUpgrade.hashCode() : 0);
+        result = 31 * result + (amountDowngrade != null ? amountDowngrade.hashCode() : 0);
+        result = 31 * result + co2;
+        result = 31 * result + fiscHp;
+        result = 31 * result + (timeOfDeliveryInDays != null ? timeOfDeliveryInDays.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", functionalLevel=" + functionalLevel +
+                ", description='" + description + '\'' +
+                ", packs=" + packs +
+                ", tyreType=" + tyreType +
+                ", fuelType=" + fuelType +
+                ", towingBracketPossibility=" + towingBracketPossibility +
+                ", gps=" + gps +
+                ", bluetooth=" + bluetooth +
+                ", idealKm=" + idealKm +
+                ", maxKm=" + maxKm +
+                ", listPrice=" + listPrice +
+                ", benefit=" + benefit +
+                ", amountUpgrade=" + amountUpgrade +
+                ", amountDowngrade=" + amountDowngrade +
+                ", co2=" + co2 +
+                ", fiscHp=" + fiscHp +
+                ", timeOfDeliveryInDays=" + timeOfDeliveryInDays +
+                '}';
     }
 }

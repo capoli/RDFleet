@@ -21,4 +21,20 @@ public class CarOption extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CarOption carOption = (CarOption) o;
+
+        return !(description != null ? !description.equals(carOption.description) : carOption.description != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return description != null ? description.hashCode() : 0;
+    }
 }

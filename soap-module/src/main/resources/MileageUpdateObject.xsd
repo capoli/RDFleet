@@ -7,53 +7,27 @@
         elementFormDefault="qualified"
         attributeFormDefault="unqualified">
 
-       <element name="MileageUpdateRequest">
-              <complexType>
-                     <sequence>
-                            <element name="MileageUpdateObject" type="tns:MileageUpdateObject"/>
-                     </sequence>
-              </complexType>
-       </element>
+    <element name="MileageUpdateRequest">
+        <complexType>
+            <sequence>
+                <element name="MileageUpdateObject" maxOccurs="unbounded" minOccurs="1" type="tns:MileageUpdateObject"/>
+            </sequence>
+        </complexType>
+    </element>
 
-       <element name="MileageUpdateResponse">
-              <complexType>
-                     <sequence>
-                            <element name="Result" type="string"/>
-                     </sequence>
-              </complexType>
-       </element>
+    <element name="MileageUpdateResponse">
+        <complexType>
+            <sequence>
+                <element name="SuccessfulUpdates" maxOccurs="unbounded" minOccurs="0" type="string"/>
+                <element name="FailedUpdates" maxOccurs="unbounded" minOccurs="0" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
 
-       <complexType name="MileageUpdateObject">
-
-              <sequence>
-                     <element name="LicensePlate" type="string"/>
-                     <element name="MileageDriven" type="int"/>
-              </sequence>
-       </complexType>
-
-       <!--<element name="MileageUpdateRequest">-->
-              <!--<complexType>-->
-                     <!--<sequence>-->
-                            <!--<element  ref="MileageUpdateObject"/>-->
-                     <!--</sequence>-->
-              <!--</complexType>-->
-       <!--</element>-->
-
-       <!--<element name="MileageUpdateResponse">-->
-              <!--<complexType>-->
-                     <!--<sequence>-->
-                            <!--<element name="Result" type="string"/>-->
-                     <!--</sequence>-->
-              <!--</complexType>-->
-       <!--</element>-->
-
-       <!--<element name="MileageUpdateObject">-->
-              <!--<complexType>-->
-                     <!--<annotation>-->
-                            <!--<appinfo>-->
-                                   <!--<jaxb:class ref="com.realdolmen.rdfleet.domain.MileageUpdateObject"></jaxb:class>-->
-                            <!--</appinfo>-->
-                     <!--</annotation>-->
-              <!--</complexType>-->
-       <!--</element>-->
+    <complexType name="MileageUpdateObject">
+        <sequence>
+            <element name="LicensePlate" type="string"/>
+            <element name="MileageDriven" type="int"/>
+        </sequence>
+    </complexType>
 </schema>
