@@ -39,6 +39,7 @@ public class CarRepositoryTest {
         car.setListPrice(BigDecimal.valueOf(25343.22));
         car.setTyreType(TyreType.ALUMINIUM);
         car.setTimeOfDeliveryInDays(Duration.ofDays(150));
+        car.setBenefit(BigDecimal.valueOf(123.58));
 
         carRepository.save(car);
         assertNotNull(car.getId());
