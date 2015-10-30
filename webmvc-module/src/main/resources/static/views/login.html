@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-10 view-heading">
+        <h1 translate="LOGIN_LOGIN"></h1>
+    </div>
+    <form name="loginForm" class="form-horizontal" ng-submit="login()">
+
+        <div class="form-group has-success"
+             ng-class="{'has-success':loginForm.email.$valid,'has-error':loginForm.email.$invalid}">
+            <label for="email" class="col-sm-2 control-label" translate="LOGIN_EMAIL"></label>
+
+            <div class="col-sm-10">
+                <input type="email" name="email" class="form-control"
+                       id="email" ng-model="loginUser.email" placeholder="{{'LOGIN_EMAIL_PLACEHOLDER' | translate}}" required>
+            </div>
+        </div>
+        <div class="form-group has-success"
+             ng-class="{'has-success':loginForm.password.$valid,'has-error':loginForm.password.$invalid}">
+            <label for="password" class="col-sm-2 control-label" translate="LOGIN_PASSWORD"></label>
+
+            <div class="col-sm-10">
+                <input type="password" name="password" class="form-control"
+                       id="password" ng-model="loginUser.password" placeholder="{{'LOGIN_PASSWORD_PLACEHOLDER' | translate}}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" id="submit" translate="LOGIN_LOGIN"></button>
+                <a ui-sref="app.register" class="btn btn-primary" role="button" translate="LOGIN_REGISTER"></a>
+            </div>
+        </div>
+    </form>
+</div>

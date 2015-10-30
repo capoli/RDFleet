@@ -1,10 +1,11 @@
 package com.realdolmen.rdfleet;
 
 import com.realdolmen.rdfleet.domain.*;
-import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
+import com.realdolmen.rdfleet.repositories.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -30,6 +31,7 @@ public class Main {
 
         EmployeeCar employeeCar = new EmployeeCar();
         employeeCar.setSelectedCar(car);
+        employeeCar.setLicensePlate("1-HLR-743");
         CarOption a = new CarOption();
         a.setDescription("Trekhaak");
         CarOption b = new CarOption();

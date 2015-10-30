@@ -1,0 +1,30 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="MenuCtrl">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" id="brand" ui-sref="{{menu.home}}" ng-click="collapseMenu()">
+                <span>RD</span>FLEET
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div ng-class="{'collapse navbar-collapse':isCollapsed}">
+            <ul ng-controller="TranslateCtrl" class="nav navbar-nav navbar-left">
+                <li><a ng-click="changeLang('en')">en</a></li>
+                <li><a ng-click="changeLang('nl')">nl</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a ui-sref="{{menu.about}}" translate="MENUBAR_ABOUT" ng-click="collapseMenu()"></a></li>
+                <li ng-if="!user.isLoggedIn"><a ui-sref="{{menu.login}}" translate="MENUBAR_LOGIN" ng-click="collapseMenu()"></a></li>
+                <li ng-if="user.isLoggedIn"><a ui-sref="{{menu.logout}}" translate="MENUBAR_LOGOUT" ng-click="logout()"></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</nav>
