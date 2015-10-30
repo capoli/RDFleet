@@ -3,12 +3,18 @@ package com.realdolmen.rdfleet.repositories;
 import com.realdolmen.rdfleet.config.JpaConfig;
 import com.realdolmen.rdfleet.domain.EmployeeCar;
 import com.realdolmen.rdfleet.util.ValidDomainObjectFactory;
+import org.dbunit.database.DatabaseConfig;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.ext.mysql.MySqlDataTypeFactory;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,6 +27,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JpaConfig.class)
 @ActiveProfiles("test")
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class EmployeeCarRepositoryTest {
     @Autowired
     private EmployeeCarRepository repository;

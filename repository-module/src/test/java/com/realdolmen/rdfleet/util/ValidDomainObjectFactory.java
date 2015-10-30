@@ -25,6 +25,7 @@ public class ValidDomainObjectFactory {
         car.setListPrice(BigDecimal.valueOf(25343.22));
         car.setTyreType(TyreType.ALUMINIUM);
         car.setTimeOfDeliveryInDays(Duration.ofDays(150));
+        car.setBenefit(BigDecimal.valueOf(158.58));
         return car;
     }
 
