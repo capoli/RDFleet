@@ -53,9 +53,9 @@ public class Application {
         RdEmployee rdEmployee = new RdEmployee();
         rdEmployee.setInService(true);
         rdEmployee.setFunctionalLevel(4);
-        rdEmployee.setFirstName("fname");
-        rdEmployee.setLastName("lname");
-        rdEmployee.setEmail("mail@mail.com");
+        rdEmployee.setFirstName("Fleet");
+        rdEmployee.setLastName("Realdolmen");
+        rdEmployee.setEmail("fleet.realdolmen@gmail.com");
         rdEmployee.setPassword("password");
         rdEmployee.setCurrentOrder(order);
 

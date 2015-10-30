@@ -47,7 +47,7 @@ public class Car extends BaseEntity {
     @Min(value = 0)
     @Digits(fraction = 2, integer = 15)
     private BigDecimal listPrice;
-    private double benefit;
+    private BigDecimal benefit;
     @NotNull
     @Min(value = 0)
     @Digits(fraction = 2, integer = 8)
@@ -120,6 +120,14 @@ public class Car extends BaseEntity {
         this.fuelType = fuelType;
     }
 
+    public BigDecimal getBenefit() {
+        return benefit;
+    }
+
+    public void setBenefit(BigDecimal benefit) {
+        this.benefit = benefit;
+    }
+
     public boolean isTowingBracketPossibility() {
         return towingBracketPossibility;
     }
@@ -166,14 +174,6 @@ public class Car extends BaseEntity {
 
     public void setListPrice(BigDecimal listPrice) {
         this.listPrice = listPrice;
-    }
-
-    public double getBenefit() {
-        return benefit;
-    }
-
-    public void setBenefit(double benefit) {
-        this.benefit = benefit;
     }
 
     public BigDecimal getAmountUpgrade() {
@@ -229,7 +229,7 @@ public class Car extends BaseEntity {
         if (bluetooth != car.bluetooth) return false;
         if (idealKm != car.idealKm) return false;
         if (maxKm != car.maxKm) return false;
-        if (Double.compare(car.benefit, benefit) != 0) return false;
+
         if (co2 != car.co2) return false;
         if (fiscHp != car.fiscHp) return false;
         if (make != null ? !make.equals(car.make) : car.make != null) return false;
@@ -263,8 +263,6 @@ public class Car extends BaseEntity {
         result = 31 * result + idealKm;
         result = 31 * result + maxKm;
         result = 31 * result + (listPrice != null ? listPrice.hashCode() : 0);
-        temp = Double.doubleToLongBits(benefit);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (amountUpgrade != null ? amountUpgrade.hashCode() : 0);
         result = 31 * result + (amountDowngrade != null ? amountDowngrade.hashCode() : 0);
         result = 31 * result + co2;
