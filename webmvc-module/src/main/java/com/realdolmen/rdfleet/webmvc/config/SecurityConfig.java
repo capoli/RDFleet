@@ -43,10 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()
                     .authorizeRequests()
-                .anyRequest().permitAll()
-                .and()
-                    .addFilterAfter(new CsrfHeaderFilter(), CsrfHeaderFilter.class)
-                    .csrf().csrfTokenRepository(csrfTokenRepository());
+                .anyRequest().permitAll();
+//                .and()
+//                    .addFilterAfter(new CsrfHeaderFilter(), CsrfHeaderFilter.class)
+//                    .csrf().csrfTokenRepository(csrfTokenRepository());
     }
 
     private CsrfTokenRepository csrfTokenRepository() {
