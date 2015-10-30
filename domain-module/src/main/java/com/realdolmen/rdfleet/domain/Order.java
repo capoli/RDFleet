@@ -14,7 +14,7 @@ import java.time.LocalDate;
 /**
  * Created by JSTAX29 on 28/10/2015.
  */
-@Entity
+@Entity(name = "CarOrder")
 public class Order extends BaseEntity {
     @NotNull
     @Convert(converter = LocalDatePersistenceConverter.class)

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://rdfleet.realdolmen.com/web-services"
+        xmlns:tns="http://rdfleet.realdolmen.com/web-services"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <element name="MileageUpdateRequest">
+        <complexType>
+            <sequence>
+                <element name="MileageUpdateObject" maxOccurs="unbounded" minOccurs="1" type="tns:MileageUpdateObject"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="MileageUpdateResponse">
+        <complexType>
+            <sequence>
+                <element name="SuccessfulUpdates" maxOccurs="unbounded" minOccurs="0" type="string"/>
+                <element name="FailedUpdates" maxOccurs="unbounded" minOccurs="0" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="MileageUpdateObject">
+        <sequence>
+            <element name="LicensePlate" type="string"/>
+            <element name="MileageDriven" type="int"/>
+        </sequence>
+    </complexType>
+</schema>

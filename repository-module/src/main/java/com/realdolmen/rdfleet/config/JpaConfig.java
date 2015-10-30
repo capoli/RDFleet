@@ -24,7 +24,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.realdolmen.rdfleet")
-@ComponentScan
+@ComponentScan(basePackages = "com.realdolmen.rdfleet")
 public class JpaConfig {
     @Bean
     @Profile("production")
