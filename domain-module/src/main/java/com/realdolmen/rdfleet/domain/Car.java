@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.domain;
 
 import com.realdolmen.rdfleet.converters.DurationPersistenceConverter;
+import com.realdolmen.rdfleet.validation.PositiveDuration;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -65,6 +66,7 @@ public class Car extends BaseEntity {
     private int fiscHp;
     @NotNull
     @Convert(converter = DurationPersistenceConverter.class)
+    @PositiveDuration
     private Duration timeOfDeliveryInDays;
 
     public String getMake() {

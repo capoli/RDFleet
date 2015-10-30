@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.domain;
 
 import com.realdolmen.rdfleet.converters.LocalDatePersistenceConverter;
+import com.realdolmen.rdfleet.validation.NoFutureDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Convert;
@@ -18,15 +19,19 @@ import java.time.LocalDate;
 public class Order extends BaseEntity {
     @NotNull
     @Convert(converter = LocalDatePersistenceConverter.class)
+    @NoFutureDate
     private LocalDate dateOrdered;
     @Min(0)
+    @NotNull
     private BigDecimal amountPaidByEmployee;
     @Min(0)
+    @NotNull
     private BigDecimal amountPaidByCompany;
     @NotNull
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private EmployeeCar orderedCar;
     @Convert(converter = LocalDatePersistenceConverter.class)
+    @NoFutureDate
     private LocalDate dateReceived;
 
     public LocalDate getDateOrdered() {

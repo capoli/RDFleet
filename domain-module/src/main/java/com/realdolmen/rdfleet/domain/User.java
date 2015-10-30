@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "ROLES")
 public abstract class User extends BaseEntity {
     @Column(nullable = false)
     @NotNull
