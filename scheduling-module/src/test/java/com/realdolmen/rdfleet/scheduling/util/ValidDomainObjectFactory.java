@@ -1,4 +1,4 @@
-package com.realdolmen.rdfleet.util;
+package com.realdolmen.rdfleet.scheduling.util;
 
 import com.realdolmen.rdfleet.domain.*;
 
@@ -38,6 +38,7 @@ public class ValidDomainObjectFactory {
         employeeCar.setCarOptions(Arrays.asList(a, b));
         employeeCar.setCarStatus(CarStatus.IN_USE);
         employeeCar.setLicensePlate("1-FGH-468");
+        employeeCar.setMileage(84_554);
         return employeeCar;
     }
 

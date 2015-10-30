@@ -47,6 +47,9 @@ public class Car extends BaseEntity {
     @Min(value = 0)
     @Digits(fraction = 2, integer = 15)
     private BigDecimal listPrice;
+    @NotNull
+    @Min(value = 0)
+    @Digits(fraction = 2, integer = 8)
     private BigDecimal benefit;
     @NotNull
     @Min(value = 0)

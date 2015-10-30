@@ -27,6 +27,13 @@ public class ScheduledTasks {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    public void setRdEmployeeRepository(RdEmployeeRepository rdEmployeeRepository) {
+        this.rdEmployeeRepository = rdEmployeeRepository;
+    }
+
+    public void setJavaMailSender(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
     /**
      * Will run the car renewal notification process every saturday at 2am.
