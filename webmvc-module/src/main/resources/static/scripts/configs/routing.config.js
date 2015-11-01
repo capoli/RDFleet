@@ -40,6 +40,17 @@
                                 return AuthorizationFactory.permissionCheck([Config.roles.user]);
                             }
                         }
+                    })
+                    .state('app.rdemployee',{
+                        abstract: true,
+                        url: '/rdemployee',
+                        templateUrl: '../../views/rdemployee.html',
+                        controller:'RdEmployeeCtrl'
+                    })
+                    .state('app.rdemployee.cars', {
+                        url: '/cars',
+                        templateUrl: '../../views/rdemployee.cars.html',
+                        controller: 'RdEmployeeCarsCtrl'
                     });
                 //Example nesting
                 /*.state('app.movie', {

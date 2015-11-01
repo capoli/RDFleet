@@ -7,7 +7,8 @@
                 $scope.loginUser = {email: '', password: ''};
 
                 $scope.login = function () {
-                    UserFactory.login().then(function () {
+                    UserFactory.login($scope.loginUser).then(function (res) {
+                        console.log(res);
                         $scope.alerts.push(
                             {type: 'success', msg: 'login success!'}
                         );

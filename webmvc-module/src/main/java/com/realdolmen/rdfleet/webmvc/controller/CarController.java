@@ -19,7 +19,7 @@ public class CarController {
     @Autowired
     private CarRepository carRepository;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Car> findAllCars() {
         return carRepository.findAll();
     }
