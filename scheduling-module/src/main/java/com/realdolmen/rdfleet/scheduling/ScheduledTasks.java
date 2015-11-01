@@ -40,7 +40,7 @@ public class ScheduledTasks {
      * When a car has reached 160.000km or when the car has been owned for 4 years, the employee should be notified he should get a new car.
      */
 //    @Scheduled(cron = "0 0 2 * * SAT")
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = (1000 * 60 * 15)) //15 minutes for testing purposes
     public void checkForNeededCarRenewals() throws MessagingException {
         List<RdEmployee> allEmployeesInService = rdEmployeeRepository.findAllEmployeesInService();
 

@@ -2,6 +2,7 @@ package com.realdolmen.rdfleet.webmvc.controller;
 
 import com.realdolmen.rdfleet.domain.Car;
 import com.realdolmen.rdfleet.repositories.CarRepository;
+import com.realdolmen.rdfleet.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,15 @@ import java.util.List;
 @RequestMapping("/api/cars")
 public class CarController {
     @Autowired
-    private CarRepository carRepository;
+    private CarService carService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public List<Car> findAllCars() {
-        return carRepository.findAll();
+        return carService.findAllCars();
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public void updateCar(@RequestBody Car car){
-        carRepository.save(car);
+    public void updateCar(@RequestBody Car car) {
+        carService.updateCar(car);
     }
 }

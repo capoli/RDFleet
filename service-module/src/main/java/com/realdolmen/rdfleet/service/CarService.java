@@ -1,0 +1,32 @@
+package com.realdolmen.rdfleet.service;
+
+import com.realdolmen.rdfleet.domain.Car;
+import com.realdolmen.rdfleet.repositories.CarRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
+
+/**
+ * Created by JSTAX29 on 1/11/2015.
+ */
+@Service
+public class CarService {
+    private CarRepository carRepository;
+
+    @Autowired
+    public void setCarRepository(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
+
+    public List<Car> findAllCars() {
+        return carRepository.findAll();
+    }
+
+    public void updateCar(Car car) {
+        carRepository.save(car);
+    }
+}
