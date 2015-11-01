@@ -9,10 +9,10 @@
                         return res.data;
                     },
                     error: function () {
-                        $q.reject('error: ' + Config.server + '/cars/all');
+                        $q.reject('error: ' + Config.baseUrl + '/cars/all');
                     }
                 };
-                return $http.get(Config.server + '/cars/all')
+                return $http.get(Config.baseUrl + '/cars/all')
                     .then(callbacks.success, callbacks.error);
             }
 

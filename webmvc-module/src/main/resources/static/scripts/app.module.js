@@ -9,6 +9,7 @@
         'angular-loading-bar',
         'pascalprecht.translate',
         'restangular',
+        'smart-table',
         'app.controllers',
         'app.directives',
         'app.factories'
