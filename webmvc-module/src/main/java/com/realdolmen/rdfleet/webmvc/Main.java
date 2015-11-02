@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,6 +19,7 @@ import java.util.Arrays;
  */
 @SpringBootApplication
 @ComponentScan("com.realdolmen.rdfleet")
+//@EnableRedisHttpSession
 public class Main {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = new SpringApplicationBuilder(Main.class).profiles("production").run();
