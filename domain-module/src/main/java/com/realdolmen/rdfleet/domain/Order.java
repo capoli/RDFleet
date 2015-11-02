@@ -57,6 +57,8 @@ public class Order extends BaseEntity {
     public void setAmountPaidByCompany(BigDecimal amountPaidByCompany) {
         if(amountPaidByCompany != null)
             this.amountPaidByCompany = amountPaidByCompany.setScale(2, BigDecimal.ROUND_HALF_UP);
+        else
+            this.amountPaidByCompany = null;
     }
 
     public EmployeeCar getOrderedCar() {
