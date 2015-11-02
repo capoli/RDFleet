@@ -18,16 +18,14 @@
                     <th>Make</th>
                     <th>Model</th>
                     <th>FunctionalLevel</th>
-                    <!-- TODO Exercise 4: Hide the Remove operations for non-ADMIN users -->
                     <!--<th class="text-right">Remove</th>-->
                 </tr>
                 </thead>
-                <tbody th:each="car : ${carList}">
-                <tr>
+                <tbody>
+                <tr th:each="car : ${carList}">
                     <td th:text="${car.make}"></td>
                     <td th:text="${car.model}"></td>
                     <td th:text="${car.functionalLevel}"></td>
-                    <!-- TODO Exercise 4: Hide the Remove operations for non-ADMIN users -->
                     <!--<td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('AC#removeAuthor').arg(0, author.id).build()}">Remove</a></td>-->
                 </tr>
                 </tbody>
@@ -41,7 +39,7 @@
 <div th:replace="fragments/fragments :: div.scripts"></div>
 <script>
     $(document).ready( function () {
-        $('#carTable').DataTable();
+        $('table').DataTable();
     } );
 </script>
 </body>
