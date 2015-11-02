@@ -8,7 +8,6 @@
     "angular-cookies": "~1.4.7",
     "angular-loading-bar": "~0.8.0",
     "angular-resource": "~1.4.7",
-    "angular-smart-table": "~2.1.4",
     "angular-translate": "~2.8.1",
     "angular-translate-loader-static-files": "~2.8.1",
     "angular-translate-storage-local": "~2.8.1",
