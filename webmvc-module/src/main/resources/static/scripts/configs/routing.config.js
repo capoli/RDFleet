@@ -36,8 +36,8 @@
                         url: '/user',
                         templateUrl: '../../views/user.html',
                         resolve: {
-                            permission: function (AuthorizationFactory, Config) {
-                                return AuthorizationFactory.permissionCheck([Config.roles.user]);
+                            permission: function (UserFactory, Config) {
+                                return UserFactory.permissionCheck([Config.roles.rdemployee]);
                             }
                         }
                     })
