@@ -6,9 +6,8 @@
             baseUrl: '/api',
             deleteMessageDelay: 1000 * 6,//6 seconds
             roles: {
-                superUser: 0,
-                admin: 1,
-                user: 2
+                rdemployee: 'ROLE_RdEmployee',
+                rdfleet: 'ROLE_FleetEmployee'
             },
             routeForUnauthorizedAccess: '/app/error'
         })
