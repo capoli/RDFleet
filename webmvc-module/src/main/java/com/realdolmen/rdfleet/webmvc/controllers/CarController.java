@@ -3,6 +3,7 @@ package com.realdolmen.rdfleet.webmvc.controllers;
 import com.realdolmen.rdfleet.domain.Car;
 import com.realdolmen.rdfleet.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/rd/cars")
+@Secured("RdEmployee")
 public class CarController {
     @Autowired
     private CarService carService;
@@ -22,6 +24,6 @@ public class CarController {
     @RequestMapping(method = RequestMethod.GET)
     public String cars(Model model) {
         model.addAttribute("carList", carService.findAllCars());
-        return "cars";
+        return "rd/car.list";
     }
 }
