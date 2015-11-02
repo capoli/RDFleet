@@ -23,60 +23,36 @@ import javax.sql.DataSource;
  * Created by JSTAX29 on 22/10/2015.
  */
 @Configuration
-//@EnableWebMvcSecurity
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@EnableWebMvcSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("rd@rd.com").password("password").roles("RdEmployee");
-
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select email, password, true from user where email = ?")
-                .authoritiesByUsernameQuery("select email, ROLES from user where email = ?");
-//                .passwordEncoder(new BCryptPasswordEncoder());
+                .authoritiesByUsernameQuery("select email, ROLES from user where email = ?")
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/#/app/login", "/#/app/home", "/#/app/about", "/#/app/", "/#/", "/").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/#/app/login")
-//                .permitAll();
-////        http
-////                .authorizeRequests()
-////                    .anyRequest().authenticated()
-////                    .and()
-////                .formLogin()
-////                    .loginPage("/#/app/login")
-////                    .permitAll()
-////                    .and()
-////                .logout()
-////                    .permitAll();
-        http
-                .httpBasic()
-        .and()
-                .authorizeRequests()
-                .antMatchers("/app/login", "/app/home", "/app/about", "/app/error", "/app", "/").permitAll()
-                .anyRequest().authenticated()
-////                .logout();
-////                .anyRequest().permitAll();
+        http.authorizeRequests()
+                    .antMatchers("/authors").authenticated()
+                    .antMatchers("/blogs").authenticated()
+                    .antMatchers("/blog").authenticated()
+                    .anyRequest().permitAll()
                 .and()
-                    .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                    .csrf().csrfTokenRepository(csrfTokenRepository());
+                    .formLogin()
+                    .loginPage("/login")
+                .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/")
+                .and()
+                    .rememberMe();
     }
 
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
-    }
 }

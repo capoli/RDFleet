@@ -8,6 +8,7 @@ import com.realdolmen.rdfleet.scheduling.util.ValidDomainObjectFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,9 +26,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by JSTAX29 on 30/10/2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = JpaConfig.class)
-@ActiveProfiles("test")
+@RunWith(MockitoJUnitRunner.class)
 public class ScheduledTasksTest {
 
     private RdEmployeeRepository rdEmployeeRepositoryMock;

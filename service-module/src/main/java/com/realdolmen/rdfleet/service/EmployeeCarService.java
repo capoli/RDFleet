@@ -13,8 +13,12 @@ import java.util.List;
  */
 @Service
 public class EmployeeCarService {
-    @Autowired
     private EmployeeCarRepository employeeCarRepository;
+
+    @Autowired
+    public void setEmployeeCarRepository(EmployeeCarRepository employeeCarRepository) {
+        this.employeeCarRepository = employeeCarRepository;
+    }
 
     public List<EmployeeCar> findAllEmployeeCars() {
         return employeeCarRepository.findAll();

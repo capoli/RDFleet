@@ -6,11 +6,10 @@ import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.web_services.MileageUpdateObject;
 import com.realdolmen.rdfleet.web_services.MileageUpdateRequest;
 import com.realdolmen.rdfleet.web_services.MileageUpdateResponse;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,9 +26,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by JSTAX29 on 29/10/2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = JpaConfig.class)
-@ActiveProfiles("test")
+@RunWith(MockitoJUnitRunner.class)
 public class MileageUpdateLogicTest {
 
     private EmployeeCarRepository employeeCarRepositoryMock;

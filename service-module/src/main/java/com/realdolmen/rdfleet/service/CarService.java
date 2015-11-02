@@ -4,9 +4,6 @@ import com.realdolmen.rdfleet.domain.Car;
 import com.realdolmen.rdfleet.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -27,6 +24,13 @@ public class CarService {
     }
 
     public void updateCar(Car car) {
+        if(car.getId() == null)
+            throw new IllegalArgumentException("The car cannot be updated because it did not originate from the database.");
+
+        carRepository.save(car);
+    }
+
+    public void createCar(Car car){
         carRepository.save(car);
     }
 }

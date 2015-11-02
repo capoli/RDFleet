@@ -22,15 +22,15 @@ import java.util.List;
  */
 @Component
 public class ScheduledTasks {
-    @Autowired
     private RdEmployeeRepository rdEmployeeRepository;
-    @Autowired
     private JavaMailSender javaMailSender;
 
+    @Autowired
     public void setRdEmployeeRepository(RdEmployeeRepository rdEmployeeRepository) {
         this.rdEmployeeRepository = rdEmployeeRepository;
     }
 
+    @Autowired
     public void setJavaMailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
@@ -40,7 +40,7 @@ public class ScheduledTasks {
      * When a car has reached 160.000km or when the car has been owned for 4 years, the employee should be notified he should get a new car.
      */
 //    @Scheduled(cron = "0 0 2 * * SAT")
-    @Scheduled(fixedRate = (1000 * 60 * 15)) //15 minutes for testing purposes
+    @Scheduled(fixedRate = (1000 * 60 * 30)) //30 minutes for testing purposes
     public void checkForNeededCarRenewals() throws MessagingException {
         List<RdEmployee> allEmployeesInService = rdEmployeeRepository.findAllEmployeesInService();
 

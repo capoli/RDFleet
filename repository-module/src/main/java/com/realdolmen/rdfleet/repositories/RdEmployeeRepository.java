@@ -12,4 +12,6 @@ import java.util.List;
 public interface RdEmployeeRepository extends JpaRepository<RdEmployee, Long> {
     @Query("select e from RdEmployee e where e.inService = true")
     List<RdEmployee> findAllEmployeesInService();
+
+    RdEmployee findByEmailIgnoreCase(String email);
 }

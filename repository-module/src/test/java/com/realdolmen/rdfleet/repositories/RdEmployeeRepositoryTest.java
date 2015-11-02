@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by JSTAX29 on 28/10/2015.
  */
@@ -46,7 +48,7 @@ public class RdEmployeeRepositoryTest {
         repository.save(notInServiceEmployee1);
         repository.save(notInServiceEmployee2);
 
-        Assert.assertEquals(2, repository.findAllEmployeesInService().size());
+        assertEquals(2, repository.findAllEmployeesInService().size());
     }
 
     @Test(expected = ConstraintViolationException.class)
@@ -140,6 +142,27 @@ public class RdEmployeeRepositoryTest {
     public void testPasswordBlank() {
         rdEmployee.setPassword("");
         repository.save(rdEmployee);
+    }
+
+    @Test
+    public void testFindByEmail(){
+        repository.save(rdEmployee);
+
+        assertEquals(rdEmployee, repository.findByEmailIgnoreCase(rdEmployee.getEmail()));
+    }
+
+    @Test
+    public void testUpdate(){
+        repository.save(rdEmployee);
+
+        assertEquals(1, repository.findAll().size());
+
+        RdEmployee byEmailEmployee = repository.findByEmailIgnoreCase(rdEmployee.getEmail());
+        byEmailEmployee.setInService(false);
+        repository.save(byEmailEmployee);
+
+        assertEquals(1, repository.findAll().size());
+        assertFalse(repository.findByEmailIgnoreCase(byEmailEmployee.getEmail()).isInService());
     }
 
 

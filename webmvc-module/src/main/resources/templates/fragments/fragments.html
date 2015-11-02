@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- TODO Exercise 4: Add the Thymeleaf Security namespace -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:fragment="head">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>RDFleet</title>
+    <link th:href="@{/css/bootstrap-3.0.3.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.css"/>
+</head>
+<body>
+<div class="navbar navbar-default" th:fragment="header">
+    <div class="container">
+        <a class="navbar-brand" href="http://www.realdolmen.com"><span class="rd-red">RD</span><span class="rd-blue">Fleet</span></a>
+        <a class="navbar-brand" href="http://realdolmen.com">RealDolmen</a>
+
+        <ul class="nav navbar-nav">
+            <li><a th:href="@{/index}">Home</a></li>
+            <li><a sec:authorize="isAuthenticated()" th:href="@{/cars}">Cars</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name">Some User</span></li>
+            <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
+            <li><a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
+            <li><a sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a></li>
+        </ul>
+    </div>
+</div>
+<div class="page-header text-center" id="page-header">
+    <h1><span class="rd-red">Real</span><span class="rd-blue">Dolmen</span> Fleet</h1>
+    <p class="lead">Welcome to the <span class="rd-red">RD</span><span class="rd-blue">Fleet</span> application!</p>
+</div>
+<div class="scripts" th:remove="tag">
+    <script th:src="@{/js/jquery-2.0.2.min.js}"></script>
+    <script th:src="@{/js/bootstrap-3.0.3.min.js}"></script>
+    <script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.js"></script>
+</div>
+</body>
+</html>

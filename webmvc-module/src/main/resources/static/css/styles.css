@@ -1,0 +1,13 @@
+.container {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.rd-blue {
+  color: #009BD8;
+
+}
+
+.rd-red {
+  color: #ED2B29;
+}

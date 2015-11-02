@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by JSTAX29 on 1/11/2015.
@@ -21,56 +22,91 @@ public class EmployeeService {
         this.rdEmployeeRepository = rdEmployeeRepository;
     }
 
-    public void assignOrderToEmployee(RdEmployee rdEmployee, Order order){
-        if(rdEmployee == null)
+    /**
+     * Assigns an order of a car to an employee. The RdEmployee and the order cannot be null. The car of the order also cannot be null.
+     *
+     * @param rdEmployee the employee found from the database
+     * @param order      the order that should be linked to the employee
+     */
+    public void assignOrderToEmployee(RdEmployee rdEmployee, Order order) {
+        if (rdEmployee == null)
             throw new IllegalArgumentException("The employee to assign and order to cannot be null.");
-        if(rdEmployee.getId() == null)
+        if (rdEmployee.getId() == null)
             throw new IllegalArgumentException(String.format("The id of employee %s %s is null so it did not originate out of the database.", rdEmployee.getFirstName(), rdEmployee.getLastName()));
-        if(order == null)
+        if (order == null)
             throw new IllegalArgumentException("The order to be assigned to an employee cannot be null.");
-        if(order.getOrderedCar() == null)
+        if (order.getOrderedCar() == null)
             throw new IllegalArgumentException("The order should have a car assigned to it.");
 
+        if ((order.getOrderedCar().getSelectedCar().getFunctionalLevel() > rdEmployee.getFunctionalLevel() + 1 ||
+                order.getOrderedCar().getSelectedCar().getFunctionalLevel() < rdEmployee.getFunctionalLevel() - 1) &&
+                order.getOrderedCar().getCarStatus() != CarStatus.NOT_USED)
+            throw new IllegalArgumentException("The ordered car differs more than 1 functional level from the employee's functional level.");
+
+        order.getOrderedCar().setCarStatus(CarStatus.PENDING);
         order.setDateOrdered(LocalDate.now());
         rdEmployee.setCurrentOrder(order);
         rdEmployeeRepository.save(rdEmployee);
     }
 
-    public void removeEmployeeFromCompany(RdEmployee rdEmployee){
-        if(rdEmployee == null)
+    /**
+     * "Removes" the employee from the company. It actually just changes his inService status to false, sets his current car to NOT_USED and sets his current order to null.
+     * This allows the car to be re-used in the free-pool.
+     *
+     * @param rdEmployee the rdEmployee to be removed from the company.
+     */
+    public void removeEmployeeFromCompany(RdEmployee rdEmployee) {
+        if (rdEmployee == null)
             throw new IllegalArgumentException("The employee to be removed cannot be null.");
-        if(rdEmployee.getId() == null)
+        if (rdEmployee.getId() == null)
             throw new IllegalArgumentException(String.format("The id of employee %s %s is null so it did not originate out of the database.", rdEmployee.getFirstName(), rdEmployee.getLastName()));
 
-        if(rdEmployee.getCurrentOrder() != null && rdEmployee.getCurrentOrder().getOrderedCar() != null)
+        if (rdEmployee.getCurrentOrder() != null && rdEmployee.getCurrentOrder().getOrderedCar() != null)
             rdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.NOT_USED);
 
+        rdEmployee.setCurrentOrder(null);
         rdEmployee.setInService(false);
         rdEmployeeRepository.save(rdEmployee);
     }
 
-    public void decrementEmployeeFunctionalLevel(RdEmployee rdEmployee){
+    /**
+     * Decrements the functional level of the employee.
+     *
+     * @param rdEmployee the employee who's functional level should be decremented.
+     */
+    public void decrementEmployeeFunctionalLevel(RdEmployee rdEmployee) {
         modifyFunctionalLevel(rdEmployee, false);
     }
 
-    public void incrementEmployeeFunctionalLevel(RdEmployee rdEmployee){
+    /**
+     * Increments the functional level of the employee.
+     *
+     * @param rdEmployee the employee who's functional level should be incremented.
+     */
+    public void incrementEmployeeFunctionalLevel(RdEmployee rdEmployee) {
         modifyFunctionalLevel(rdEmployee, true);
     }
 
-    private void modifyFunctionalLevel(RdEmployee rdEmployee, boolean increment){
-        if(rdEmployee == null)
+    /**
+     * Helper method to re-use code for incrementing and decrementing functional levels.
+     *
+     * @param rdEmployee the employee who's functional level should be incremented or decremented.
+     * @param increment  true if his functional level should be incremented, false if it should be decremented.
+     */
+    private void modifyFunctionalLevel(RdEmployee rdEmployee, boolean increment) {
+        if (rdEmployee == null)
             throw new IllegalArgumentException("The employee to be removed cannot be null.");
-        if(rdEmployee.getId() == null)
+        if (rdEmployee.getId() == null)
             throw new IllegalArgumentException(String.format("The id of employee %s %s is null so it did not originate out of the database.", rdEmployee.getFirstName(), rdEmployee.getLastName()));
 
-        if(!increment){
-            if(rdEmployee.getFunctionalLevel() <= 2)
+        if (!increment) {
+            if (rdEmployee.getFunctionalLevel() <= 2)
                 throw new IllegalArgumentException(String.format("The employee %s %s already has a functional level of %d, it cannot be lowered.", rdEmployee.getFirstName(), rdEmployee.getLastName(), rdEmployee.getFunctionalLevel()));
 
             rdEmployee.setFunctionalLevel(rdEmployee.getFunctionalLevel() - 1);
-        }else{
-            if(rdEmployee.getFunctionalLevel() >= 7)
-                throw new IllegalArgumentException(String.format("The employee %s %s already has a functional level of %d, it cannot be incremented.",  rdEmployee.getFirstName(), rdEmployee.getLastName(),rdEmployee.getFunctionalLevel()));
+        } else {
+            if (rdEmployee.getFunctionalLevel() >= 7)
+                throw new IllegalArgumentException(String.format("The employee %s %s already has a functional level of %d, it cannot be incremented.", rdEmployee.getFirstName(), rdEmployee.getLastName(), rdEmployee.getFunctionalLevel()));
 
             rdEmployee.setFunctionalLevel(rdEmployee.getFunctionalLevel() + 1);
         }
