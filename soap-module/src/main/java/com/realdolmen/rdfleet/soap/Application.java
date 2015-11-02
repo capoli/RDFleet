@@ -1,16 +1,15 @@
-package com.realdolmen.rdfleet.webmvc;
+package com.realdolmen.rdfleet.soap;
 
 import com.realdolmen.rdfleet.domain.*;
-import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
+import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.Arrays;
 
 /**
@@ -18,9 +17,9 @@ import java.util.Arrays;
  */
 @SpringBootApplication
 @ComponentScan("com.realdolmen.rdfleet")
-public class Main {
+public class Application {
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = new SpringApplicationBuilder(Main.class).profiles("production").run();
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(Application.class).profiles("production").run();
 
     }
 }

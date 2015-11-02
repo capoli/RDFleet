@@ -4,7 +4,6 @@
     angular.module('app')
         .constant('Config', {
             baseUrl: '/api',
-            server: 'http://localhost:8080',
             deleteMessageDelay: 1000 * 6,//6 seconds
             roles: {
                 rdemployee: 'ROLE_RdEmployee',
