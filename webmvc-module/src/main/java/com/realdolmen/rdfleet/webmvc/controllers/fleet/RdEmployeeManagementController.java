@@ -18,7 +18,6 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
  */
 @Controller
 @RequestMapping("/fleet/employees")
-//@Secured("FleetEmployee")
 public class RdEmployeeManagementController {
     @Autowired
     private EmployeeService employeeService;
@@ -44,11 +43,46 @@ public class RdEmployeeManagementController {
         return "redirect:" + fromMappingName("REMC#employees").build();
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateEmployee(@ModelAttribute RdEmployee rdEmployee, BindingResult errors, Model model){
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!! Came into method !!!!!!!!!!!!!!!!!!!!!!");
+    @RequestMapping(value = "/{id}/incrementFunc", method = RequestMethod.GET)
+    public String incrementFunctionalLevel(@PathVariable Long id, Model model){
+        RdEmployee rdEmployee = employeeService.findRdEmployee(id);
+
+        if(id == null || rdEmployee == null){
+            model.addAttribute("error", "The employee with the provided id could not be found.");
+            model.addAttribute("employeeList", employeeService.findAllRdEmployeesInService());
+            return "fleet/employee.list";
+        }else{
+            try{
+                employeeService.incrementEmployeeFunctionalLevel(rdEmployee);
+            }catch (IllegalArgumentException e){
+                model.addAttribute("error", e.getMessage());
+                model.addAttribute("employeeList", employeeService.findAllRdEmployeesInService());
+                return "fleet/employee.list";
+            }
+        }
+
         return "redirect:" + fromMappingName("REMC#employees").build();
     }
 
 
+    @RequestMapping(value = "/{id}/decrementFunc", method = RequestMethod.GET)
+    public String decrementFunctionalLevel(@PathVariable Long id, Model model){
+        RdEmployee rdEmployee = employeeService.findRdEmployee(id);
+
+        if(id == null || rdEmployee == null){
+            model.addAttribute("error", "The employee with the provided id could not be found.");
+            model.addAttribute("employeeList", employeeService.findAllRdEmployeesInService());
+            return "fleet/employee.list";
+        }else{
+            try{
+                employeeService.decrementEmployeeFunctionalLevel(rdEmployee);
+            }catch (IllegalArgumentException e){
+                model.addAttribute("error", e.getMessage());
+                model.addAttribute("employeeList", employeeService.findAllRdEmployeesInService());
+                return "fleet/employee.list";
+            }
+        }
+
+        return "redirect:" + fromMappingName("REMC#employees").build();
+    }
 }
