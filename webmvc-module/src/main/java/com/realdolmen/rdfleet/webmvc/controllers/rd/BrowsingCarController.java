@@ -29,7 +29,7 @@ public class BrowsingCarController {
     private EmployeeService employeeService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String cars(Model model) {
+    public String getNewCars(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("carList",
                 employeeService.findCarsForEmployeeByFunctionalLevel(auth.getName()));
@@ -37,7 +37,7 @@ public class BrowsingCarController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String car(@PathVariable int id, Model model) {
+    public String getNewCar(@PathVariable("id") Long id, Model model) {
         model.addAttribute("car", carService.findById(id));
         return "rd/car.detail";
     }

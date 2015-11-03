@@ -17,7 +17,7 @@
                     <th>Make</th>
                     <th>Model</th>
                     <th>FunctionalLevel</th>
-                    <!--<th class="text-right">Remove</th>-->
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,11 +25,10 @@
                     <td th:text="${car.make}"></td>
                     <td th:text="${car.model}"></td>
                     <td th:text="${car.functionalLevel}"></td>
-                    <!--<td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('AC#removeAuthor').arg(0, author.id).build()}">Remove</a></td>-->
+                    <td class="text-right"><a class="btn btn-info btn-xs" th:href="${#mvc.url('BCC#getNewCar').arg(0, car.id).build()}">Details</a></td>
                 </tr>
                 </tbody>
             </table>
-            <a class="btn btn-primary">Add car</a>
         </div>
     </div>
 

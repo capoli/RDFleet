@@ -6,12 +6,12 @@
 <div class="container">
     <div th:replace="fragments/fragments :: div#page-header"></div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" th:object="${car}">
             <div class="has-error" th:if="${error != null}">
                 <span class="help-block" th:text="${error}"/>
             </div>
-            <h4 th:text="${car.make} ${car.model}"></h4>
-            <p th:text="${car.listPrice}"></p>
+            <h4><span th:field="*{make}"></span> <span th:field="*{model}"></span></h4>
+            <p th:field="*{listPrice}"></p>
         </div>
     </div>
 

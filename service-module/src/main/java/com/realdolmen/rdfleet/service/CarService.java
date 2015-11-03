@@ -35,8 +35,11 @@ public class CarService {
     }
 
     //TODO: test
-    public Car findById(long id) {
+    public Car findById(Long id) {
+        if(id == null) throw new IllegalArgumentException("Car id can not be null");
         if(id < 0) throw new IllegalArgumentException("Car id can not be a negative number");
-        return carRepository.findOne(id);
+        Car car = carRepository.findOne(id);
+        if(car == null) throw new IllegalArgumentException("Car object can not be null");
+        return car;
     }
 }
