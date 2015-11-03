@@ -6,6 +6,7 @@ import com.realdolmen.rdfleet.domain.Order;
 import com.realdolmen.rdfleet.domain.RdEmployee;
 import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
+import com.realdolmen.rdfleet.viewmodel.OrderNewCar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -125,13 +126,48 @@ public class EmployeeService {
 
     //TODO: test
     public List<Car> findCarsForEmployeeByFunctionalLevel(String email) {
-        if(email.isEmpty()) throw new IllegalArgumentException("email can not be empty");
-        int functionalLevel = rdEmployeeRepository.findByEmailIgnoreCase(email).getFunctionalLevel();
+        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
+        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        int functionalLevel = rdEmployee.getFunctionalLevel();
         List<Car> cars = new ArrayList<>();
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel));
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel - 1));
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel + 1));
+        if(cars.size() == 0) throw new IllegalArgumentException("There are no cars to select from");
         return cars;
+    }
+
+    //TODO: test
+    public OrderNewCar getNewCarOrderForEmployee(String email, Long carId) {
+        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        if(carId == null) throw new IllegalArgumentException("Car id can not be null");
+        if(carId < 0) throw new IllegalArgumentException("Car id can not be a negative number");
+
+        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
+        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        Car car = carRepository.findOne(carId);
+        if(car == null) throw new IllegalArgumentException("Car object can not be null");
+        if(car.getFunctionalLevel() < rdEmployee.getFunctionalLevel() - 1
+                || car.getFunctionalLevel() > rdEmployee.getFunctionalLevel() + 1)
+            throw new IllegalArgumentException("The functional level of employee is too high or too low");
+
+        OrderNewCar orderNewCar = new OrderNewCar();
+        orderNewCar.setId(carId);
+        if(car.getFunctionalLevel() == rdEmployee.getFunctionalLevel()) {
+            orderNewCar.setPriceDowngrade(null);
+            orderNewCar.setPriceUpgrade(null);
+        }
+        else if(car.getFunctionalLevel() > rdEmployee.getFunctionalLevel()) {
+            orderNewCar.setPriceDowngrade(null);
+            orderNewCar.setPriceUpgrade(car.getAmountUpgrade());
+        }
+        else if(car.getFunctionalLevel() < rdEmployee.getFunctionalLevel()) {
+            orderNewCar.setPriceDowngrade(car.getAmountDowngrade());
+            orderNewCar.setPriceUpgrade(null);
+        }
+
+        return orderNewCar;
     }
 	
     public List<RdEmployee> findAllRdEmployeesInService(){

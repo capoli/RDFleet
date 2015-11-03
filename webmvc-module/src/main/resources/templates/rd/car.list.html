@@ -4,10 +4,10 @@
 <body>
 <div th:replace="fragments/fragments :: header"></div>
 <div class="container">
-    <div th:replace="fragments/fragments :: div#page-header"></div>
+    <!--<div th:replace="fragments/fragments :: div#page-header"></div>-->
     <div class="row">
         <div class="col-lg-12">
-            <h4>Car List</h4>
+            <h4>Cars catalog</h4>
             <div class="has-error" th:if="${error != null}">
                 <span class="help-block" th:text="${error}"/>
             </div>
