@@ -133,4 +133,12 @@ public class EmployeeService {
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel + 1));
         return cars;
     }
+	
+    public List<RdEmployee> findAllRdEmployeesInService(){
+        return rdEmployeeRepository.findAllEmployeesInService();
+    }
+
+    public RdEmployee findRdEmployee(Long id){
+        return rdEmployeeRepository.findOne(id);
+    }
 }
