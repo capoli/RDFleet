@@ -26,4 +26,6 @@ public class CarController {
         model.addAttribute("carList", carService.findAllCars());
         return "rd/car.list";
     }
+
+
 }

@@ -23,6 +23,10 @@ public class RdEmployee extends User {
     private List<Order> orderHistory = new ArrayList<>();
     private boolean inService;
 
+    public RdEmployee() {
+        role = Role.ROLE_RDEMPLOYEE;
+    }
+
     public int getFunctionalLevel() {
         return functionalLevel;
     }

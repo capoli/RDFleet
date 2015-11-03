@@ -113,4 +113,13 @@ public class EmployeeService {
 
         rdEmployeeRepository.save(rdEmployee);
     }
+
+    public List<RdEmployee> findAllRdEmployeesInService(){
+        return rdEmployeeRepository.findAllEmployeesInService();
+    }
+
+    public RdEmployee findRdEmployee(Long id){
+        return rdEmployeeRepository.findOne(id);
+    }
+
 }

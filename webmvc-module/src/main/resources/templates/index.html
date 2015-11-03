@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="fragments/fragments :: head"></head>
 <body>
 <div th:replace="fragments/fragments :: header"></div>
@@ -8,6 +8,10 @@
     <div th:replace="fragments/fragments :: div#page-header"></div>
     <div class="row">
         <div class="col-lg-12">
+            <h3 sec:authorize="isAuthenticated()" >
+                Logged user: <span sec:authentication="name"></span><br/>
+                Roles: <span sec:authentication="principal.authorities"></span>
+            </h3>
             <h4>Registration</h4>
             <p>Please register <a th:href="@{/register}">here</a>!</p>
         </div>

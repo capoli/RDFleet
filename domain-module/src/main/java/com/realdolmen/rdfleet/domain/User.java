@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "ROLES")
 public abstract class User extends BaseEntity {
     @Column(nullable = false)
     @NotNull
@@ -30,6 +29,13 @@ public abstract class User extends BaseEntity {
     @NotNull
     @NotBlank
     private String password;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    protected Role role;
+
+    public User() {
+        role = Role.ROLE_DEFAULT;
+    }
 
     public String getFirstName() {
         return firstName;
