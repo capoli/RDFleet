@@ -1,13 +1,16 @@
 package com.realdolmen.rdfleet.service;
 
+import com.realdolmen.rdfleet.domain.Car;
 import com.realdolmen.rdfleet.domain.CarStatus;
 import com.realdolmen.rdfleet.domain.Order;
 import com.realdolmen.rdfleet.domain.RdEmployee;
+import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,10 +19,16 @@ import java.util.List;
 @Service
 public class EmployeeService {
     private RdEmployeeRepository rdEmployeeRepository;
+    private CarRepository carRepository;
 
     @Autowired
     public void setRdEmployeeRepository(RdEmployeeRepository rdEmployeeRepository) {
         this.rdEmployeeRepository = rdEmployeeRepository;
+    }
+
+    @Autowired
+    public void setCarRepository(CarRepository carRepository) {
+        this.carRepository = carRepository;
     }
 
     /**
@@ -112,5 +121,16 @@ public class EmployeeService {
         }
 
         rdEmployeeRepository.save(rdEmployee);
+    }
+
+    //TODO: test
+    public List<Car> findCarsForEmployeeByFunctionalLevel(String email) {
+        if(email.isEmpty()) throw new IllegalArgumentException("email can not be empty");
+        int functionalLevel = rdEmployeeRepository.findByEmailIgnoreCase(email).getFunctionalLevel();
+        List<Car> cars = new ArrayList<>();
+        cars.addAll(carRepository.findByFunctionalLevel(functionalLevel));
+        cars.addAll(carRepository.findByFunctionalLevel(functionalLevel - 1));
+        cars.addAll(carRepository.findByFunctionalLevel(functionalLevel + 1));
+        return cars;
     }
 }

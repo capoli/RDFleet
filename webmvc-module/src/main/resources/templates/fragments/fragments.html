@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- TODO Exercise 4: Add the Thymeleaf Security namespace -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragment="head">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
@@ -26,7 +25,6 @@
             <li sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name">Some User</span></li>
             <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
             <li><a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
-            <li><a sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a></li>
         </ul>
     </div>
 </div>

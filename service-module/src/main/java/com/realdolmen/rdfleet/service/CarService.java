@@ -33,4 +33,10 @@ public class CarService {
     public void createCar(Car car){
         carRepository.save(car);
     }
+
+    //TODO: test
+    public Car findById(long id) {
+        if(id < 0) throw new IllegalArgumentException("Car id can not be a negative number");
+        return carRepository.findOne(id);
+    }
 }
