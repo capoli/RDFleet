@@ -17,21 +17,21 @@
 <body>
 <div class="navbar navbar-default" th:fragment="header">
     <div class="container">
-        <a class="navbar-brand" href="http://www.realdolmen.com"><span class="rd-red">RD</span><span class="rd-blue">Fleet</span></a>
-        <a class="navbar-brand" href="http://realdolmen.com">RealDolmen</a>
+        <a class="navbar-brand" th:href="@{/index}"><span class="rd-red">RD</span><span class="rd-blue">Fleet</span></a>
 
         <ul class="nav navbar-nav">
-            <li><a th:href="@{/index}">Home</a></li>
             <li><a sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars}">Browse cars catalog</a></li>
+            <li><a id="orderCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
             <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Cars</a></li>
             <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <li sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name">Some User</span></li>
+            <li><a sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></a></li>
             <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
             <li><a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
         </ul>
+        <div style="visibility: hidden" sec:authorize="isAuthenticated()"><span id="useremail" sec:authentication="name"></span></div>
     </div>
 </div>
 <div class="page-header text-center" id="page-header">
@@ -45,6 +45,27 @@
     <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"></script>-->
     <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>-->
     <!--<script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9,af-2.0.0,fc-3.1.0,fh-3.0.0,kt-2.0.0,r-1.0.7,sc-1.3.0,se-1.0.1/datatables.min.js"></script>-->
+    <script type="text/javascript">
+        $(document).load(function () {
+            var email = $('#useremail').text();
+            if(email !== '') {
+                $.ajax({
+                    method:'get',
+                    url:'/api/canOrderCar/' + email,
+                    success: function(data) {
+                        if(data) {
+                            $('#orderCarCatalog').show();
+                        }
+                        else {
+                            $('#orderCarCatalog').hide();
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </div>
+<script>
+</script>
 </body>
 </html>
