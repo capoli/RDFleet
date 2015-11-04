@@ -200,32 +200,32 @@ public class EmployeeService {
 
     //TODO: test
     public List<Car> findCarsForEmployeeByFunctionalLevel(String email) {
-        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
         RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
         int functionalLevel = rdEmployee.getFunctionalLevel();
         List<Car> cars = new ArrayList<>();
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel));
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel - 1));
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel + 1));
-        if(cars.size() == 0) throw new IllegalArgumentException("There are no cars to select from");
+        if (cars.size() == 0) throw new IllegalArgumentException("There are no cars to select from");
         return cars;
     }
 
-    public List<RdEmployee> findAllRdEmployeesInService(){
+    public List<RdEmployee> findAllRdEmployeesInService() {
         return rdEmployeeRepository.findAllEmployeesInService();
     }
 
-    public RdEmployee findRdEmployee(Long id){
+    public RdEmployee findRdEmployee(Long id) {
         return rdEmployeeRepository.findOne(id);
     }
 
     //TODO: test
     public int getFunctionalLevelByEmail(String email) {
-        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
         RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
-        return  rdEmployee.getFunctionalLevel();
+        if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        return rdEmployee.getFunctionalLevel();
     }
 
     //TODO: test
@@ -241,19 +241,18 @@ public class EmployeeService {
         if (car == null) throw new IllegalArgumentException("Car object can not be null");
         boolean canOrderCar = checkIfEmployeeCanOrderCar(email);
         RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if(car.getFunctionalLevel() <= rdEmployee.getFunctionalLevel() + 1
-                && car.getFunctionalLevel() >= rdEmployee.getFunctionalLevel() - 1)
-            canOrderCar = true;
-        return canOrderCar;
+        return canOrderCar
+                && car.getFunctionalLevel() <= rdEmployee.getFunctionalLevel() + 1
+                && car.getFunctionalLevel() >= rdEmployee.getFunctionalLevel() - 1;
     }
 
     //TODO: test
     private boolean checkIfEmployeeCanOrderCar(String email) {
-        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
         RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
         LocalDate fourYearsAgo = LocalDate.now().minusYears(4);
-        if(rdEmployee.getCurrentOrder() == null) return true;
+        if (rdEmployee.getCurrentOrder() == null) return true;
         if (rdEmployee.getCurrentOrder().getDateReceived().isBefore(fourYearsAgo)) return true;
         if (rdEmployee.getCurrentOrder().getOrderedCar().getMileage() > 160000) return true;
         return false;

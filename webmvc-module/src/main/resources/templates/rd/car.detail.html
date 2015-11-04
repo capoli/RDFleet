@@ -7,18 +7,15 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
+            <h1 style="padding-left: 15px" th:text="${car.make}"></h1>
             <div class="col-lg-7">
                 <div class="has-error" th:if="${error != null}">
                     <span class="help-block" th:text="${error}"/>
                 </div>
 
-                <h1 th:text="${car.make}"></h1>
-
                 <h3 th:text="${car.model}"></h3>
 
                 <h4>Functional level: <span th:text="${car.functionalLevel}"></span></h4>
-
-                <a th:if="${canOrderNewCar}" class="btn btn-info btn-lg" th:href="${#mvc.url('OCC#getOrderNewCar').arg(0, car.id).build()}">Order</a>
 
                 <br/>
                 <table class="table table-striped">
@@ -32,15 +29,24 @@
                     </tr>
                     <tr>
                         <td><h6>Towing bracket:</h6></td>
-                        <td th:text="${car.towingBracketPossibility}"></td>
+                        <td>
+                            <span th:if="${car.towingBracketPossibility}" class="glyphicon glyphicon-ok"></span>
+                            <span th:if="${!car.towingBracketPossibility}" class="glyphicon glyphicon-remove"></span>
+                        </td>
                     </tr>
                     <tr>
                         <td><h6>Gps:</h6></td>
-                        <td th:text="${car.gps}"></td>
+                        <td>
+                            <span th:if="${car.gps}" class="glyphicon glyphicon-ok"></span>
+                            <span th:if="${!car.gps}" class="glyphicon glyphicon-remove"></span>
+                        </td>
                     </tr>
                     <tr>
                         <td><h6>Bluetooth:</h6></td>
-                        <td th:text="${car.bluetooth}"></td>
+                        <td>
+                            <span th:if="${car.bluetooth}" class="glyphicon glyphicon-ok"></span>
+                            <span th:if="${!car.bluetooth}" class="glyphicon glyphicon-remove"></span>
+                        </td>
                     </tr>
                     <tr>
                         <td><h6>co2:</h6></td>
@@ -59,15 +65,16 @@
                         <td th:text="${car.maxKm}"></td>
                     </tr>
                 </table>
+                <a th:if="${canOrderNewCar}" class="btn btn-info btn-lg btn-block" th:href="${#mvc.url('OCC#getOrderNewCar').arg(0, car.id).build()}">Order</a>
             </div>
             <div class="col-lg-5">
                 <div id="info" class="well">
                     <h3 class="modal-header">Additional info</h3>
-                    <h4>Price: <span th:text="${car.listPrice}"></span></h4>
-                    <h4>Benefit: <span th:text="${car.benefit}"></span></h4>
-                    <h4>Amount for upgrade: <span th:text="${car.amountUpgrade}"></span></h4>
-                    <h4>Amount for downgrade: <span th:text="${car.amountDowngrade}"></span></h4>
-                    <h4>Time of delivery in days: <span th:text="${car.timeOfDeliveryInDays.toDays()}"></span></h4>
+                    <h4>Price: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.listPrice}"></span></div></h4>
+                    <h4>Benefit: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.benefit}"></span></div></h4>
+                    <h4>Amount for upgrade: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.amountUpgrade}"></span></div></h4>
+                    <h4>Amount for downgrade: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.amountDowngrade}"></span></div></h4>
+                    <h4>Time of delivery in days: <div style="float: right"><span th:text="${car.timeOfDeliveryInDays.toDays()}"></span></div></h4>
                 </div>
                 <div id="packs" class="well"  th:if="${car.packs.size() > 0}">
                     <h3 class="modal-header">Packs</h3>

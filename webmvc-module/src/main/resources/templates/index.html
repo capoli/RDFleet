@@ -10,10 +10,14 @@
         <div class="col-lg-12">
             <!--<h4>Registration</h4>-->
             <!--<p>Please register <a th:href="@{/register}">here</a>!</p>-->
-            <h3 sec:authorize="isAuthenticated()" >
-                Logged user: <span sec:authentication="name"></span><br/>
-                Roles: <span sec:authentication="principal.authorities"></span>
-            </h3>
+            <!--<h3 sec:authorize="isAuthenticated()" >-->
+                <!--Logged user: <span sec:authentication="name"></span><br/>-->
+                <!--Roles: <span sec:authentication="principal.authorities"></span>-->
+            <!--</h3>-->
+            <h2>For realdolmen employees:</h2>
+            <h3>You can use this site to order a new car</h3>
+            <h2>For fleet employees:</h2>
+            <h3>You can use this site to manage information</h3>
         </div>
     </div>
 
