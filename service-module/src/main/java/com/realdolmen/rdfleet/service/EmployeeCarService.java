@@ -1,5 +1,6 @@
 package com.realdolmen.rdfleet.service;
 
+import com.realdolmen.rdfleet.domain.CarStatus;
 import com.realdolmen.rdfleet.domain.EmployeeCar;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,5 @@ public class EmployeeCarService {
     public EmployeeCar findEmployeeCarByLicensePlate(String licensePlate){
         return employeeCarRepository.findByLicensePlateIgnoreCase(licensePlate);
     }
+
 }

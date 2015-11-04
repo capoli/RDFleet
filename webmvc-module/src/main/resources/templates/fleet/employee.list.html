@@ -34,7 +34,16 @@
                             <span th:text="${rdEmployee.functionalLevel}"></span>
                             <a class="btn btn-info btn-xs" th:href="${#mvc.url('REMC#incrementFunctionalLevel').arg(0, rdEmployee.id).build()}">+</a>
                         </td>
-                        <td th:text="${rdEmployee.currentOrder.orderedCar.licensePlate}"></td>
+                        <td>
+                            <div th:if="${rdEmployee.currentOrder != null}">
+                                <a th:href="${#mvc.url('ECMC#viewEmployeeCar').arg(0, rdEmployee.id).build()}" title="View more information about the employee's car">
+                                    <span th:text="${rdEmployee.currentOrder.orderedCar.licensePlate}"></span>
+                                </a>
+                            </div>
+                            <div th:if="${rdEmployee.currentOrder == null}">
+                                No car assigned
+                            </div>
+                        </td>
                         <td>To be continued</td>
                         <td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('REMC#removeFromService').arg(0, rdEmployee.id).build()}">Remove from service</a></td>
                 </tr>

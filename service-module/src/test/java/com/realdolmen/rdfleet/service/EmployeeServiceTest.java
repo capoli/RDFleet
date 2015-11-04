@@ -2,8 +2,10 @@ package com.realdolmen.rdfleet.service;
 
 import com.realdolmen.rdfleet.config.JpaConfig;
 import com.realdolmen.rdfleet.domain.CarStatus;
+import com.realdolmen.rdfleet.domain.EmployeeCar;
 import com.realdolmen.rdfleet.domain.Order;
 import com.realdolmen.rdfleet.domain.RdEmployee;
+import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
 import com.realdolmen.rdfleet.service.util.ValidDomainObjectFactory;
 import org.junit.Assert;
@@ -29,14 +31,9 @@ import static org.mockito.Mockito.*;
 /**
  * Created by JSTAX29 on 1/11/2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = JpaConfig.class)
-@ActiveProfiles("test")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@RunWith(MockitoJUnitRunner.class)
 public class EmployeeServiceTest {
-    @Autowired
-    private RdEmployeeRepository rdEmployeeRepository;
-
+    private EmployeeCarRepository employeeCarRepositoryMock;
     private RdEmployeeRepository rdEmployeeRepositoryMock;
     private EmployeeService employeeService;
 
@@ -45,13 +42,14 @@ public class EmployeeServiceTest {
     @Before
     public void initialize() {
         rdEmployeeRepositoryMock = mock(RdEmployeeRepository.class);
+        employeeCarRepositoryMock = mock(EmployeeCarRepository.class);
 
         employeeService = new EmployeeService();
         employeeService.setRdEmployeeRepository(rdEmployeeRepositoryMock);
+        employeeService.setEmployeeCarRepository(employeeCarRepositoryMock);
 
-        RdEmployee rdEmployee = ValidDomainObjectFactory.createRdEmployee();
-        dbRdEmployee = rdEmployeeRepository.save(rdEmployee);
-
+        dbRdEmployee = ValidDomainObjectFactory.createRdEmployee();
+        dbRdEmployee.setId(1000l);
     }
 
     // Assigning orders tests
@@ -104,7 +102,7 @@ public class EmployeeServiceTest {
     public void testAssignOrderEverythingOk() {
         employeeService.assignOrderToEmployee(dbRdEmployee, dbRdEmployee.getCurrentOrder());
 
-        verify(rdEmployeeRepositoryMock).save(dbRdEmployee);
+        verify(rdEmployeeRepositoryMock, times(2)).save(dbRdEmployee);
     }
 
     @Test
@@ -128,6 +126,18 @@ public class EmployeeServiceTest {
         employeeService.assignOrderToEmployee(dbRdEmployee, order);
 
         assertEquals(order, dbRdEmployee.getCurrentOrder());
+    }
+
+    @Test
+    public void testAssignOrderOldCarIsSetToRemoved(){
+        EmployeeCar oldCar = dbRdEmployee.getCurrentOrder().getOrderedCar();
+        assertEquals(CarStatus.IN_USE, oldCar.getCarStatus());
+
+        Order newOrder = ValidDomainObjectFactory.createOrder();
+        employeeService.assignOrderToEmployee(dbRdEmployee, newOrder);
+
+        assertEquals(CarStatus.REMOVED, oldCar.getCarStatus());
+        assertEquals(CarStatus.PENDING, dbRdEmployee.getCurrentOrder().getOrderedCar().getCarStatus());
     }
 
     //Removing employees tests
@@ -229,4 +239,129 @@ public class EmployeeServiceTest {
 
         verify(rdEmployeeRepositoryMock).save(dbRdEmployee);
     }
+
+    //Tests for setting the employee car in use
+    @Test
+    public void testSetEmployeeCarInUseAllOk(){
+        dbRdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.PENDING);
+        employeeService.setEmployeeCarInUse(dbRdEmployee);
+
+        assertEquals(LocalDate.now(), dbRdEmployee.getCurrentOrder().getDateReceived());
+        assertTrue(dbRdEmployee.getOrderHistory().contains(dbRdEmployee.getCurrentOrder()));
+        assertEquals(CarStatus.IN_USE, dbRdEmployee.getCurrentOrder().getOrderedCar().getCarStatus());
+
+        verify(rdEmployeeRepositoryMock).save(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInUseEmployeeNull(){
+        employeeService.setEmployeeCarInUse(null);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInUseEmployeeIdNull(){
+        dbRdEmployee.setId(null);
+
+        employeeService.setEmployeeCarInUse(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInUseOrderNull(){
+        dbRdEmployee.setCurrentOrder(null);
+
+        employeeService.setEmployeeCarInUse(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInUseEmployeeCarNull(){
+        dbRdEmployee.getCurrentOrder().setOrderedCar(null);
+
+        employeeService.setEmployeeCarInUse(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInUseStatusNotPending(){
+        dbRdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.IN_USE);
+
+        employeeService.setEmployeeCarInUse(dbRdEmployee);
+    }
+
+    //Tests for setting the employee car to the free pool
+    @Test
+    public void testSetEmployeeCarInFreePoolAllOk(){
+        EmployeeCar orderedCar = dbRdEmployee.getCurrentOrder().getOrderedCar();
+        employeeService.setEmployeeCarInFreePool(dbRdEmployee);
+
+        assertEquals(CarStatus.NOT_USED, orderedCar.getCarStatus());
+        assertNull(dbRdEmployee.getCurrentOrder());
+
+        verify(rdEmployeeRepositoryMock).save(dbRdEmployee);
+        verify(employeeCarRepositoryMock).save(orderedCar);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInFreePoolEmployeeIsNull(){
+        employeeService.setEmployeeCarInFreePool(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInFreePoolEmployeeIdIsNull(){
+        dbRdEmployee.setId(null);
+        employeeService.setEmployeeCarInFreePool(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInFreePoolOrderIsNull(){
+        dbRdEmployee.setCurrentOrder(null);
+
+        employeeService.setEmployeeCarInFreePool(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarInFreePoolCarIsNull(){
+        dbRdEmployee.getCurrentOrder().setOrderedCar(null);
+
+        employeeService.setEmployeeCarInFreePool(dbRdEmployee);
+    }
+
+    //Tests for setting the employee car to removed
+    @Test
+    public void testSetEmployeeCarRemovedAllOk(){
+        EmployeeCar orderedCar = dbRdEmployee.getCurrentOrder().getOrderedCar();
+        employeeService.setEmployeeCarRemoved(dbRdEmployee);
+
+        assertEquals(CarStatus.REMOVED, orderedCar.getCarStatus());
+        assertNull(dbRdEmployee.getCurrentOrder());
+
+        verify(rdEmployeeRepositoryMock).save(dbRdEmployee);
+        verify(employeeCarRepositoryMock).save(orderedCar);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarRemovedEmployeeIsNull(){
+        employeeService.setEmployeeCarRemoved(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarRemovedEmployeeIdIsNull(){
+        dbRdEmployee.setId(null);
+        employeeService.setEmployeeCarRemoved(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarRemovedOrderIsNull(){
+        dbRdEmployee.setCurrentOrder(null);
+
+        employeeService.setEmployeeCarRemoved(dbRdEmployee);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarRemovedCarIsNull(){
+        dbRdEmployee.getCurrentOrder().setOrderedCar(null);
+
+        employeeService.setEmployeeCarRemoved(dbRdEmployee);
+    }
+
+
 }
