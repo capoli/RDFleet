@@ -1,10 +1,13 @@
 package com.realdolmen.rdfleet.service;
 
 import com.realdolmen.rdfleet.domain.Car;
+import com.realdolmen.rdfleet.domain.Pack;
 import com.realdolmen.rdfleet.repositories.CarRepository;
+import com.realdolmen.rdfleet.repositories.PackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -13,10 +16,16 @@ import java.util.List;
 @Service
 public class CarService {
     private CarRepository carRepository;
+    private PackRepository packRepository;
 
     @Autowired
     public void setCarRepository(CarRepository carRepository) {
         this.carRepository = carRepository;
+    }
+
+    @Autowired
+    public void setPackRepository(PackRepository packRepository) {
+        this.packRepository = packRepository;
     }
 
     public List<Car> findAllCars() {
@@ -28,6 +37,10 @@ public class CarService {
             throw new IllegalArgumentException("The car cannot be updated because it did not originate from the database.");
 
         carRepository.save(car);
+    }
+
+    public List<Pack> findAllPacks(){
+        return packRepository.findAll();
     }
 
     public void createCar(Car car){

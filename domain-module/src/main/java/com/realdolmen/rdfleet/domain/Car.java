@@ -29,11 +29,14 @@ public class Car extends BaseEntity {
     @Max(7)
     private int functionalLevel;
     private String description;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private List<Pack> packs = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     @NotNull
     private TyreType tyreType;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private CarType carType = CarType.REGULAR;
     @Enumerated(EnumType.STRING)
     @NotNull
     private FuelType fuelType;
@@ -123,6 +126,14 @@ public class Car extends BaseEntity {
 
     public void setFuelType(FuelType fuelType) {
         this.fuelType = fuelType;
+    }
+
+    public CarType getCarType() {
+        return carType;
+    }
+
+    public void setCarType(CarType carType) {
+        this.carType = carType;
     }
 
     public BigDecimal getBenefit() {
