@@ -6,7 +6,6 @@ import com.realdolmen.rdfleet.domain.Order;
 import com.realdolmen.rdfleet.domain.RdEmployee;
 import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
-import com.realdolmen.rdfleet.viewmodel.OrderNewCar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -138,43 +137,50 @@ public class EmployeeService {
         return cars;
     }
 
-    //TODO: test
-    public OrderNewCar getNewCarOrderForEmployee(String email, Long carId) {
-        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
-        if(carId == null) throw new IllegalArgumentException("Car id can not be null");
-        if(carId < 0) throw new IllegalArgumentException("Car id can not be a negative number");
-
-        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
-        Car car = carRepository.findOne(carId);
-        if(car == null) throw new IllegalArgumentException("Car object can not be null");
-        if(car.getFunctionalLevel() < rdEmployee.getFunctionalLevel() - 1
-                || car.getFunctionalLevel() > rdEmployee.getFunctionalLevel() + 1)
-            throw new IllegalArgumentException("The functional level of employee is too high or too low");
-
-        OrderNewCar orderNewCar = new OrderNewCar();
-        orderNewCar.setId(carId);
-        if(car.getFunctionalLevel() == rdEmployee.getFunctionalLevel()) {
-            orderNewCar.setPriceDowngrade(null);
-            orderNewCar.setPriceUpgrade(null);
-        }
-        else if(car.getFunctionalLevel() > rdEmployee.getFunctionalLevel()) {
-            orderNewCar.setPriceDowngrade(null);
-            orderNewCar.setPriceUpgrade(car.getAmountUpgrade());
-        }
-        else if(car.getFunctionalLevel() < rdEmployee.getFunctionalLevel()) {
-            orderNewCar.setPriceDowngrade(car.getAmountDowngrade());
-            orderNewCar.setPriceUpgrade(null);
-        }
-
-        return orderNewCar;
-    }
-	
     public List<RdEmployee> findAllRdEmployeesInService(){
         return rdEmployeeRepository.findAllEmployeesInService();
     }
 
     public RdEmployee findRdEmployee(Long id){
         return rdEmployeeRepository.findOne(id);
+    }
+
+    //TODO: test
+    public int getFunctionalLevelByEmail(String email) {
+        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
+        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        return  rdEmployee.getFunctionalLevel();
+    }
+
+    //TODO: test
+    public boolean employeeCanOrderNewCar(String email) {
+        return checkIfEmployeeCanOrderCar(email);
+    }
+
+    //TODO: test
+    public boolean employeeCanOrderNewCar(String email, Long carId) {
+        if (carId == null) throw new IllegalArgumentException("Car id can not be null");
+        if (carId < 0) throw new IllegalArgumentException("Car id can not be a negative number");
+        Car car = carRepository.findOne(carId);
+        if (car == null) throw new IllegalArgumentException("Car object can not be null");
+        boolean canOrderCar = checkIfEmployeeCanOrderCar(email);
+        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
+        if(car.getFunctionalLevel() <= rdEmployee.getFunctionalLevel() + 1
+                && car.getFunctionalLevel() >= rdEmployee.getFunctionalLevel() - 1)
+            canOrderCar = true;
+        return canOrderCar;
+    }
+
+    //TODO: test
+    private boolean checkIfEmployeeCanOrderCar(String email) {
+        if(email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
+        if(rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        LocalDate fourYearsAgo = LocalDate.now().minusYears(4);
+        if(rdEmployee.getCurrentOrder() == null) return true;
+        if (rdEmployee.getCurrentOrder().getDateReceived().isBefore(fourYearsAgo)) return true;
+        if (rdEmployee.getCurrentOrder().getOrderedCar().getMileage() > 160000) return true;
+        return false;
     }
 }

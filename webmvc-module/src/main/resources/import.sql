@@ -103,7 +103,7 @@ INSERT INTO pack_items (Pack_id,items) VALUES (1006,"Climatronic");
 INSERT INTO pack_items (Pack_id,items) VALUES (1006,"8 luidsprekers");
 INSERT INTO pack_items (Pack_id,items) VALUES (1006,"3D navigatie met 8 inch aanraakscherm");
 INSERT INTO pack_items (Pack_id,items) VALUES (1006,"Aux in, USB, 2xSD");
-INSERT INTO pack_items (Pack_id,items) VALUES (1006,"weergave foto, MP3, Divx, …");
+INSERT INTO pack_items (Pack_id,items) VALUES (1006,"weergave foto, MP3, Divx, â€¦");
 INSERT INTO pack_items (Pack_id,items) VALUES (1006,"Bluetooth connectie (telefoon en audio)");
 INSERT INTO pack_items (Pack_id,items) VALUES (1006,"SSD harde schijf");
 INSERT INTO pack_items (Pack_id,items) VALUES (1006,"Parkeersensoren voor en achter");
@@ -193,7 +193,7 @@ INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_i
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1014,1,"NOT_USED",164957,"1-XVK-577",1012);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1015,1,"IN_USE",88935,"1-WDC-195",1013);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1016,1,"IN_USE",30708,"0-DVX-807",1028);
-INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1017,1,"IN_USE",25587,"9-WKH-991",1025);
+INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1017,1,"IN_USE",160100,"9-WKH-991",1025);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1018,1,"NOT_USED",160805,"4-MTR-366",1026);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1019,1,"IN_USE",66266,"3-TRB-458",1027);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1020,1,"IN_USE",63345,"1-SLP-460",1031);

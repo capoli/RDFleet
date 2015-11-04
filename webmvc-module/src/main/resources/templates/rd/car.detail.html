@@ -5,7 +5,6 @@
 <body>
 <div th:replace="./fragments/fragments :: header"></div>
 <div class="container">
-    <!--<div th:replace="./fragments/fragments :: div#page-header"></div>-->
     <div class="row">
         <div class="col-lg-12">
             <div class="col-lg-7">
@@ -13,15 +12,13 @@
                     <span class="help-block" th:text="${error}"/>
                 </div>
 
-                <!--<p><img src="pics/<%= firstName %>_<%= lastName %>.jpg" width="160" height="160"/></p>-->
-
                 <h1 th:text="${car.make}"></h1>
 
                 <h3 th:text="${car.model}"></h3>
 
                 <h4>Functional level: <span th:text="${car.functionalLevel}"></span></h4>
 
-                <a class="btn btn-info btn-lg" th:href="${#mvc.url('BCC#getOrderNewCar').arg(0, car.id).build()}">Order</a>
+                <a th:if="${canOrderNewCar}" class="btn btn-info btn-lg" th:href="${#mvc.url('OCC#getOrderNewCar').arg(0, car.id).build()}">Order</a>
 
                 <br/>
                 <table class="table table-striped">
@@ -87,20 +84,6 @@
         </div>
     </div>
 </div>
-<!--<div class="row">-->
-<!--<div class="col-lg-12">-->
-<!--<div class="has-error" th:if="${error != null}">-->
-<!--<span class="help-block" th:text="${error}"/>-->
-<!--</div>-->
-<!--<h4><span th:text="${car.make}"></span> <span th:text="${car.model}"></span></h4>-->
-<!--<p><span th:text="${car.listPrice}"></span></p>-->
-<!--</div>-->
-<!--</div>-->
 <div th:replace="fragments/fragments :: div.scripts"></div>
-<script>
-    $(document).ready(function () {
-        $('table').DataTable();
-    });
-</script>
 </body>
 </html>
