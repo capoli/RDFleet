@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.webmvc.controllers.fleet;
 
 import com.realdolmen.rdfleet.domain.Car;
+import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
@@ -21,6 +23,7 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 public class CarManagementController {
     @Autowired
     private CarService carService;
+
     @Autowired
     private Validator validator;
 
@@ -33,6 +36,14 @@ public class CarManagementController {
     @RequestMapping( value = "/{id}/edit", method = RequestMethod.GET)
     public String goToEditPage(@PathVariable Long id, Model model){
         model.addAttribute("car", carService.findById(id));
+        model.addAttribute("allPacks", carService.findAllPacks());
+        return "fleet/car.detail";
+    }
+
+    @RequestMapping( value = "/create", method = RequestMethod.GET)
+    public String createCar(Model model){
+        model.addAttribute("car", new Car());
+        model.addAttribute("allPacks", carService.findAllPacks());
         return "fleet/car.detail";
     }
 
@@ -41,6 +52,7 @@ public class CarManagementController {
         validator.validate(car, errors);
         if (errors.hasErrors()) {
             model.addAttribute(carService.findAllCars());
+            model.addAttribute("allPacks", carService.findAllPacks());
             return "fleet/car.detail";
         }
 
