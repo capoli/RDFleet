@@ -69,8 +69,12 @@
                         <td th:text="${employeeCar.selectedCar.maxKm}"></td>
                     </tr>
                 </table>
-                <a class="btn btn-info btn-lg btn-block">Confirm</a>
-                <a class="btn btn-danger btn-lg btn-block">Cancel</a>
+                <form action="#" th:action="@{/rd/cars/submitOrder}" style="margin-bottom: 10px;" method="post" >
+                    <button type="submit" class="btn btn-info btn-block">Confirm</button>
+                </form>
+                <form action="#" th:action="@{/rd/cars/cancelOrder}" method="post" >
+                    <button type="submit" class="btn btn-danger btn-block">Cancel</button>
+                </form>
             </div>
             <div class="col-lg-5">
                 <div id="info" class="well">

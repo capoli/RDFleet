@@ -5,6 +5,7 @@ import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.repositories.OrderRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
+import com.realdolmen.rdfleet.utils.LicensePlateGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -203,11 +204,52 @@ public class EmployeeService {
     }
 
     //TODO: test
-    public List<Car> findCarsForEmployeeByFunctionalLevel(String email) {
+    /**
+     * this will generate a licenseplate and call the assignOrderForEmployee
+     * uses findCarByLicensePlate until it returns null to ensure licenseplate is unique
+     * @param email of an rdemployee
+     * @param order new car to order
+     */
+    public void createEmployeeCarAndDelegateOrderForEmployee(String email, Order order) {
+        RdEmployee rdEmployee = findRdEmployeeByEmail(email);
+        if(order == null) throw new IllegalArgumentException("Order can not be null");
+        EmployeeCar employeeCar = order.getOrderedCar();
+        if(employeeCar == null) throw new IllegalArgumentException("EmployeeCar can not be null");
+        if(employeeCar.getSelectedCar() == null) throw new IllegalArgumentException("Car for employeeCar can not be null");
+        if(order.getAmountPaidByCompany() == null) throw new IllegalArgumentException("amountPaidByCompany can not be null");
+        if(order.getAmountPaidByEmployee() == null) throw new IllegalArgumentException("amountPaidByEmployee can not be null");
+        String licensePlate;
+        do {
+            licensePlate = LicensePlateGenerator.generateLicensePlate();
+        } while (employeeCarRepository.findByLicensePlateIgnoreCase(licensePlate) != null);
+        employeeCar.setLicensePlate(licensePlate);
+        assignOrderToEmployee(rdEmployee, order);
+    }
+
+    //TODO: test
+
+    /**
+     * find and return an rdemployee by email if email is not empty and find doesn't return an empty object
+     * @param email of an rdemployee
+     * @return rdEmployee if it isn't null else error
+     */
+    public RdEmployee findRdEmployeeByEmail(String email) {
         if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
         RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
         if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
-        int functionalLevel = rdEmployee.getFunctionalLevel();
+        return rdEmployee;
+    }
+
+    //TODO: test
+
+    /**
+     * uses getFunctionalLevelByEmail
+     * find cars relevant for an employee by his current functional level + one above and one under his current level
+     * @param email of an rdemployee
+     * @return list of cars founded (func lvl, -1, +1), if empty error
+     */
+    public List<Car> findCarsForEmployeeByFunctionalLevel(String email) {
+        int functionalLevel = getFunctionalLevelByEmail(email);
         List<Car> cars = new ArrayList<>();
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel));
         cars.addAll(carRepository.findByFunctionalLevel(functionalLevel - 1));
@@ -225,26 +267,35 @@ public class EmployeeService {
     }
 
     //TODO: test
+
+    /**
+     * calls findRdEmployeeByEmail and gets functional level for the returned rdemployee
+     * @param email of an rdemployee
+     * @return functionallevel by given email
+     */
     public int getFunctionalLevelByEmail(String email) {
-        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
-        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
-        return rdEmployee.getFunctionalLevel();
+        return findRdEmployeeByEmail(email).getFunctionalLevel();
     }
 
     //TODO: test
+
+    /**
+     * calls checkIfEmployeeCanOrderCar and return the returnvalue of that function
+     * @param email of an rdemployee
+     * @return returns true or false
+     */
     public boolean employeeCanOrderNewCar(String email) {
         return checkIfEmployeeCanOrderCar(email);
     }
 
-    //TODO: test
+    //TODO: test + look if orderable
     public boolean employeeCanOrderNewCar(String email, Long carId) {
         if (carId == null) throw new IllegalArgumentException("Car id can not be null");
         if (carId < 0) throw new IllegalArgumentException("Car id can not be a negative number");
         Car car = carRepository.findOne(carId);
         if (car == null) throw new IllegalArgumentException("Car object can not be null");
         boolean canOrderCar = checkIfEmployeeCanOrderCar(email);
-        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
+        RdEmployee rdEmployee = findRdEmployeeByEmail(email);
         return canOrderCar
                 && car.getFunctionalLevel() <= rdEmployee.getFunctionalLevel() + 1
                 && car.getFunctionalLevel() >= rdEmployee.getFunctionalLevel() - 1;
@@ -252,9 +303,7 @@ public class EmployeeService {
 
     //TODO: test
     private boolean checkIfEmployeeCanOrderCar(String email) {
-        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
-        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        RdEmployee rdEmployee = findRdEmployeeByEmail(email);
         LocalDate fourYearsAgo = LocalDate.now().minusYears(4);
         if (rdEmployee.getCurrentOrder() == null) return true;
         if (rdEmployee.getCurrentOrder().getDateReceived().isBefore(fourYearsAgo)) return true;
@@ -263,9 +312,7 @@ public class EmployeeService {
     }
 
     public Order createOrderForEmployee(String email, EmployeeCar employeeCar) {
-        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
-        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
-        if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        RdEmployee rdEmployee = findRdEmployeeByEmail(email);
         if (employeeCar == null) throw new IllegalArgumentException("EmployeeCar can not be empty");
         if (employeeCar.getSelectedCar() == null)
             throw new IllegalArgumentException("EmployeeCar selectedCar can not be empty");
