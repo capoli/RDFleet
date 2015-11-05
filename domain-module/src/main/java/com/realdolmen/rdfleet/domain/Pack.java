@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Pack extends BaseEntity {
     @NotBlank
     private String name;
     @NotNull
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> items = new ArrayList<>();
 
     public String getName() {

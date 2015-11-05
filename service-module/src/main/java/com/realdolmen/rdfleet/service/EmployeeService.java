@@ -8,6 +8,7 @@ import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class EmployeeService {
                 order.getOrderedCar().getCarStatus() != CarStatus.NOT_USED)
             throw new IllegalArgumentException("The ordered car differs more than 1 functional level from the employee's functional level.");
 
-        if(rdEmployee.getCurrentOrder() != null)
+        if (rdEmployee.getCurrentOrder() != null)
             setEmployeeCarRemoved(rdEmployee);
 
         order.getOrderedCar().setCarStatus(CarStatus.PENDING);
@@ -135,23 +136,24 @@ public class EmployeeService {
      * After ordering a car it is set to pending, the fleet employee has to set the car to IN_USE.
      * This will define the car as being used, it will also add the car to the history of the user.
      * The received-date will be set on the day this method is called.
+     *
      * @param rdEmployee the employee whos car should be set to in-use
      */
     public void setEmployeeCarInUse(RdEmployee rdEmployee) {
-        if(rdEmployee == null || rdEmployee.getId() == null)
+        if (rdEmployee == null || rdEmployee.getId() == null)
             throw new IllegalArgumentException("The employee cannot was not found.");
 
         Order currentOrder = rdEmployee.getCurrentOrder();
 
-        if(currentOrder == null)
+        if (currentOrder == null)
             throw new IllegalArgumentException("The order cannot be null.");
 
         EmployeeCar employeeCar = currentOrder.getOrderedCar();
 
-        if(employeeCar == null)
+        if (employeeCar == null)
             throw new IllegalArgumentException("The car to change status of cannot be null.");
 
-        if(employeeCar.getCarStatus() != CarStatus.PENDING)
+        if (employeeCar.getCarStatus() != CarStatus.PENDING)
             throw new IllegalArgumentException("The car is not in PENDING state.");
 
         rdEmployee.getOrderHistory().add(rdEmployee.getCurrentOrder());
@@ -164,9 +166,10 @@ public class EmployeeService {
     /**
      * The car from an employee can be moved to the free pool so another employee can instead use this car.
      * The current employee will then not have a current car and will have to order a new one.
+     *
      * @param rdEmployee the employee of which the car should be moved to the free pool
      */
-    public void setEmployeeCarInFreePool(RdEmployee rdEmployee){
+    public void setEmployeeCarInFreePool(RdEmployee rdEmployee) {
         setEmployeeCarToStatus(rdEmployee, CarStatus.NOT_USED);
     }
 
@@ -174,20 +177,21 @@ public class EmployeeService {
      * The car from an employee can be removed from the system.
      * This could happen on a total-loss off the car or when the max mileage/date is reached for his car.
      * The employee will then have to order a new car.
+     *
      * @param rdEmployee the employee of which the car should be set to REMOVED status
      */
-    public void setEmployeeCarRemoved(RdEmployee rdEmployee){
+    public void setEmployeeCarRemoved(RdEmployee rdEmployee) {
         setEmployeeCarToStatus(rdEmployee, CarStatus.REMOVED);
     }
 
-    private void setEmployeeCarToStatus(RdEmployee rdEmployee, CarStatus status){
-        if(rdEmployee == null || rdEmployee.getId() == null)
+    private void setEmployeeCarToStatus(RdEmployee rdEmployee, CarStatus status) {
+        if (rdEmployee == null || rdEmployee.getId() == null)
             throw new IllegalArgumentException("Existing employee must be provided.");
 
-        if(rdEmployee.getCurrentOrder() == null)
+        if (rdEmployee.getCurrentOrder() == null)
             throw new IllegalArgumentException("The employee does not have an order.");
 
-        if(rdEmployee.getCurrentOrder().getOrderedCar() == null)
+        if (rdEmployee.getCurrentOrder().getOrderedCar() == null)
             throw new IllegalArgumentException("The employee must have a car.");
 
         EmployeeCar orderedCar = rdEmployee.getCurrentOrder().getOrderedCar();
@@ -256,5 +260,28 @@ public class EmployeeService {
         if (rdEmployee.getCurrentOrder().getDateReceived().isBefore(fourYearsAgo)) return true;
         if (rdEmployee.getCurrentOrder().getOrderedCar().getMileage() > 160000) return true;
         return false;
+    }
+
+    public Order createOrderForEmployee(String email, EmployeeCar employeeCar) {
+        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
+        if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
+        if (employeeCar == null) throw new IllegalArgumentException("EmployeeCar can not be empty");
+        if (employeeCar.getSelectedCar() == null)
+            throw new IllegalArgumentException("EmployeeCar selectedCar can not be empty");
+        Order order = new Order();
+        if (employeeCar.getSelectedCar().getFunctionalLevel() > rdEmployee.getFunctionalLevel()) {
+            order.setAmountPaidByCompany(
+                    employeeCar.getSelectedCar().getListPrice());
+            order.setAmountPaidByEmployee(
+                    employeeCar.getSelectedCar().getAmountUpgrade());
+        } else {
+            order.setAmountPaidByCompany(
+                    employeeCar.getSelectedCar().getListPrice());
+            order.setAmountPaidByEmployee(
+                    BigDecimal.ZERO);
+        }
+        order.setOrderedCar(employeeCar);
+        return order;
     }
 }

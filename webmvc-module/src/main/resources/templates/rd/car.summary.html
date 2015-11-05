@@ -6,9 +6,101 @@
 <div th:replace="./fragments/fragments :: header"></div>
 <div class="container">
     <div class="row">
-        <div class="col-sm-12">
-          <h1>Summary</h1>
+        <div class="col-lg-12">
 
+            <h1>Summary</h1>
+
+            <div class="col-lg-7">
+                <div class="has-error" th:if="${error != null}">
+                    <span class="help-block" th:text="${error}"/>
+                </div>
+
+                <h2 th:text="${employeeCar.selectedCar.make}"></h2>
+
+                <h3 th:text="${employeeCar.selectedCar.model}"></h3>
+
+                <h4>Functional level: <span th:text="${employeeCar.selectedCar.functionalLevel}"></span></h4>
+
+                <br/>
+                <table class="table table-striped">
+                    <tr>
+                        <td><h6>Tyre type:</h6></td>
+                        <td th:text="${employeeCar.selectedCar.tyreType}"></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Fuel type:</h6></td>
+                        <td th:text="${employeeCar.selectedCar.fuelType}"></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Towing bracket:</h6></td>
+                        <td>
+                            <span th:if="${employeeCar.selectedCar.towingBracketPossibility}" class="glyphicon glyphicon-ok"></span>
+                            <span th:if="${!employeeCar.selectedCar.towingBracketPossibility}" class="glyphicon glyphicon-remove"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Gps:</h6></td>
+                        <td>
+                            <span th:if="${employeeCar.selectedCar.gps}" class="glyphicon glyphicon-ok"></span>
+                            <span th:if="${!employeeCar.selectedCar.gps}" class="glyphicon glyphicon-remove"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Bluetooth:</h6></td>
+                        <td>
+                            <span th:if="${employeeCar.selectedCar.bluetooth}" class="glyphicon glyphicon-ok"></span>
+                            <span th:if="${!employeeCar.selectedCar.bluetooth}" class="glyphicon glyphicon-remove"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>co2:</h6></td>
+                        <td th:text="${employeeCar.selectedCar.co2}"></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Fiscal hp:</h6></td>
+                        <td th:text="${employeeCar.selectedCar.fiscHp}"></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Ideal km:</h6></td>
+                        <td th:text="${employeeCar.selectedCar.idealKm}"></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Max km:</h6></td>
+                        <td th:text="${employeeCar.selectedCar.maxKm}"></td>
+                    </tr>
+                </table>
+                <a class="btn btn-info btn-lg btn-block">Confirm</a>
+                <a class="btn btn-danger btn-lg btn-block">Cancel</a>
+            </div>
+            <div class="col-lg-5">
+                <div id="info" class="well">
+                    <h3 class="modal-header">Additional info</h3>
+                    <h5>Price paid by company: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${order.amountPaidByCompany}"></span></div></h5>
+                    <h5>Price paid by employee: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${order.amountPaidByEmployee}"></span></div></h5>
+                    <h5>Benefit: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${employeeCar.selectedCar.benefit}"></span></div></h5>
+                    <h5 th:if="${functionalLevel > employeeCar.selectedCar.functionalLevel}">Budget for options: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${employeeCar.selectedCar.amountDowngrade}"></span></div></h5>
+                    <h5>Time of delivery in days: <div style="float: right"><span th:text="${employeeCar.selectedCar.timeOfDeliveryInDays.toDays()}"></span></div></h5>
+                </div>
+                <div id="caroptions" class="well"  th:if="${employeeCar.carOptions.size() > 0}">
+                    <h3 class="modal-header">Car options</h3>
+                    <h4><small>note that these options aren't calculated in the price</small></h4>
+
+                    <div th:each="carOption : ${employeeCar.carOptions}">
+                        <h5 th:text="${carOption.description}"></h5>
+                    </div>
+                </div>
+                <div id="packs" class="well"  th:if="${employeeCar.selectedCar.packs.size() > 0}">
+                    <h3 class="modal-header">Packs</h3>
+
+                    <div th:each="pack : ${employeeCar.selectedCar.packs}">
+                        <h4 th:text="${pack.name}"></h4>
+
+                        <div th:each="item : ${pack.items}">
+                            <h6 th:text="${item}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

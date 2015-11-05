@@ -47,8 +47,11 @@ public class OrderCarController {
     }
 
     @RequestMapping(value="/summary", method = RequestMethod.GET)
-    public String getSummaryCar(@ModelAttribute("employeeCar") EmployeeCar employeeCar) {
+    public String getSummaryCar(@ModelAttribute("employeeCar") EmployeeCar employeeCar, Model model) {
         if(!canOrderNewCar()) return "redirect:/index";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("order", employeeService.createOrderForEmployee(auth.getName(), employeeCar));
+        model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
         return "rd/car.summary";
     }
 
