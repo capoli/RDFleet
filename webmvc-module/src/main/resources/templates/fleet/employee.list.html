@@ -44,7 +44,7 @@
                                 No car assigned
                             </div>
                         </td>
-                        <td>To be continued</td>
+                        <td><a class="btn btn-info btn-xs" th:href="${#mvc.url('ECMC#viewEmployeeCarHistory').arg(0, rdEmployee.id).build()}">View history details</a></td>
                         <td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('REMC#removeFromService').arg(0, rdEmployee.id).build()}">Remove from service</a></td>
                 </tr>
                 </tbody>

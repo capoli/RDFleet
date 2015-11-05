@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/fragments :: head"></head>
+<body>
+<div th:replace="fragments/fragments :: header"></div>
+<div class="container">
+    <div th:replace="fragments/fragments :: div#page-header"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Car History of <span th:text="${employee.firstName}"></span> <span th:text="${employee.lastName}"></span></h4>
+            <div class="has-error" th:if="${error != null}">
+                <span class="help-block" th:text="${error}"/>
+            </div>
+            <table class="table table-striped table-hover" id="carTable">
+                <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>License Plate</th>
+                    <th>Mileage</th>
+                    <th>Status</th>
+                    <th>Date received</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${employee.orderHistory}">
+                    <td th:text="${order.orderedCar.selectedCar.make}"></td>
+                    <td th:text="${order.orderedCar.selectedCar.model}"></td>
+                    <td th:if="${order.orderedCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE and order.orderedCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
+                        <a th:href="${#mvc.url('CCMC#viewCompanyCar').arg(0, order.orderedCar.licensePlate).build()}"><span th:text="${order.orderedCar.licensePlate}"></span></a>
+                    </td>
+                    <td th:if="${order.orderedCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE or order.orderedCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
+                        <a th:href="${#mvc.url('CCMC#viewCompanyCarWithEmployee').arg(0, order.orderedCar.licensePlate).build()}"><span th:text="${order.orderedCar.licensePlate}"></span></a>
+                    </td>
+                    <td th:text="${order.orderedCar.mileage}"></td>
+                    <td th:text="${order.orderedCar.carStatus}"></td>
+                    <td th:text="${{order.dateReceived}}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hr/>
+</div>
+<div th:replace="fragments/fragments :: div.scripts"></div>
+<script>
+    $(document).ready( function () {
+        $('#carTable').DataTable();
+    } );
+</script>
+</body>
+</html>

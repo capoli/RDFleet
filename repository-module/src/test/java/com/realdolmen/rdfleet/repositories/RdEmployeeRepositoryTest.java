@@ -165,6 +165,23 @@ public class RdEmployeeRepositoryTest {
         assertFalse(repository.findByEmailIgnoreCase(byEmailEmployee.getEmail()).isInService());
     }
 
+    @Test
+    public void testFindEmployeeByLicensePlate(){
+        repository.save(rdEmployee);
+        String licensePlate = rdEmployee.getCurrentOrder().getOrderedCar().getLicensePlate();
+        assertEquals(rdEmployee, repository.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(licensePlate));
+    }
+
+    @Test
+    public void testFindEmployeeByLicensePlateNotFound(){
+        repository.save(rdEmployee);
+        assertNull(repository.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate("0-XXX-000"));
+    }
+
+    @Test
+    public void testFindEmployeeByLicensePlateNull(){
+        assertNull(repository.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(null));
+    }
 
     private RdEmployee createEmployee(int funcLevel, boolean inService, String fname, String lname, String mail, String pw) {
         RdEmployee employee = new RdEmployee();

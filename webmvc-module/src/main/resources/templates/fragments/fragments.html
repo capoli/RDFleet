@@ -22,7 +22,8 @@
         <ul class="nav navbar-nav">
             <li><a sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars}">Browse cars catalog</a></li>
             <li><a id="orderCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
-            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Cars</a></li>
+            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Car models</a></li>
+            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">Company cars</a></li>
             <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a></li>
         </ul>
 

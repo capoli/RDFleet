@@ -38,6 +38,18 @@ public class EmployeeCarManagementController {
         return "fleet/employee.car.detail";
     }
 
+    @RequestMapping(value = "/{employeeId}/history", method = RequestMethod.GET)
+    public String viewEmployeeCarHistory(@PathVariable Long employeeId, Model model) {
+        RdEmployee rdEmployee = employeeService.findRdEmployee(employeeId);
+        if(rdEmployee == null){
+            model.addAttribute("error", "The employee id " + employeeId + " was not found in the system.");
+            model.addAttribute("employeeList", employeeService.findAllRdEmployeesInService());
+            return "fleet/employee.list";
+        }
+        model.addAttribute("employee", rdEmployee);
+        return "fleet/employee.car.history";
+    }
+
     @RequestMapping(value = "/status-in-use", method = RequestMethod.POST)
     public String setCarStatusInUse(@RequestParam("employeeId") Long employeeId, Model model){
         if(employeeId == null){
@@ -111,4 +123,6 @@ public class EmployeeCarManagementController {
 
         return "redirect:" + fromMappingName("REMC#employees").build();
     }
+
+
 }

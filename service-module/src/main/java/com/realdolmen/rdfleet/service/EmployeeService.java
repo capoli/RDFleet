@@ -180,6 +180,11 @@ public class EmployeeService {
         setEmployeeCarToStatus(rdEmployee, CarStatus.REMOVED);
     }
 
+    /**
+     * Helper method to combine duplicate code. It will set the status of the car based on the parameters.
+     * @param rdEmployee the employee to save and manipulate
+     * @param status the status to set the car to
+     */
     private void setEmployeeCarToStatus(RdEmployee rdEmployee, CarStatus status){
         if(rdEmployee == null || rdEmployee.getId() == null)
             throw new IllegalArgumentException("Existing employee must be provided.");
@@ -196,6 +201,13 @@ public class EmployeeService {
 
         rdEmployee.setCurrentOrder(null);
         rdEmployeeRepository.save(rdEmployee);
+    }
+
+    public RdEmployee findEmployeeByLicensePlateOfCurrentCar(String licensePlate){
+        if(licensePlate == null || licensePlate.isEmpty())
+            throw new IllegalArgumentException("The license plate should be provided.");
+
+        return rdEmployeeRepository.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(licensePlate);
     }
 
     //TODO: test
