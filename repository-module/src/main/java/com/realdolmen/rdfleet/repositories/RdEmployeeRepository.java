@@ -14,4 +14,6 @@ public interface RdEmployeeRepository extends JpaRepository<RdEmployee, Long> {
     List<RdEmployee> findAllEmployeesInService();
 
     RdEmployee findByEmailIgnoreCase(String email);
+
+    RdEmployee findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(String licensePlate);
 }

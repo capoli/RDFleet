@@ -35,6 +35,10 @@
                             </span>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Date car was received</td>
+                        <td th:text="${{employee.currentOrder.dateReceived}}"></td>
+                    </tr>
                 </table>
 
                 <div class="has-error" th:if="${error != null}">

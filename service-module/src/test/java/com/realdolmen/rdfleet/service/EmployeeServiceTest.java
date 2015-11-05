@@ -50,6 +50,8 @@ public class EmployeeServiceTest {
 
         dbRdEmployee = ValidDomainObjectFactory.createRdEmployee();
         dbRdEmployee.setId(1000l);
+
+        when(rdEmployeeRepositoryMock.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(dbRdEmployee.getCurrentOrder().getOrderedCar().getLicensePlate())).thenReturn(dbRdEmployee);
     }
 
     // Assigning orders tests
@@ -363,5 +365,28 @@ public class EmployeeServiceTest {
         employeeService.setEmployeeCarRemoved(dbRdEmployee);
     }
 
+    //Test for finding employee based on license plate
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindEmployeeByLicensePlateLicensePlateEmpty(){
+        employeeService.findEmployeeByLicensePlateOfCurrentCar("");
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindEmployeeByLicensePlateLicensePlateNull(){
+        employeeService.findEmployeeByLicensePlateOfCurrentCar(null);
+    }
+
+    @Test
+    public void testFindEmployeeByLicensePlateAllOk(){
+        String licensePlate = dbRdEmployee.getCurrentOrder().getOrderedCar().getLicensePlate();
+        assertEquals(dbRdEmployee, employeeService.findEmployeeByLicensePlateOfCurrentCar(licensePlate));
+        verify(rdEmployeeRepositoryMock).findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(licensePlate);
+    }
+
+    @Test
+    public void testFindEmployeeByLicensePlateNotFound(){
+        String licensePlate = "0-XXX-000";
+        assertNull(employeeService.findEmployeeByLicensePlateOfCurrentCar(licensePlate));
+        verify(rdEmployeeRepositoryMock).findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(licensePlate);
+    }
 }

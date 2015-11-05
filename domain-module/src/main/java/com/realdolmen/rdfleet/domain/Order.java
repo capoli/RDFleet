@@ -2,6 +2,7 @@ package com.realdolmen.rdfleet.domain;
 
 import com.realdolmen.rdfleet.converters.LocalDatePersistenceConverter;
 import com.realdolmen.rdfleet.validation.NoFutureDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Convert;
@@ -20,6 +21,7 @@ public class Order extends BaseEntity {
     @NotNull
     @Convert(converter = LocalDatePersistenceConverter.class)
     @NoFutureDate
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateOrdered;
     @Min(0)
     @NotNull
@@ -32,6 +34,7 @@ public class Order extends BaseEntity {
     private EmployeeCar orderedCar;
     @Convert(converter = LocalDatePersistenceConverter.class)
     @NoFutureDate
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateReceived;
 
     public LocalDate getDateOrdered() {
