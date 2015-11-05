@@ -8,11 +8,7 @@
     <link th:href="@{/css/bootstrap-3.0.3.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <link th:href="@{/css/chosen.min.css}" rel="stylesheet"/>
-	<link rel="stylesheet" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,b-print-1.0.3,cr-1.2.0,r-1.0.7/datatables.min.css"/>
-    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs/dt-1.10.9,af-2.0.0,fc-3.1.0,fh-3.0.0,kt-2.0.0,r-1.0.7,sc-1.3.0,se-1.0.1/datatables.min.css"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>-->
-    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/dataTables.bootstrap.min.css"/>-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.css"/>
 </head>
 <body>
 <div class="navbar navbar-default" th:fragment="header">
@@ -24,6 +20,7 @@
             <li><a id="orderCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
             <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Car models</a></li>
             <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">Company cars</a></li>
+            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/options}">Car options</a></li>
             <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a></li>
         </ul>
 
@@ -42,10 +39,9 @@
 <div class="scripts" th:remove="tag">
     <script th:src="@{/js/jquery-2.0.2.min.js}"></script>
     <script th:src="@{/js/bootstrap-3.0.3.min.js}"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,b-print-1.0.3,cr-1.2.0,r-1.0.7/datatables.min.js"></script>
-    <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"></script>-->
-    <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>-->
-    <!--<script type="text/javascript" src="https://cdn.datatables.net/r/bs/dt-1.10.9,af-2.0.0,fc-3.1.0,fh-3.0.0,kt-2.0.0,r-1.0.7,sc-1.3.0,se-1.0.1/datatables.min.js"></script>-->
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.js"></script>
+    <script th:src="@{/js/jquery.dataTables.columnFilter.js}"></script>
+
     <script type="text/javascript">
         $(document).load(function () {
             var email = $('#useremail').text();

@@ -43,6 +43,7 @@ public class Car extends BaseEntity {
     private boolean towingBracketPossibility;
     private boolean gps;
     private boolean bluetooth;
+    private boolean orderable = true;
     @Min(0)
     private int idealKm;
     @Min(0)
@@ -166,6 +167,14 @@ public class Car extends BaseEntity {
 
     public void setBluetooth(boolean bluetooth) {
         this.bluetooth = bluetooth;
+    }
+
+    public boolean isOrderable() {
+        return orderable;
+    }
+
+    public void setOrderable(boolean orderable) {
+        this.orderable = orderable;
     }
 
     public int getIdealKm() {

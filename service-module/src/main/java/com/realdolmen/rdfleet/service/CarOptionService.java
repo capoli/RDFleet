@@ -19,7 +19,15 @@ public class CarOptionService {
     //TODO: test
     public List<CarOption> findAllCarOptions() {
         List<CarOption> carOptions = carOptionRepository.findAll();
-        if(carOptions.size() == 0) throw new IllegalArgumentException("There are no caroptiosn available");
+        if(carOptions.size() == 0) throw new IllegalArgumentException("There are no caroptions available");
         return carOptions;
+    }
+
+    public CarOption findCarOptionById(Long carOptionId){
+        return carOptionRepository.findOne(carOptionId);
+    }
+
+    public void createCarOption(CarOption carOption) {
+        carOptionRepository.save(carOption);
     }
 }
