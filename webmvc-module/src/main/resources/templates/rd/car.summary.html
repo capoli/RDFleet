@@ -93,7 +93,7 @@
                         <h5 th:text="${carOption.description}"></h5>
                     </div>
                 </div>
-                <div id="packs" class="well"  th:if="${employeeCar.selectedCar.packs.size() > 0}">
+                <div id="packs" class="well"  th:if="${car.packs.size() > 0}">
                     <h3 class="modal-header">Packs</h3>
 
                     <div th:each="pack : ${employeeCar.selectedCar.packs}">
