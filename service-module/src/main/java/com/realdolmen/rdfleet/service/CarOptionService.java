@@ -1,10 +1,12 @@
 package com.realdolmen.rdfleet.service;
 
+import com.realdolmen.rdfleet.domain.Car;
 import com.realdolmen.rdfleet.domain.CarOption;
 import com.realdolmen.rdfleet.repositories.CarOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -19,11 +21,27 @@ public class CarOptionService {
     //TODO: test
     public List<CarOption> findAllCarOptions() {
         List<CarOption> carOptions = carOptionRepository.findAll();
-        if(carOptions.size() == 0) throw new IllegalArgumentException("There are no caroptions available");
+        if (carOptions == null || carOptions.size() == 0)
+            throw new IllegalArgumentException("There are no caroptions available");
         return carOptions;
     }
 
-    public CarOption findCarOptionById(Long carOptionId){
+    //TODO: test
+    public List<CarOption> findAllCarOptionsByTowingBracketPossibility(boolean towingBracketPossibility) {
+        List<CarOption> carOptions = findAllCarOptions();
+        if (!towingBracketPossibility) {
+            Iterator<CarOption> iterator = carOptions.iterator();
+            while (iterator.hasNext()) {
+                CarOption carOption = iterator.next();
+                if (carOption.getDescription().toLowerCase().contains("trekhaak")) {
+                    iterator.remove();
+                }
+            }
+        }
+        return carOptions;
+    }
+
+    public CarOption findCarOptionById(Long carOptionId) {
         return carOptionRepository.findOne(carOptionId);
     }
 

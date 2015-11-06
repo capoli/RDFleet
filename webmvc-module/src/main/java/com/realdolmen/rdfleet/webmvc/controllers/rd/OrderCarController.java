@@ -51,6 +51,8 @@ public class OrderCarController {
     @RequestMapping(value = "/freepool/{id}", method = RequestMethod.GET)
     public String getFreePoolCar(@PathVariable("id") Long id, @ModelAttribute("employeeCar") EmployeeCar employeeCar, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean canOrderEmployeeCar = employeeService.employeeCanOrderEmployeeCar(auth.getName(), employeeCar.getId());
+        if(!canOrderEmployeeCar) return "redirect:/rd/cars/freepool";
         EmployeeCar employeeCarFromService = employeeCarService.findById(id);
         employeeCar.setCarOptions(employeeCarFromService.getCarOptions());
         employeeCar.setCarStatus(employeeCarFromService.getCarStatus());
@@ -61,7 +63,7 @@ public class OrderCarController {
         employeeCar.setVersion(employeeCarFromService.getVersion());
         model.addAttribute("employeeCar", employeeCar);
         model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
-        model.addAttribute("canOrderFreePoolCar", employeeService.employeeCanOrderNewCar(auth.getName()));
+        model.addAttribute("canOrderFreePoolCar", canOrderEmployeeCar);
         return "rd/freepool.detail";
     }
 
@@ -72,7 +74,8 @@ public class OrderCarController {
         employeeCar.setSelectedCar(carService.findByIdAndIsOrderable(id));
         employeeCar.setCarOptions(new ArrayList<>());
         model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
-        model.addAttribute("carOptions", carOptionService.findAllCarOptions());
+        model.addAttribute("carOptions", carOptionService.findAllCarOptionsByTowingBracketPossibility(
+                employeeCar.getSelectedCar().isTowingBracketPossibility()));
         return "rd/car.order";
     }
 

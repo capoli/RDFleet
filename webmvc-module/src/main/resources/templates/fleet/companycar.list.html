@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="fragments/fragments :: head"></head>
+<head th:replace="fragments/general.fragment :: head"></head>
 <body>
-<div th:replace="fragments/fragments :: header"></div>
+<div th:replace="fragments/general.fragment :: header"></div>
 <div class="container">
-    <div th:replace="fragments/fragments :: div#page-header"></div>
+    <div th:replace="fragments/general.fragment :: div#page-header"></div>
     <div class="row">
         <div class="col-lg-12">
             <h4>Car List</h4>
@@ -50,7 +50,7 @@
 
     <hr/>
 </div>
-<div th:replace="fragments/fragments :: div.scripts"></div>
+<div th:replace="fragments/general.fragment :: div.scripts"></div>
 <script>
     $(document).ready( function () {
         $('#carTable').dataTable( {
