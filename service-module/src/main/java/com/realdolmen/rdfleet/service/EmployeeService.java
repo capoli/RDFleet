@@ -262,10 +262,7 @@ public class EmployeeService {
      */
     public List<Car> findCarsForEmployeeByFunctionalLevel(String email) {
         int functionalLevel = getFunctionalLevelByEmail(email);
-        List<Car> cars = new ArrayList<>();
-        cars.addAll(carRepository.findByFunctionalLevel(functionalLevel));
-        cars.addAll(carRepository.findByFunctionalLevel(functionalLevel - 1));
-        cars.addAll(carRepository.findByFunctionalLevel(functionalLevel + 1));
+        List<Car> cars = carRepository.findAllCarsByFunctionalLevelAndIsOrderable(functionalLevel);
         if (cars.size() == 0) throw new IllegalArgumentException("There are no cars to select from");
         return cars;
     }
@@ -318,7 +315,11 @@ public class EmployeeService {
         RdEmployee rdEmployee = findRdEmployeeByEmail(email);
         LocalDate fourYearsAgo = LocalDate.now().minusYears(4);
         if (rdEmployee.getCurrentOrder() == null) return true;
-        if (rdEmployee.getCurrentOrder().getDateReceived().isBefore(fourYearsAgo)) return true;
+        if(rdEmployee.getCurrentOrder().getDateReceived() == null) {
+            if(rdEmployee.getCurrentOrder().getOrderedCar().getCarStatus() == CarStatus.PENDING) return false;
+            else if (rdEmployee.getCurrentOrder().getDateOrdered().isBefore(fourYearsAgo)) return true;
+        }
+        if(rdEmployee.getCurrentOrder().getOrderedCar() == null) return true;
         if (rdEmployee.getCurrentOrder().getOrderedCar().getMileage() > 160000) return true;
         return false;
     }

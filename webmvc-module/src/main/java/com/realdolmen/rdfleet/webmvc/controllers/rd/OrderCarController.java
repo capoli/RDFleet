@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping("/rd/cars")
 @Secured({"RdEmployee", "FleetEmployee"})
@@ -41,7 +43,8 @@ public class OrderCarController {
     public String getOrderNewCar(@PathVariable("id") Long id, Model model, @ModelAttribute("employeeCar") EmployeeCar employeeCar) {
         if(!canOrderNewCar()) return "redirect:/index";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        employeeCar.setSelectedCar(carService.findById(id));
+        employeeCar.setSelectedCar(carService.findByIdAndIsOrderable(id));
+        employeeCar.setCarOptions(new ArrayList<>());
         model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
         model.addAttribute("carOptions", carOptionService.findAllCarOptions());
         return "rd/car.order";
@@ -80,7 +83,6 @@ public class OrderCarController {
     public String cancelOrder(@ModelAttribute("employeeCar") EmployeeCar employeeCar,
                               @ModelAttribute("order") Order order,
                               SessionStatus status) {
-
         if(!canOrderNewCar() || order == null) return "redirect:/index";
         status.setComplete();
         return "redirect:/rd/cars?type=order";
