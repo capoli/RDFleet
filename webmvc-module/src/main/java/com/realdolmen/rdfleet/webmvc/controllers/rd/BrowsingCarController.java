@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.webmvc.controllers.rd;
 
 import com.realdolmen.rdfleet.domain.Car;
+import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.service.CarService;
 import com.realdolmen.rdfleet.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class BrowsingCarController {
     private CarService carService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private EmployeeCarRepository employeeCarRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getNewCars(@RequestParam(value = "type", required = false) String type, Model model) {
@@ -59,5 +62,16 @@ public class BrowsingCarController {
         model.addAttribute("car", carService.findById(id));
         model.addAttribute("canOrderNewCar", employeeService.employeeCanOrderNewCar(auth.getName(), id));
         return "rd/car.detail";
+    }
+
+    @RequestMapping(value = "/freepool", method = RequestMethod.GET)
+    public String getCarsFromFreePool(Model model) {
+        model.addAttribute("employeeCars", employeeCarRepository.findAllIsNotUsed());
+        return "rd/freepool.list";
+    }
+
+    @RequestMapping(value = "/freepool/{id}", method = RequestMethod.GET)
+    public String getFreePoolCar(@PathVariable("id") Long id) {
+        return "rd/freepool.detail";
     }
 }

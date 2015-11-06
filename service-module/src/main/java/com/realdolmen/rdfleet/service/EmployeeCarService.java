@@ -29,4 +29,8 @@ public class EmployeeCarService {
         return employeeCarRepository.findByLicensePlateIgnoreCase(licensePlate);
     }
 
+    public List<EmployeeCar> findAllIsNotUsed() {
+        return employeeCarRepository.findAllIsNotUsed();
+    }
+
 }
