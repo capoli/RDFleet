@@ -31,8 +31,6 @@ public class BrowsingCarController {
     private CarService carService;
     @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    private EmployeeCarService employeeCarService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getNewCars(@RequestParam(value = "type", required = false) String type, Model model) {
@@ -64,19 +62,5 @@ public class BrowsingCarController {
         model.addAttribute("car", carService.findById(id));
         model.addAttribute("canOrderNewCar", employeeService.employeeCanOrderNewCar(auth.getName(), id));
         return "rd/car.detail";
-    }
-
-    @RequestMapping(value = "/freepool", method = RequestMethod.GET)
-    public String getCarsFromFreePool(Model model) {
-        model.addAttribute("employeeCars", employeeCarService.findAllIsNotUsed());
-        return "rd/freepool.list";
-    }
-
-    @RequestMapping(value = "/freepool/{id}", method = RequestMethod.GET)
-    public String getFreePoolCar(@PathVariable("id") Long id, Model model) {
-        EmployeeCar employeeCar = employeeCarService.findById(id);
-        model.addAttribute("employeeCar", employeeCar);
-        model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
-        return "rd/freepool.detail";
     }
 }
