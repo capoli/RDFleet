@@ -72,4 +72,11 @@ public class CarService {
         car.setOrderable(false);
         carRepository.save(car);
     }
+
+    //TODO: test
+    public Car findByIdAndIsOrderable(Long id) {
+        Car car = findById(id);
+        if(!car.isOrderable()) throw new IllegalArgumentException("Car is not orderable");
+        return car;
+    }
 }
