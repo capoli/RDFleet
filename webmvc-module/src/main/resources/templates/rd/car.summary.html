@@ -96,7 +96,7 @@
                 <div id="packs" class="well"  th:if="${car.packs.size() > 0}">
                     <h3 class="modal-header">Packs</h3>
 
-                    <div th:each="pack : ${employeeCar.selectedCar.packs}">
+                    <div th:each="pack : ${car.packs}">
                         <h4 th:text="${pack.name}"></h4>
 
                         <div th:each="item : ${pack.items}">

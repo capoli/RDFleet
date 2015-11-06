@@ -1,8 +1,10 @@
 package com.realdolmen.rdfleet.webmvc.controllers.rd;
 
 import com.realdolmen.rdfleet.domain.Car;
+import com.realdolmen.rdfleet.domain.EmployeeCar;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.service.CarService;
+import com.realdolmen.rdfleet.service.EmployeeCarService;
 import com.realdolmen.rdfleet.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -30,7 +32,7 @@ public class BrowsingCarController {
     @Autowired
     private EmployeeService employeeService;
     @Autowired
-    private EmployeeCarRepository employeeCarRepository;
+    private EmployeeCarService employeeCarService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getNewCars(@RequestParam(value = "type", required = false) String type, Model model) {
@@ -66,12 +68,15 @@ public class BrowsingCarController {
 
     @RequestMapping(value = "/freepool", method = RequestMethod.GET)
     public String getCarsFromFreePool(Model model) {
-        model.addAttribute("employeeCars", employeeCarRepository.findAllIsNotUsed());
+        model.addAttribute("employeeCars", employeeCarService.findAllIsNotUsed());
         return "rd/freepool.list";
     }
 
     @RequestMapping(value = "/freepool/{id}", method = RequestMethod.GET)
-    public String getFreePoolCar(@PathVariable("id") Long id) {
+    public String getFreePoolCar(@PathVariable("id") Long id, Model model) {
+        EmployeeCar employeeCar = employeeCarService.findById(id);
+        model.addAttribute("employeeCar", employeeCar);
+        model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
         return "rd/freepool.detail";
     }
 }

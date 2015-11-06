@@ -65,7 +65,7 @@ public class OrderCarController {
         order.setAmountPaidByEmployee(orderForEmployee.getAmountPaidByCompany());
         order.setOrderedCar(orderForEmployee.getOrderedCar());
         model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
-        model.addAttribute("car", employeeCar.getSelectedCar());
+        model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
         return "rd/car.summary";
     }
 
