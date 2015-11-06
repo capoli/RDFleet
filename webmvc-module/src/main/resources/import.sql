@@ -247,7 +247,7 @@ INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_i
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1068,1,"REMOVED",160651,"9-UDE-216",1029);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1069,1,"IN_USE",20295,"2-HUG-265",1028);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1070,1,"REMOVED",161616,"1-MHY-040",1005);
-INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1071,1,"IN_USE",83743,"2-HET-986",1000);
+INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1071,1,"NOT_USED",83743,"2-HET-986",1000);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1072,1,"REMOVED",11325,"3-RUM-933",1032);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1073,1,"IN_USE",60291,"2-DJY-614",1032);
 INSERT INTO employeecar (id,version,carStatus,mileage,licensePlate,selectedCar_id) VALUES (1074,1,"REMOVED",101476,"3-NNT-304",1005);
