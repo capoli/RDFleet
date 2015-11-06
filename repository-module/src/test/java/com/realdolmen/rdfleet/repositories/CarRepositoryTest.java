@@ -19,6 +19,7 @@ import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.time.Duration;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -219,5 +220,20 @@ public class CarRepositoryTest {
     public void testTimeOfDeliveryNegative() {
         car.setTimeOfDeliveryInDays(Duration.ofDays(-5254));
         carRepository.save(car);
+    }
+
+    @Test
+    public void testFindAllOrderableCars(){
+        carRepository.save(car);
+        Car notOrderableCar = ValidDomainObjectFactory.createCar();
+        notOrderableCar.setOrderable(false);
+        carRepository.save(notOrderableCar);
+
+        assertEquals(1, carRepository.findAllOrderableCars().size());
+    }
+
+    @Test
+    public void testFindAllOrderableCarsNoneFound(){
+        assertEquals(0, carRepository.findAllOrderableCars().size());
     }
 }

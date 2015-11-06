@@ -18,6 +18,7 @@
                     <th>Model</th>
                     <th>FunctionalLevel</th>
                     <th>Edit</th>
+                    <th>Remove</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,6 +27,7 @@
                     <td th:text="${car.model}"></td>
                     <td th:text="${car.functionalLevel}"></td>
                     <td class="text-right"><a class="btn btn-info btn-xs" th:href="${#mvc.url('CMC#goToEditPage').arg(0, car.id).build()}">Edit</a></td>
+                    <td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('CMC#removeFromOrderList').arg(0, car.id).build()}">Remove from orderable list</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -38,7 +40,12 @@
 <div th:replace="fragments/fragments :: div.scripts"></div>
 <script>
     $(document).ready( function () {
-        $('#carTable').DataTable();
+        $('#carTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        });
     } );
 </script>
 </body>

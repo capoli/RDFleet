@@ -40,14 +40,14 @@ public class BrowsingCarController {
                     if(employeeService.employeeCanOrderNewCar(auth.getName()))
                         cars = employeeService.findCarsForEmployeeByFunctionalLevel(auth.getName());
                     else
-                        cars = carService.findAllCars();
+                        cars = carService.findAllOrderableCars();
                     break;
                 default:
-                    cars = carService.findAllCars();
+                    cars = carService.findAllOrderableCars();
                     break;
             }
         }
-        else cars = carService.findAllCars();
+        else cars = carService.findAllOrderableCars();
 
         model.addAttribute("carList", cars);
         return "rd/car.list";

@@ -28,8 +28,13 @@ public class CarService {
         this.packRepository = packRepository;
     }
 
-    public List<Car> findAllCars() {
-        return carRepository.findAll();
+
+    /**
+     * Finds all cars that where orderable equals true in the database.
+     * @return the list of all cars that are orderable
+     */
+    public List<Car> findAllOrderableCars() {
+        return carRepository.findAllOrderableCars();
     }
 
     public void updateCar(Car car) {
@@ -54,5 +59,17 @@ public class CarService {
         Car car = carRepository.findOne(id);
         if(car == null) throw new IllegalArgumentException("Car object can not be null");
         return car;
+    }
+
+    /**
+     * Will set the orderable property of the car to false and persist it to the database.
+     * @param car the car that should no longer be orderable
+     */
+    public void makeCarNotOrderable(Car car) {
+        if(car == null)
+            throw new IllegalArgumentException("Car to be made un-orderable must be provided.");
+
+        car.setOrderable(false);
+        carRepository.save(car);
     }
 }

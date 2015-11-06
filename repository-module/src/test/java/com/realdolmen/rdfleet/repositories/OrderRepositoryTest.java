@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
@@ -87,12 +88,6 @@ public class OrderRepositoryTest {
     @Test(expected = ConstraintViolationException.class)
     public void testAmountPaidByCompanyNegative() {
         order.setAmountPaidByCompany(BigDecimal.valueOf(-500));
-        orderRepository.save(order);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testDateReceivedNull() {
-        order.setDateReceived(null);
         orderRepository.save(order);
     }
 
