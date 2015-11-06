@@ -10,9 +10,7 @@
             <div class="view-heading" th:class="${employeeCar.selectedCar.functionalLevel != functionalLevel} ? 'col-sm-8':'col-sm-12'">
                 <h1>Order for</h1>
                 <h2><span th:text="${employeeCar.selectedCar.make}"></span> <span th:text="${employeeCar.selectedCar.model}"></span></h2>
-                <div class="has-error" th:if="${error != null}">
-                    <span class="help-block" th:text="${error}"/>
-                </div>
+                <div th:replace="./fragments/fragments :: error(${error})"></div>
             </div>
             <div class="col-sm-4" style="padding-right: 0;" th:if="${employeeCar.selectedCar.functionalLevel != functionalLevel}">
                 <div id="info" class="well">

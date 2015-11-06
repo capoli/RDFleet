@@ -49,6 +49,11 @@
     <h1><span class="rd-red">Real</span><span class="rd-blue">Dolmen</span> Fleet</h1>
     <p class="lead">Welcome to the <span class="rd-red">RD</span><span class="rd-blue">Fleet</span> application!</p>
 </div>
+<div th:fragment="error(error)">
+    <div class="has-error" th:if="${error != null}">
+        <span class="help-block" th:text="${error}"/>
+    </div>
+</div>
 <div class="scripts" th:remove="tag">
     <script th:src="@{/js/jquery-2.0.2.min.js}"></script>
     <script th:src="@{/js/jszip.min.js}"></script>

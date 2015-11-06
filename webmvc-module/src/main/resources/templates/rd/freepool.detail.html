@@ -8,88 +8,18 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 style="padding-left: 15px" th:text="${car.make}"></h1>
+
             <div class="col-lg-7">
-                <div class="has-error" th:if="${error != null}">
-                    <span class="help-block" th:text="${error}"/>
-                </div>
-
-                <h3 th:text="${car.model}"></h3>
-
-                <h4>Functional level: <span th:text="${car.functionalLevel}"></span></h4>
-
-                <br/>
-                <table class="table table-striped">
-                    <tr>
-                        <td><h6>Tyre type:</h6></td>
-                        <td th:text="${car.tyreType}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Fuel type:</h6></td>
-                        <td th:text="${car.fuelType}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Towing bracket:</h6></td>
-                        <td>
-                            <span th:if="${car.towingBracketPossibility}" class="glyphicon glyphicon-ok"></span>
-                            <span th:if="${!car.towingBracketPossibility}" class="glyphicon glyphicon-remove"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><h6>Gps:</h6></td>
-                        <td>
-                            <span th:if="${car.gps}" class="glyphicon glyphicon-ok"></span>
-                            <span th:if="${!car.gps}" class="glyphicon glyphicon-remove"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><h6>Bluetooth:</h6></td>
-                        <td>
-                            <span th:if="${car.bluetooth}" class="glyphicon glyphicon-ok"></span>
-                            <span th:if="${!car.bluetooth}" class="glyphicon glyphicon-remove"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><h6>co2:</h6></td>
-                        <td th:text="${car.co2}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Fiscal hp:</h6></td>
-                        <td th:text="${car.fiscHp}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Ideal km:</h6></td>
-                        <td th:text="${car.idealKm}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Max km:</h6></td>
-                        <td th:text="${car.maxKm}"></td>
-                    </tr>
-                </table>
-                <form th:if="${canOrderNewCar}" action="#" th:action="@{/rd/cars/order}" style="margin-bottom: 10px;" method="post" >
-                    <button type="submit" class="btn btn-info btn-block">Order</button>
+                <div th:replace="./fragments/fragments :: error(${error})"></div>
+                <th:block th:replace="./fragments/car.detail.fragment :: carDetailMain(${car})"/>
+                <form th:if="${canOrderFreePoolCar}" action="#" th:action="@{/rd/cars/order}" style="margin-bottom: 10px;" method="post" >
+                    <button type="submit" class="btn btn-info btn-lg btn-block">Order</button>
                 </form>
-                <!--<a th:if="${canOrderNewCar}" class="btn btn-info btn-lg btn-block" th:href="${#mvc.url('OCC#getOrderNewCar').arg(0, car.id).build()}">Order</a>-->
             </div>
+
             <div class="col-lg-5">
-                <div id="info" class="well">
-                    <h3 class="modal-header">Additional info</h3>
-                    <h4>Price: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.listPrice}"></span></div></h4>
-                    <h4>Benefit: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.benefit}"></span></div></h4>
-                    <h4>Amount for upgrade: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.amountUpgrade}"></span></div></h4>
-                    <h4>Amount for downgrade: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.amountDowngrade}"></span></div></h4>
-                    <h4>Time of delivery in days: <div style="float: right"><span th:text="${car.timeOfDeliveryInDays.toDays()}"></span></div></h4>
-                </div>
-                <div id="packs" class="well"  th:if="${car.packs != null and car.packs.size() > 0}">
-                    <h3 class="modal-header">Packs</h3>
-
-                    <div th:each="pack : ${car.packs}">
-                        <h4 th:text="${pack.name}"></h4>
-
-                        <div th:each="item : ${pack.items}">
-                            <h6 th:text="${item}"></h6>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${car})"></div>
+                <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${car})"></div>
             </div>
         </div>
     </div>

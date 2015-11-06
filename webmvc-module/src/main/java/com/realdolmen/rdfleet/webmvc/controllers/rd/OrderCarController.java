@@ -61,7 +61,7 @@ public class OrderCarController {
         employeeCar.setVersion(employeeCarFromService.getVersion());
         model.addAttribute("employeeCar", employeeCar);
         model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
-        model.addAttribute("canOrderNewCar", employeeService.employeeCanOrderNewCar(auth.getName(), id));
+        model.addAttribute("canOrderFreePoolCar", employeeService.employeeCanOrderNewCar(auth.getName()));
         return "rd/freepool.detail";
     }
 
