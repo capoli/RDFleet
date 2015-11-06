@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/fragments :: head"></head>
+<style>
+    .entry:not(:first-of-type)
+    {
+        margin-top: 10px;
+    }
+
+    .glyphicon
+    {
+        font-size: 12px;
+    }
+</style>
+<body>
+<div th:replace="fragments/fragments :: header"></div>
+<div class="container">
+    <div th:replace="fragments/fragments :: div#page-header"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="has-error" th:if="${error != null}">
+                <span class="help-block" th:text="${error}"/>
+            </div>
+
+            <h4 th:if="${pack.id == null}">Create an option</h4>
+            <h4 th:if="${pack.id != null}">Edit an option</h4>
+
+            <form action="#" th:action="@{/fleet/packs/}" method="post" th:object="${pack}">
+
+                <div class="form-group" th:class="${#fields.hasErrors('name')}? 'has-error'">
+                    <label th:for="${#ids.next('name')}">Name:</label>
+                    <input type="text" th:field="*{name}" class="form-control"/>
+                    <span th:if="${#fields.hasErrors('name')}" class="help-block" th:errors="*{name}"></span>
+                </div>
+
+
+                <div class="form-group" th:class="${#fields.hasErrors('items')}? 'has-error'">
+                    <label th:for="${#ids.next('items')}">Items:</label>
+
+                    <input type="text" th:field="*{items}" class="form-control"/>
+
+                    <span th:if="${#fields.hasErrors('items')}" class="help-block" th:errors="*{items}"></span>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="control-group" id="fields">
+                            <div class="controls">
+                                <form role="form" autocomplete="off">
+                                    <div class="entry input-group col-xs-3">
+                                        <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success btn-add" type="button">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+                                <br/>
+                                <small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field :)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{version}"/>
+                <span th:if="${pack.id == null}">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </span>
+                <span th:if="${pack.id != null}">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </span>
+            </form>
+        </div>
+    </div>
+
+    <hr/>
+</div>
+<div th:replace="fragments/fragments :: div.scripts"></div>
+<script>
+        $(function()
+        {
+            $(document).on('click', '.btn-add', function(e)
+            {
+                e.preventDefault();
+
+                var controlForm = $('.controls form:first'),
+                        currentEntry = $(this).parents('.entry:first'),
+                        newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                newEntry.find('input').val('');
+                controlForm.find('.entry:not(:last) .btn-add')
+                        .removeClass('btn-add').addClass('btn-remove')
+                        .removeClass('btn-success').addClass('btn-danger')
+                        .html('<span class="glyphicon glyphicon-minus"></span>');
+
+            }).on('click', '.btn-remove', function(e)
+            {
+                $(this).parents('.entry:first').remove();
+
+                e.preventDefault();
+                return false;
+            });
+        });
+</script>
+</body>
+</html>
