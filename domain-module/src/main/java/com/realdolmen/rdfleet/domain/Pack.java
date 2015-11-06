@@ -18,8 +18,8 @@ public class Pack extends BaseEntity {
     @NotBlank
     private String name;
     @NotNull
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> items = new ArrayList<>();
+    @ElementCollection
+    private List<String> items;
 
     public String getName() {
         return name;

@@ -85,7 +85,7 @@
                     <h5 th:if="${functionalLevel > employeeCar.selectedCar.functionalLevel}">Budget for options: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${employeeCar.selectedCar.amountDowngrade}"></span></div></h5>
                     <h5>Time of delivery in days: <div style="float: right"><span th:text="${employeeCar.selectedCar.timeOfDeliveryInDays.toDays()}"></span></div></h5>
                 </div>
-                <div id="caroptions" class="well"  th:if="${employeeCar.carOptions.size() > 0}">
+                <div id="caroptions" class="well"  th:if="${employeeCar.carOptions != null and employeeCar.carOptions.size() > 0}">
                     <h3 class="modal-header">Car options</h3>
                     <h4><small>note that these options aren't calculated in the price</small></h4>
 

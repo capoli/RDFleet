@@ -6,7 +6,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by JSTAX29 on 29/10/2015.
@@ -26,7 +28,18 @@ public class ValidDomainObjectFactory {
         car.setTyreType(TyreType.ALUMINIUM);
         car.setTimeOfDeliveryInDays(Duration.ofDays(150));
         car.setBenefit(BigDecimal.valueOf(158.58));
+        car.setPacks(createPacks());
         return car;
+    }
+
+    private static List<Pack> createPacks(){
+        Pack pack1 = new Pack();
+        pack1.setName("Leather Pack");
+        pack1.setItems(new ArrayList<>(Arrays.asList("Leather steering wheel", "Leather seats", "Leather dashboard")));
+        Pack pack2 = new Pack();
+        pack2.setName("LED");
+        pack2.setItems(new ArrayList<>(Arrays.asList("LED headlights", "LED dashboard", "LED backlights")));
+        return new ArrayList<>(Arrays.asList(pack1, pack2));
     }
 
     public static CarOption createCarOption(String desc){

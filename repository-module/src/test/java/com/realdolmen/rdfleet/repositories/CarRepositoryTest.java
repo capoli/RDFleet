@@ -236,4 +236,13 @@ public class CarRepositoryTest {
     public void testFindAllOrderableCarsNoneFound(){
         assertEquals(0, carRepository.findAllOrderableCars().size());
     }
+
+    @Test
+    public void testFindCarGivesRightAmountOfPacks(){
+        assertEquals(2, car.getPacks().size());
+        Car savedCar = carRepository.save(car);
+        Car newCar = carRepository.findOne(savedCar.getId());
+        assertEquals(2, newCar.getPacks().size());
+    }
+
 }

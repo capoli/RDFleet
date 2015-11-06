@@ -76,7 +76,7 @@
                     <h4>Amount for downgrade: <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span th:text="${car.amountDowngrade}"></span></div></h4>
                     <h4>Time of delivery in days: <div style="float: right"><span th:text="${car.timeOfDeliveryInDays.toDays()}"></span></div></h4>
                 </div>
-                <div id="packs" class="well"  th:if="${car.packs.size() > 0}">
+                <div id="packs" class="well"  th:if="${car.packs != null and car.packs.size() > 0}">
                     <h3 class="modal-header">Packs</h3>
 
                     <div th:each="pack : ${car.packs}">

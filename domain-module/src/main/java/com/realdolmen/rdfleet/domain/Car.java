@@ -30,7 +30,7 @@ public class Car extends BaseEntity {
     private int functionalLevel;
     private String description;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    private List<Pack> packs = new ArrayList<>();
+    private List<Pack> packs;
     @Enumerated(EnumType.STRING)
     @NotNull
     private TyreType tyreType;
