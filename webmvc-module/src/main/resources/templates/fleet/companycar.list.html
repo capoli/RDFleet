@@ -27,21 +27,21 @@
                     <td th:text="${employeeCar.carStatus}"></td>
                     <td th:text="${employeeCar.selectedCar.make}"></td>
                     <td th:text="${employeeCar.selectedCar.model}"></td>
-                    <td th:if="${employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE and employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
+                    <td class="text-right" th:if="${employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE and employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
                         <a class="btn btn-info btn-xs" th:href="${#mvc.url('CCMC#viewCompanyCar').arg(0, employeeCar.licensePlate).build()}">View full details</a>
                     </td>
-                    <td th:if="${employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE or employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
+                    <td class="text-right" th:if="${employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE or employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
                         <a class="btn btn-info btn-xs" th:href="${#mvc.url('CCMC#viewCompanyCarWithEmployee').arg(0, employeeCar.licensePlate).build()}">View full details</a>
                     </td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>License Plate</th>
+                    <th>Car Status</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Details</th>
                 </tr>
                 </tfoot>
             </table>
@@ -53,11 +53,14 @@
 <div th:replace="fragments/fragments :: div.scripts"></div>
 <script>
     $(document).ready( function () {
-
-        $('#carTable').dataTable().columnFilter({aoColumns: [
-            {},{ type: "checkbox", values: [ 'IN_USE', 'PENDING', 'NOT_USED','REMOVED'] },{},{},{} ]});
-
-    } )
+        $('#carTable').dataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        }).columnFilter({aoColumns: [
+            {},{ type: "checkbox", values: [ 'IN_USE', 'PENDING', 'NOT_USED','REMOVED'] },{},{}, null ]});
+    } );
 </script>
 </body>
 </html>

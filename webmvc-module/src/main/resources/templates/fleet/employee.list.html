@@ -57,7 +57,12 @@
 <div th:replace="fragments/fragments :: div.scripts"></div>
 <script th:inline="javascript">
     $(document).ready(function () {
-        $('#employeeTable').DataTable();
+        $('#employeeTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        });
     });
 </script>
 <!--<script th:inline="javascript">-->

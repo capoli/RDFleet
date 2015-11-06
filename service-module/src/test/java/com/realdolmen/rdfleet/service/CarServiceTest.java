@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.DirtiesContext;
@@ -24,13 +25,8 @@ import static org.mockito.Mockito.*;
 /**
  * Created by JSTAX29 on 2/11/2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = JpaConfig.class)
-@ActiveProfiles("test")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@RunWith(MockitoJUnitRunner.class)
 public class CarServiceTest {
-    @Autowired
-    private CarRepository carRepository;
 
     private CarRepository carRepositoryMock;
     private CarService carService;
@@ -51,17 +47,17 @@ public class CarServiceTest {
         car2.setFunctionalLevel(2);
 
         allCars = new ArrayList<>(Arrays.asList(car1, car2));
-        when(carRepositoryMock.findAll()).thenReturn(allCars);
+        when(carRepositoryMock.findAllOrderableCars()).thenReturn(allCars);
 
-        Car car = ValidDomainObjectFactory.createCar();
-        this.car = carRepository.save(car);
+        car = ValidDomainObjectFactory.createCar();
+        car.setId(1000l);
     }
 
     @Test
-    public void testFindAllCarsFindsAllCars(){
-        assertEquals(allCars, carService.findAllCars());
+    public void testFindAllOrderableCarsFindsAllCars(){
+        assertEquals(allCars, carService.findAllOrderableCars());
 
-        verify(carRepositoryMock).findAll();
+        verify(carRepositoryMock).findAllOrderableCars();
     }
 
     @Test
@@ -84,4 +80,16 @@ public class CarServiceTest {
         verify(carRepositoryMock).save(car);
     }
 
+    @Test
+    public void testMakeCarNotOrderableSetsOrderableFalse(){
+        assertTrue(car.isOrderable());
+        carService.makeCarNotOrderable(car);
+        assertFalse(car.isOrderable());
+        verify(carRepositoryMock).save(car);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMakeCarNotORderableCarIsNull(){
+        carService.makeCarNotOrderable(null);
+    }
 }
