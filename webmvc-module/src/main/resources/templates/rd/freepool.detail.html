@@ -65,6 +65,9 @@
                         <td th:text="${car.maxKm}"></td>
                     </tr>
                 </table>
+                <form th:if="${canOrderNewCar}" action="#" th:action="@{/rd/cars/order}" style="margin-bottom: 10px;" method="post" >
+                    <button type="submit" class="btn btn-info btn-block">Order</button>
+                </form>
                 <!--<a th:if="${canOrderNewCar}" class="btn btn-info btn-lg btn-block" th:href="${#mvc.url('OCC#getOrderNewCar').arg(0, car.id).build()}">Order</a>-->
             </div>
             <div class="col-lg-5">

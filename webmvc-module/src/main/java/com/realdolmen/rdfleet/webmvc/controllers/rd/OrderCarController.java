@@ -5,6 +5,7 @@ import com.realdolmen.rdfleet.domain.Order;
 import com.realdolmen.rdfleet.domain.RdEmployee;
 import com.realdolmen.rdfleet.service.CarOptionService;
 import com.realdolmen.rdfleet.service.CarService;
+import com.realdolmen.rdfleet.service.EmployeeCarService;
 import com.realdolmen.rdfleet.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -28,6 +29,8 @@ public class OrderCarController {
     private EmployeeService employeeService;
     @Autowired
     private CarOptionService carOptionService;
+    @Autowired
+    private EmployeeCarService employeeCarService;
 
     @ModelAttribute("employeeCar")
     public EmployeeCar getInitializedEmployeeCar() {
@@ -37,6 +40,29 @@ public class OrderCarController {
     @ModelAttribute("order")
     public Order getInitializedOrder() {
         return new Order();
+    }
+
+    @RequestMapping(value = "/freepool", method = RequestMethod.GET)
+    public String getCarsFromFreePool(Model model) {
+        model.addAttribute("employeeCars", employeeCarService.findAllIsNotUsed());
+        return "rd/freepool.list";
+    }
+
+    @RequestMapping(value = "/freepool/{id}", method = RequestMethod.GET)
+    public String getFreePoolCar(@PathVariable("id") Long id, @ModelAttribute("employeeCar") EmployeeCar employeeCar, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        EmployeeCar employeeCarFromService = employeeCarService.findById(id);
+        employeeCar.setCarOptions(employeeCarFromService.getCarOptions());
+        employeeCar.setCarStatus(employeeCarFromService.getCarStatus());
+        employeeCar.setLicensePlate(employeeCarFromService.getLicensePlate());
+        employeeCar.setSelectedCar(employeeCarFromService.getSelectedCar());
+        employeeCar.setMileage(employeeCarFromService.getMileage());
+        employeeCar.setId(employeeCarFromService.getId());
+        employeeCar.setVersion(employeeCarFromService.getVersion());
+        model.addAttribute("employeeCar", employeeCar);
+        model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
+        model.addAttribute("canOrderNewCar", employeeService.employeeCanOrderNewCar(auth.getName(), id));
+        return "rd/freepool.detail";
     }
 
     @RequestMapping(value = "/{id}/order", method = RequestMethod.GET)

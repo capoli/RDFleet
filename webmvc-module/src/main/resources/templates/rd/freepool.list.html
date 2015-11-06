@@ -24,7 +24,7 @@
                     <td th:text="${employeeCar.selectedCar.make}"></td>
                     <td th:text="${employeeCar.selectedCar.model}"></td>
                     <td th:text="${employeeCar.selectedCar.functionalLevel}"></td>
-                    <td class="text-right"><a class="btn btn-info btn-xs" th:href="${#mvc.url('BCC#getFreePoolCar').arg(0, employeeCar.selectedCar.id).build()}">Details</a></td>
+                    <td class="text-right"><a class="btn btn-info btn-xs" th:href="${#mvc.url('OCC#getFreePoolCar').arg(0, employeeCar.selectedCar.id).build()}">Details</a></td>
                 </tr>
                 </tbody>
             </table>
