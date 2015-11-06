@@ -18,13 +18,23 @@
         <a class="navbar-brand" th:href="@{/index}"><span class="rd-red">RD</span><span class="rd-blue">Fleet</span></a>
 
         <ul class="nav navbar-nav">
-            <li><a sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars}">Browse cars catalog</a></li>
-            <li><a id="orderCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
-            <li><a id="orderCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars/freepool}">Browse cars freepool</a></li>
-            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Car models</a></li>
-            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">Company cars</a></li>
-            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/options}">Car options</a></li>
-            <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a></li>
+            <li class="dropdown" sec:authorize="hasRole('ROLE_RDEMPLOYEE')">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employee <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars}">Browse cars catalog</a></li>
+                    <li><a id="orderCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
+                    <li><a id="orderFreePoolCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars/freepool}">Browse cars freepool</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employee <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Car models</a></li>
+                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">Company cars</a></li>
+                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/options}">Car options</a></li>
+                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a></li>
+                </ul>
+            </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -60,9 +70,11 @@
                     success: function(data) {
                         if(data) {
                             $('#orderCarCatalog').show();
+                            $('#orderFreePoolCarCatalog').show();
                         }
                         else {
                             $('#orderCarCatalog').hide();
+                            $('#orderFreePoolCarCatalog').hide();
                         }
                     }
                 });
