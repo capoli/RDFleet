@@ -34,74 +34,16 @@
                 </table>
             </div>
 
+            <div class="col-lg-12">
+                <h1 style="padding-left: 15px" th:text="${employeeCar.selectedCar.make}"></h1>
 
-            <div class="col-lg-7">
-
-                <h1 th:text="${employeeCar.selectedCar.make}"></h1>
-
-                <h3 th:text="${employeeCar.selectedCar.model}"></h3>
-
-                <h4>Functional level: <span th:text="${employeeCar.selectedCar.functionalLevel}"></span></h4>
-
-                <br/>
-                <table class="table table-striped">
-                    <tr>
-                        <td><h6>Tyre type:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.tyreType}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Fuel type:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.fuelType}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Towing bracket:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.towingBracketPossibility}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Gps:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.gps}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Bluetooth:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.bluetooth}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>co2:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.co2}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Fiscal hp:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.fiscHp}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Ideal km:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.idealKm}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Max km:</h6></td>
-                        <td th:text="${employeeCar.selectedCar.maxKm}"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-lg-5">
-                <div id="info" class="well">
-                    <h3 class="modal-header">Additional info</h3>
-                    <h4>Price: <span th:text="${employeeCar.selectedCar.listPrice}"></span></h4>
-                    <h4>Benefit: <span th:text="${employeeCar.selectedCar.benefit}"></span></h4>
-                    <h4>Amount for upgrade: <span th:text="${employeeCar.selectedCar.amountUpgrade}"></span></h4>
-                    <h4>Amount for downgrade: <span th:text="${employeeCar.selectedCar.amountDowngrade}"></span></h4>
-                    <h4>Time of delivery in days: <span th:text="${employeeCar.selectedCar.timeOfDeliveryInDays.toDays()}"></span></h4>
+                <div class="col-lg-7">
+                    <th:block th:replace="./fragments/car.detail.fragment :: carDetailMain(${employeeCar.selectedCar})"/>
                 </div>
-                <div id="packs" class="well"  th:if="${employeeCar.selectedCar.packs.size() > 0}">
-                    <h3 class="modal-header">Packs</h3>
 
-                    <div th:each="pack : ${employeeCar.selectedCar.packs}">
-                        <h4 th:text="${pack.name}"></h4>
-
-                        <div th:each="item : ${pack.items}">
-                            <h6 th:text="${item}"></h6>
-                        </div>
-                    </div>
+                <div class="col-lg-5">
+                    <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${employeeCar.selectedCar})"></div>
+                    <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${employeeCar.selectedCar})"></div>
                 </div>
             </div>
         </div>

@@ -51,7 +51,7 @@ public class EmployeeCarManagementController {
     }
 
     @RequestMapping(value = "/status-in-use", method = RequestMethod.POST)
-    public String setCarStatusInUse(@RequestParam("employeeId") Long employeeId, Model model){
+    public String setCarStatusInUse(@RequestParam("employeeId") Long employeeId,@RequestParam("licensePlate") String licensePlate, Model model){
         if(employeeId == null){
             model.addAttribute("error", "Employee id must be given.");
         }
@@ -64,7 +64,7 @@ public class EmployeeCarManagementController {
         }
 
         try{
-            employeeService.setEmployeeCarInUse(employee);
+            employeeService.setEmployeeCarInUse(employee, licensePlate);
         }catch (IllegalArgumentException e){
             model.addAttribute("error", e.getMessage());
         }

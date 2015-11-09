@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,7 @@ public class EmployeeCar extends BaseEntity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @NotNull
     private Car selectedCar;
-    @NotNull
-    @NotBlank
+    @Pattern(regexp = "^\\d-[A-Z]{3}-\\d{3}$", message = "The license plate is not valid. It must have the following pattern: 0-XXX-000")
     @Column(unique = true)
     private String licensePlate;
 
