@@ -1,25 +1,30 @@
 .container {
-  margin: 0 auto;
-  max-width: 960px;
+    margin: 0 auto;
+    max-width: 960px;
 }
 
 .rd-blue {
-  color: #009BD8;
+    color: #009BD8;
 
 }
 
 .rd-red {
-  color: #ED2B29;
+    color: #ED2B29;
 }
 
 .modal-header {
-  margin-top: 0;
-  padding-top: 0;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 #carOptionsForm .chosen-choices {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-height: 34px;
-  padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 34px;
+    padding: 6px 12px;
+}
+
+.disableClick {
+    pointer-events: none;
+    color: red;
 }

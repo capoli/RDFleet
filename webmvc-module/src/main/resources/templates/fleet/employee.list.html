@@ -20,33 +20,53 @@
                     <th>Last Name</th>
                     <th>FunctionalLevel</th>
                     <th>Current Car</th>
-                    <th>Car History</th>
+                    <th class="text-right">Car History</th>
                     <th class="text-right">Remove from service</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="rdEmployee : ${employeeList}">
-                        <td th:text="${rdEmployee.firstName}"></td>
-                        <td th:text="${rdEmployee.lastName}"></td>
-                        <td>
-                            <a class="btn btn-info btn-xs" th:href="${#mvc.url('REMC#decrementFunctionalLevel').arg(0, rdEmployee.id).build()}">-</a>
-                            <span th:text="${rdEmployee.functionalLevel}"></span>
-                            <a class="btn btn-info btn-xs" th:href="${#mvc.url('REMC#incrementFunctionalLevel').arg(0, rdEmployee.id).build()}">+</a>
-                        </td>
-                        <td>
-                            <div th:if="${rdEmployee.currentOrder != null}">
-                                <a th:href="${#mvc.url('ECMC#viewEmployeeCar').arg(0, rdEmployee.id).build()}" title="View more information about the employee's car">
-                                    <span th:text="${rdEmployee.currentOrder.orderedCar.licensePlate}"></span>
-                                </a>
-                            </div>
-                            <div th:if="${rdEmployee.currentOrder == null}">
-                                No car assigned
-                            </div>
-                        </td>
-                        <td><a class="btn btn-info btn-xs" th:href="${#mvc.url('ECMC#viewEmployeeCarHistory').arg(0, rdEmployee.id).build()}">View history details</a></td>
-                        <td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('REMC#removeFromService').arg(0, rdEmployee.id).build()}">Remove from service</a></td>
+                    <td th:text="${rdEmployee.firstName}"></td>
+                    <td th:text="${rdEmployee.lastName}"></td>
+                    <td>
+                        <a class="btn btn-info btn-xs"
+                           th:href="${#mvc.url('REMC#decrementFunctionalLevel').arg(0, rdEmployee.id).build()}">-</a>
+                        <span th:text="${rdEmployee.functionalLevel}"></span>
+                        <a class="btn btn-info btn-xs"
+                           th:href="${#mvc.url('REMC#incrementFunctionalLevel').arg(0, rdEmployee.id).build()}">+</a>
+                    </td>
+                    <td>
+                        <div th:if="${rdEmployee.currentOrder != null}">
+                            <a th:href="${#mvc.url('ECMC#viewEmployeeCar').arg(0, rdEmployee.id).build()}"
+                               title="View more information about the employee's car">
+                                    <span th:if="${rdEmployee.currentOrder.orderedCar.licensePlate != null and !rdEmployee.currentOrder.orderedCar.licensePlate.isEmpty()}"
+                                          th:text="${rdEmployee.currentOrder.orderedCar.licensePlate}"></span>
+                                    <span th:if="${rdEmployee.currentOrder.orderedCar.licensePlate == null or rdEmployee.currentOrder.orderedCar.licensePlate.isEmpty()}"
+                                          style="color: red">Pending request</span>
+                            </a>
+                        </div>
+                        <div th:if="${rdEmployee.currentOrder == null}">
+                            No car assigned
+                        </div>
+                    </td>
+                    <td class="text-right"><a class="btn btn-info btn-xs"
+                                              th:href="${#mvc.url('ECMC#viewEmployeeCarHistory').arg(0, rdEmployee.id).build()}">View
+                        history details</a></td>
+                    <td class="text-right"><a class="btn btn-danger btn-xs"
+                                              th:href="${#mvc.url('REMC#removeFromService').arg(0, rdEmployee.id).build()}">Remove
+                        from service</a></td>
                 </tr>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>FunctionalLevel</th>
+                    <th>Current Car</th>
+                    <th class="text-right">Car History</th>
+                    <th class="text-right">Remove from service</th>
+                </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -56,37 +76,47 @@
 <div th:replace="fragments/general.fragment :: div.scripts"></div>
 <script th:inline="javascript">
     $(document).ready(function () {
-        $('#employeeTable').DataTable({
+        $('#employeeTable').dataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
+        }).columnFilter({
+            aoColumns: [
+                {}, {}, {}, {
+                    type: "checkbox",
+                    bRegex: true,
+                    values: [{value: 'Pending request', label: 'Pending requests'}, {
+                        value: 'No car assigned',
+                        label: 'Unassigned cars'
+                    }, {value: '[0-9]-[A-Z]{3}-[0-9]{3}', label: 'License plates'}]
+                }, null, null]
         });
     });
 </script>
 <!--<script th:inline="javascript">-->
-    <!--/*<![CDATA[*/-->
-    <!--var apiUrl = /*[[@{/fleet/employees/}]]*/ '/fleet/employees/';-->
+<!--/*<![CDATA[*/-->
+<!--var apiUrl = /*[[@{/fleet/employees/}]]*/ '/fleet/employees/';-->
 
-    <!--$(document).ready(function () {-->
-        <!--var dataTable = $('#employeeTable').DataTable();-->
+<!--$(document).ready(function () {-->
+<!--var dataTable = $('#employeeTable').DataTable();-->
 
-        <!--$('.incr-btn').click(function(e) {-->
-            <!--onIncrementBtnClick.apply(this, [e]);-->
-        <!--});-->
+<!--$('.incr-btn').click(function(e) {-->
+<!--onIncrementBtnClick.apply(this, [e]);-->
+<!--});-->
 
-        <!--function onIncrementBtnClick(e){-->
-            <!--var $btn = $(this);-->
-            <!--var id = $btn.attr('data-id');-->
-            <!--$.get(apiUrl + id + '/incrementFunc', onSuccessful);-->
-            <!--function onSuccessful() {-->
-                <!--var $row = $btn.closest('tr');-->
-                <!--var $funcLevelSpan = $row.find('.functional-level');-->
-                <!--$funcLevelSpan.text(parseInt($funcLevelSpan.text(), 10) + 1);-->
-            <!--}-->
-        <!--}-->
-    <!--});-->
-    <!--/*]]>*/-->
+<!--function onIncrementBtnClick(e){-->
+<!--var $btn = $(this);-->
+<!--var id = $btn.attr('data-id');-->
+<!--$.get(apiUrl + id + '/incrementFunc', onSuccessful);-->
+<!--function onSuccessful() {-->
+<!--var $row = $btn.closest('tr');-->
+<!--var $funcLevelSpan = $row.find('.functional-level');-->
+<!--$funcLevelSpan.text(parseInt($funcLevelSpan.text(), 10) + 1);-->
+<!--}-->
+<!--}-->
+<!--});-->
+<!--/*]]>*/-->
 <!--</script>-->
 </body>
 </html>
