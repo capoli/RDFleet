@@ -98,6 +98,10 @@ body {
     padding-left: 0;
 }
 
+.btn-form {
+    margin-bottom: 15px;
+}
+
 @media (min-width: 768px) {
 }
 .control-label {

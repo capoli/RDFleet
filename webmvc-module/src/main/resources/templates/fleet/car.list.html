@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="view-heading">
-                    <h1>Cars list</h1>
+                    <h1>Car list</h1>
                     <hr/>
                 </div>
                 <div th:replace="./fragments/general.fragment :: error(${error})"></div>
@@ -46,7 +46,7 @@
                     </tr>
                     </tfoot>
                 </table>
-                <a class="btn btn-info btn-lg" th:href="${#mvc.url('CMC#createCar').build()}">Add a new car</a>
+                <a class="btn btn-info btn-lg btn-form" th:href="${#mvc.url('CMC#createCar').build()}">Add a new car</a>
             </div>
         </div>
 

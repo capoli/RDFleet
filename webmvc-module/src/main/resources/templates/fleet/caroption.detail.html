@@ -15,7 +15,7 @@
                 <h4 th:if="${carOption.id == null}">Create an option</h4>
                 <h4 th:if="${carOption.id != null}">Edit an option</h4>
 
-                <form action="#" th:action="@{/fleet/options/}" method="post" th:object="${carOption}">
+                <form id="edit-view" action="#" th:action="@{/fleet/options/}" method="post" th:object="${carOption}">
 
                     <div class="form-group" th:class="${#fields.hasErrors('description')}? 'has-error'">
                         <label th:for="${#ids.next('description')}">Description:</label>
@@ -35,8 +35,6 @@
                 </form>
             </div>
         </div>
-
-
     </div>
 </div>
 <div th:replace="fragments/general.fragment :: div.scripts"></div>

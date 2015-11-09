@@ -1,69 +1,81 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="fragments/general.fragment :: head"></head>
 <body>
 <div th:replace="fragments/general.fragment :: header"></div>
-<div class="container">
+<div id="content">
+    <div class="container">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h4>Car List</h4>
-            <div class="has-error" th:if="${error != null}">
-                <span class="help-block" th:text="${error}"/>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="view-heading">
+                    <h1>Company car list</h1>
+                    <hr/>
+                </div>
+                <div th:replace="./fragments/general.fragment :: error(${error})"></div>
+                <table class="table table-striped table-hover" id="carTable">
+                    <thead>
+                    <tr>
+                        <th>License Plate</th>
+                        <th>Car Status</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employeeCar : ${employeeCarList}">
+                        <td th:if="${employeeCar.licensePlate != null and !employeeCar.licensePlate.isEmpty()}"
+                            th:text="${employeeCar.licensePlate}"></td>
+                        <td th:if="${employeeCar.licensePlate == null or employeeCar.licensePlate.isEmpty()}">Not yet
+                            assigned
+                        </td>
+                        <td th:text="${employeeCar.carStatus}"></td>
+                        <td th:text="${employeeCar.selectedCar.make}"></td>
+                        <td th:text="${employeeCar.selectedCar.model}"></td>
+                        <td class="text-right"
+                            th:if="${employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE and employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
+                            <a class="btn btn-info btn-xs"
+                               th:href="${#mvc.url('CCMC#viewCompanyCar').arg(0, employeeCar.licensePlate).build()}">View
+                                full details</a>
+                        </td>
+                        <td class="text-right"
+                            th:if="${employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE or employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
+                            <a th:class="${employeeCar.licensePlate != null and !employeeCar.licensePlate.isEmpty()} ? 'btn btn-info btn-xs' : 'btn btn-info btn-xs disableClick'"
+                               th:disabled="${employeeCar.licensePlate == null || employeeCar.licensePlate.isEmpty()}"
+                               th:href="${#mvc.url('CCMC#viewCompanyCarWithEmployee').arg(0, employeeCar.licensePlate).build()}">View
+                                full details</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>License Plate</th>
+                        <th>Car Status</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Details</th>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
-            <table class="table table-striped table-hover" id="carTable">
-                <thead>
-                <tr>
-                    <th>License Plate</th>
-                    <th>Car Status</th>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Details</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="employeeCar : ${employeeCarList}">
-                    <td th:if="${employeeCar.licensePlate != null and !employeeCar.licensePlate.isEmpty()}" th:text="${employeeCar.licensePlate}"></td>
-                    <td th:if="${employeeCar.licensePlate == null or employeeCar.licensePlate.isEmpty()}">Not yet assigned</td>
-                    <td th:text="${employeeCar.carStatus}"></td>
-                    <td th:text="${employeeCar.selectedCar.make}"></td>
-                    <td th:text="${employeeCar.selectedCar.model}"></td>
-                    <td class="text-right" th:if="${employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE and employeeCar.carStatus != T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
-                        <a class="btn btn-info btn-xs" th:href="${#mvc.url('CCMC#viewCompanyCar').arg(0, employeeCar.licensePlate).build()}">View full details</a>
-                    </td>
-                    <td class="text-right" th:if="${employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE or employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
-                        <a th:class="${employeeCar.licensePlate != null and !employeeCar.licensePlate.isEmpty()} ? 'btn btn-info btn-xs' : 'btn btn-info btn-xs disableClick'"
-                           th:disabled="${employeeCar.licensePlate == null || employeeCar.licensePlate.isEmpty()}"
-                           th:href="${#mvc.url('CCMC#viewCompanyCarWithEmployee').arg(0, employeeCar.licensePlate).build()}">View full details</a>
-                    </td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>License Plate</th>
-                    <th>Car Status</th>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Details</th>
-                </tr>
-                </tfoot>
-            </table>
         </div>
     </div>
-
-
 </div>
 <div th:replace="fragments/general.fragment :: div.scripts"></div>
 <script>
-    $(document).ready( function () {
-        $('#carTable').dataTable( {
+    $(document).ready(function () {
+        $('#carTable').dataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
-        }).columnFilter({aoColumns: [
-            {},{ type: "checkbox", values: [ 'IN_USE', 'PENDING', 'NOT_USED','REMOVED'] },{},{}, null ]});
-    } );
+        }).columnFilter({
+            aoColumns: [
+                {}, {type: "checkbox", values: ['IN_USE', 'PENDING', 'NOT_USED', 'REMOVED']}, {}, {}, null]
+        });
+    });
 </script>
 </body>
 </html>

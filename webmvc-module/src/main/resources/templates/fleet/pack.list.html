@@ -7,12 +7,12 @@
 <div id="content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h4>Pack List</h4>
-
-                <div class="has-error" th:if="${error != null}">
-                    <span class="help-block" th:text="${error}"/>
+            <div class="col-sm-12">
+                <div class="view-heading">
+                    <h1>Pack list</h1>
+                    <hr/>
                 </div>
+                <div th:replace="./fragments/general.fragment :: error(${error})"></div>
                 <table class="table table-striped table-hover" id="packTable">
                     <thead>
                     <tr>
@@ -35,7 +35,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <a class="btn btn-info btn-lg" th:href="${#mvc.url('PMC#createPack').build()}">Add a new pack</a>
+                <a class="btn btn-info btn-lg btn-form" th:href="${#mvc.url('PMC#createPack').build()}">Add a new pack</a>
             </div>
         </div>
 
