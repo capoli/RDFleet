@@ -48,6 +48,12 @@
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                     <div th:if="${employee.currentOrder.orderedCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
                         <form action="#" th:action="@{/fleet/employees/car/status-in-use}" method="post" >
+
+                            <div class="form-group">
+                                <label>License Plate:</label>
+                                <input type="text" th:name="licensePlate" class="form-control"/>
+                            </div>
+
                             <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
                             <button type="submit" class="btn btn-info btn-lg">Employee has received the car</button>
                         </form>
@@ -63,80 +69,22 @@
                         <button type="submit" class="btn btn-danger btn-lg">Remove car from system</button>
                     </form>
                 </div>
-
-
             </div>
 
+            <div class="col-lg-12">
+                <h1 style="padding-left: 15px" th:text="${employee.currentOrder.orderedCar.selectedCar.make}"></h1>
 
-            <div class="col-lg-7">
-
-                <h1 th:text="${employee.currentOrder.orderedCar.selectedCar.make}"></h1>
-
-                <h3 th:text="${employee.currentOrder.orderedCar.selectedCar.model}"></h3>
-
-                <h4>Functional level: <span th:text="${employee.currentOrder.orderedCar.selectedCar.functionalLevel}"></span></h4>
-
-                <br/>
-                <table class="table table-striped">
-                    <tr>
-                        <td><h6>Tyre type:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.tyreType}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Fuel type:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.fuelType}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Towing bracket:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.towingBracketPossibility}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Gps:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.gps}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Bluetooth:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.bluetooth}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>co2:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.co2}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Fical hp:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.fiscHp}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Ideal km:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.idealKm}"></td>
-                    </tr>
-                    <tr>
-                        <td><h6>Max km:</h6></td>
-                        <td th:text="${employee.currentOrder.orderedCar.selectedCar.maxKm}"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-lg-5">
-                <div id="info" class="well">
-                    <h3 class="modal-header">Additional info</h3>
-                    <h4>Price: <span th:text="${employee.currentOrder.orderedCar.selectedCar.listPrice}"></span></h4>
-                    <h4>Benefit: <span th:text="${employee.currentOrder.orderedCar.selectedCar.benefit}"></span></h4>
-                    <h4>Amount for upgrade: <span th:text="${employee.currentOrder.orderedCar.selectedCar.amountUpgrade}"></span></h4>
-                    <h4>Amount for downgrade: <span th:text="${employee.currentOrder.orderedCar.selectedCar.amountDowngrade}"></span></h4>
-                    <h4>Time of delivery in days: <span th:text="${employee.currentOrder.orderedCar.selectedCar.timeOfDeliveryInDays.toDays()}"></span></h4>
+                <div class="col-lg-7">
+                    <th:block th:replace="./fragments/car.detail.fragment :: carDetailMain(${employee.currentOrder.orderedCar.selectedCar})"/>
                 </div>
-                <div id="packs" class="well"  th:if="${employee.currentOrder.orderedCar.selectedCar.packs.size() > 0}">
-                    <h3 class="modal-header">Packs</h3>
 
-                    <div th:each="pack : ${employee.currentOrder.orderedCar.selectedCar.packs}">
-                        <h4 th:text="${pack.name}"></h4>
-
-                        <div th:each="item : ${pack.items}">
-                            <h6 th:text="${item}"></h6>
-                        </div>
-                    </div>
+                <div class="col-lg-5">
+                    <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${employee.currentOrder.orderedCar.selectedCar})"></div>
+                    <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${employee.currentOrder.orderedCar.selectedCar})"></div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>

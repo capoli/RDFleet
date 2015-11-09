@@ -81,9 +81,15 @@ public class EmployeeCarRepositoryTest {
         repository.save(employeeCar);
     }
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void testLicensePlateNull() {
         employeeCar.setLicensePlate(null);
+        repository.save(employeeCar);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testLicensePlateInvalidStructure() {
+        employeeCar.setLicensePlate("XXX-225");
         repository.save(employeeCar);
     }
 

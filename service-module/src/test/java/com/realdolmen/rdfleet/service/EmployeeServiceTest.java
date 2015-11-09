@@ -1,10 +1,7 @@
 package com.realdolmen.rdfleet.service;
 
 import com.realdolmen.rdfleet.config.JpaConfig;
-import com.realdolmen.rdfleet.domain.CarStatus;
-import com.realdolmen.rdfleet.domain.EmployeeCar;
-import com.realdolmen.rdfleet.domain.Order;
-import com.realdolmen.rdfleet.domain.RdEmployee;
+import com.realdolmen.rdfleet.domain.*;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
 import com.realdolmen.rdfleet.service.util.ValidDomainObjectFactory;
@@ -246,7 +243,7 @@ public class EmployeeServiceTest {
     @Test
     public void testSetEmployeeCarInUseAllOk(){
         dbRdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.PENDING);
-        employeeService.setEmployeeCarInUse(dbRdEmployee);
+        employeeService.setEmployeeCarInUse(dbRdEmployee, "0-XXX-000");
 
         assertEquals(LocalDate.now(), dbRdEmployee.getCurrentOrder().getDateReceived());
         assertTrue(dbRdEmployee.getOrderHistory().contains(dbRdEmployee.getCurrentOrder()));
@@ -256,8 +253,23 @@ public class EmployeeServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarLicensePlateInvalid(){
+        dbRdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.PENDING);
+        employeeService.setEmployeeCarInUse(dbRdEmployee, "XXX-000");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetEmployeeCarLicensePlateExists(){
+        EmployeeCar car = ValidDomainObjectFactory.createEmployeeCar();
+        when(employeeCarRepositoryMock.findByLicensePlateIgnoreCase("1-ABC-000")).thenReturn(car);
+
+        dbRdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.PENDING);
+        employeeService.setEmployeeCarInUse(dbRdEmployee, "1-ABC-000");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void testSetEmployeeCarInUseEmployeeNull(){
-        employeeService.setEmployeeCarInUse(null);
+        employeeService.setEmployeeCarInUse(null, "0-XXX-000");
     }
 
 
@@ -265,28 +277,28 @@ public class EmployeeServiceTest {
     public void testSetEmployeeCarInUseEmployeeIdNull(){
         dbRdEmployee.setId(null);
 
-        employeeService.setEmployeeCarInUse(dbRdEmployee);
+        employeeService.setEmployeeCarInUse(dbRdEmployee, "0-XXX-000");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetEmployeeCarInUseOrderNull(){
         dbRdEmployee.setCurrentOrder(null);
 
-        employeeService.setEmployeeCarInUse(dbRdEmployee);
+        employeeService.setEmployeeCarInUse(dbRdEmployee, "0-XXX-000");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetEmployeeCarInUseEmployeeCarNull(){
         dbRdEmployee.getCurrentOrder().setOrderedCar(null);
 
-        employeeService.setEmployeeCarInUse(dbRdEmployee);
+        employeeService.setEmployeeCarInUse(dbRdEmployee, "0-XXX-000");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetEmployeeCarInUseStatusNotPending(){
         dbRdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.IN_USE);
 
-        employeeService.setEmployeeCarInUse(dbRdEmployee);
+        employeeService.setEmployeeCarInUse(dbRdEmployee, "0-XXX-000");
     }
 
     //Tests for setting the employee car to the free pool

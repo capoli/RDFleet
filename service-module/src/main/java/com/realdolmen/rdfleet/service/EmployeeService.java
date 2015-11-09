@@ -3,15 +3,12 @@ package com.realdolmen.rdfleet.service;
 import com.realdolmen.rdfleet.domain.*;
 import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
-import com.realdolmen.rdfleet.repositories.OrderRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
-import com.realdolmen.rdfleet.utils.LicensePlateGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +111,7 @@ public class EmployeeService {
      */
     private void modifyFunctionalLevel(RdEmployee rdEmployee, boolean increment) {
         if (rdEmployee == null)
-            throw new IllegalArgumentException("The employee to be removed cannot be null.");
+            throw new IllegalArgumentException("The employee to be modified cannot be null.");
         if (rdEmployee.getId() == null)
             throw new IllegalArgumentException(String.format("The id of employee %s %s is null so it did not originate out of the database.", rdEmployee.getFirstName(), rdEmployee.getLastName()));
 
@@ -140,9 +137,9 @@ public class EmployeeService {
      *
      * @param rdEmployee the employee whos car should be set to in-use
      */
-    public void setEmployeeCarInUse(RdEmployee rdEmployee) {
+    public void setEmployeeCarInUse(RdEmployee rdEmployee, String givenLicensePlate) {
         if (rdEmployee == null || rdEmployee.getId() == null)
-            throw new IllegalArgumentException("The employee cannot was not found.");
+            throw new IllegalArgumentException("The employee was not found.");
 
         Order currentOrder = rdEmployee.getCurrentOrder();
 
@@ -157,9 +154,18 @@ public class EmployeeService {
         if (employeeCar.getCarStatus() != CarStatus.PENDING)
             throw new IllegalArgumentException("The car is not in PENDING state.");
 
+        String upperCaseLicensePlate = givenLicensePlate.toUpperCase();
+        if(!upperCaseLicensePlate.matches("^\\d-[A-Z]{3}-\\d{3}$"))
+            throw new IllegalArgumentException("The license plate is not valid. It must have the following pattern: 0-XXX-000");
+
+        EmployeeCar byLicensePlateIgnoreCase = employeeCarRepository.findByLicensePlateIgnoreCase(upperCaseLicensePlate);
+        if(byLicensePlateIgnoreCase != null)
+            throw new IllegalArgumentException("This license plate already exists in the system. Please provide a new one.");
+
         rdEmployee.getOrderHistory().add(rdEmployee.getCurrentOrder());
         rdEmployee.getCurrentOrder().setDateReceived(LocalDate.now());
         employeeCar.setCarStatus(CarStatus.IN_USE);
+        employeeCar.setLicensePlate(upperCaseLicensePlate);
 
         rdEmployeeRepository.save(rdEmployee);
     }
@@ -230,11 +236,6 @@ public class EmployeeService {
         if(employeeCar.getSelectedCar() == null) throw new IllegalArgumentException("Car for employeeCar can not be null");
         if(order.getAmountPaidByCompany() == null) throw new IllegalArgumentException("amountPaidByCompany can not be null");
         if(order.getAmountPaidByEmployee() == null) throw new IllegalArgumentException("amountPaidByEmployee can not be null");
-        String licensePlate;
-        do {
-            licensePlate = LicensePlateGenerator.generateLicensePlate();
-        } while (employeeCarRepository.findByLicensePlateIgnoreCase(licensePlate) != null);
-        employeeCar.setLicensePlate(licensePlate);
         assignOrderToEmployee(rdEmployee, order);
     }
 

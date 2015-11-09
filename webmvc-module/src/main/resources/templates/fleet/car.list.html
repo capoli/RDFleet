@@ -30,6 +30,15 @@
                     <td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('CMC#removeFromOrderList').arg(0, car.id).build()}">Remove from orderable list</a></td>
                 </tr>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>FunctionalLevel</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                </tr>
+                </tfoot>
             </table>
             <a class="btn btn-info btn-lg" th:href="${#mvc.url('CMC#createCar').build()}">Add a new car</a>
         </div>
@@ -40,12 +49,13 @@
 <div th:replace="fragments/fragments :: div.scripts"></div>
 <script>
     $(document).ready( function () {
-        $('#carTable').DataTable({
+        $('#carTable').dataTable( {
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
-        });
+        }).columnFilter({aoColumns: [
+            {},{},{}, null, null ]});
     } );
 </script>
 </body>
