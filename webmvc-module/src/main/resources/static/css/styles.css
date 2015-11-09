@@ -135,3 +135,6 @@ body {
     }
 }
 
+.disableClick {
+    pointer-events: none;
+}

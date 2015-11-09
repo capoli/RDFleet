@@ -23,7 +23,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="employeeCar : ${employeeCarList}">
-                    <td th:text="${employeeCar.licensePlate}"></td>
+                    <td th:if="${employeeCar.licensePlate != null and !employeeCar.licensePlate.isEmpty()}" th:text="${employeeCar.licensePlate}"></td>
+                    <td th:if="${employeeCar.licensePlate == null or employeeCar.licensePlate.isEmpty()}">Not yet assigned</td>
                     <td th:text="${employeeCar.carStatus}"></td>
                     <td th:text="${employeeCar.selectedCar.make}"></td>
                     <td th:text="${employeeCar.selectedCar.model}"></td>
@@ -31,7 +32,9 @@
                         <a class="btn btn-info btn-xs" th:href="${#mvc.url('CCMC#viewCompanyCar').arg(0, employeeCar.licensePlate).build()}">View full details</a>
                     </td>
                     <td class="text-right" th:if="${employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).IN_USE or employeeCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
-                        <a class="btn btn-info btn-xs" th:href="${#mvc.url('CCMC#viewCompanyCarWithEmployee').arg(0, employeeCar.licensePlate).build()}">View full details</a>
+                        <a th:class="${employeeCar.licensePlate != null and !employeeCar.licensePlate.isEmpty()} ? 'btn btn-info btn-xs' : 'btn btn-info btn-xs disableClick'"
+                           th:disabled="${employeeCar.licensePlate == null || employeeCar.licensePlate.isEmpty()}"
+                           th:href="${#mvc.url('CCMC#viewCompanyCarWithEmployee').arg(0, employeeCar.licensePlate).build()}">View full details</a>
                     </td>
                 </tr>
                 </tbody>
