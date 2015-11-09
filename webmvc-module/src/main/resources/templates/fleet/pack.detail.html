@@ -21,8 +21,8 @@
                 <span class="help-block" th:text="${error}"/>
             </div>
 
-            <h4 th:if="${pack.id == null}">Create an option</h4>
-            <h4 th:if="${pack.id != null}">Edit an option</h4>
+            <h4 th:if="${pack.id == null}">Create an item</h4>
+            <h4 th:if="${pack.id != null}">Edit an item</h4>
 
             <form id="pack" action="#" th:action="@{/fleet/packs/}" method="post" th:object="${pack}">
 
@@ -32,24 +32,36 @@
                     <span th:if="${#fields.hasErrors('name')}" class="help-block" th:errors="*{name}"></span>
                 </div>
 
-
-                <div class="form-group" th:class="${#fields.hasErrors('items')}? 'has-error'">
-                    <label th:for="${#ids.next('items')}">Items:</label>
-
-                    <input type="text" th:field="*{items}" class="form-control"/>
-
-                    <span th:if="${#fields.hasErrors('items')}" class="help-block" th:errors="*{items}"></span>
-                </div>
+                <!--<table>-->
+                    <!--<tr th:each="item, rowStat : *{items}">-->
+                        <!--<td><input type="text" th:field="*{items[__${rowStat.index}__]}" placeholder="item..."/></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
 
 
                 <div class="entry input-group col-xs-3">
-                    <input class="form-control" name="fields[]" type="text" placeholder="Type something"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-success btn-add" type="button">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    </span>
+                    <div th:value="itemList" th:each="item, rowStat : *{items}">
+                        <input class="form-control" name="fields[]" type="text" th:field="*{items[__${rowStat.index}__]}" placeholder="Add an item"/>
+                        <span class="input-group-btn">
+                            <button th:if="${rowStat.index == rowStat.size - 1}" class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                            <button th:if="${rowStat.index != rowStat.size - 1}" class="btn btn-danger btn-remove" type="button">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        </span>
+                    </div>
                 </div>
+
+
+                <!--<div class="entry input-group col-xs-3">-->
+                    <!--<input class="form-control" name="fields[]" type="text" placeholder="Add an item"/>-->
+                    <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-success btn-add" type="button">-->
+                            <!--<span class="glyphicon glyphicon-plus"></span>-->
+                        <!--</button>-->
+                    <!--</span>-->
+                <!--</div>-->
 
                 <input type="hidden" th:field="*{id}"/>
                 <input type="hidden" th:field="*{version}"/>
