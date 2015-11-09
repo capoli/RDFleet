@@ -107,3 +107,7 @@ body {
     }
 }
 
+.disableClick {
+    pointer-events: none;
+    color: red;
+}
