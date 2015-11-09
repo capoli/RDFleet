@@ -1,52 +1,72 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragment="head">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>RDFleet</title>
-    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <link th:href="@{/css/chosen.min.css}" rel="stylesheet"/>
     <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.css"/>-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/ju-1.11.4/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/r/ju-1.11.4/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+          crossorigin="anonymous"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 
 </head>
 <body>
-<div class="navbar navbar-default" th:fragment="header">
-    <div class="container">
-        <a class="navbar-brand" th:href="@{/index}"><span class="rd-red">RD</span><span class="rd-blue">Fleet</span></a>
+<div class="navbar navbar-fixed-top" th:fragment="header">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/index}"><span class="rd-red">RD</span><span class="rd-blue">Fleet</span></a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown" sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Browse<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')"
+                               th:href="@{/rd/cars}">Browse
+                            cars catalog</a></li>
+                        <li><a id="orderCarCatalog" sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')"
+                               th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
+                        <li><a id="orderFreePoolCarCatalog"
+                               sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')"
+                               th:href="@{/rd/cars/freepool}">Browse cars freepool</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Manage<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Car models</a>
+                        </li>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">Company
+                            cars</a></li>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/options}">Car options</a>
+                        </li>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
-        <ul class="nav navbar-nav">
-            <li class="dropdown" sec:authorize="hasRole('ROLE_RDEMPLOYEE')">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employee <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars}">Browse cars catalog</a></li>
-                    <li><a id="orderCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
-                    <li><a id="orderFreePoolCarCatalog" sec:authorize="hasRole('ROLE_RDEMPLOYEE')" th:href="@{/rd/cars/freepool}">Browse cars freepool</a></li>
-                </ul>
-            </li>
-            <li class="dropdown" sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Car models</a></li>
-                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">Company cars</a></li>
-                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/options}">Car options</a></li>
-                    <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            <li><a sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></a></li>
-            <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
-            <li><a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
-        </ul>
-        <div style="visibility: hidden" sec:authorize="isAuthenticated()"><span id="useremail" sec:authentication="name"></span></div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
+                <li><a sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
+            </ul>
+        </div>
+        <div style="visibility: hidden" sec:authorize="isAuthenticated()"><span id="useremail"
+                                                                                sec:authentication="name"></span></div>
     </div>
 </div>
 <div class="page-header text-center" id="page-header">
     <h1><span class="rd-red">Real</span><span class="rd-blue">Dolmen</span> Fleet</h1>
+
     <p class="lead">Welcome to the <span class="rd-red">RD</span><span class="rd-blue">Fleet</span> application!</p>
 </div>
 <div th:fragment="error(error)">
@@ -61,19 +81,22 @@
     <script th:src="@{/js/vfs_fonts.js}"></script>
     <!--<script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.js"></script>-->
 
-    <script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/r/ju-1.11.4/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,b-1.0.3,b-html5-1.0.3,r-1.0.7/datatables.min.js"></script>
     <script th:src="@{/js/jquery.dataTables.columnFilter.js}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+            integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+            crossorigin="anonymous"></script>
 
     <script type="text/javascript">
         $(document).load(function () {
             var email = $('#useremail').text();
-            if(email !== '') {
+            if (email !== '') {
                 $.ajax({
-                    method:'get',
-                    url:'/api/canOrderCar/' + email,
-                    success: function(data) {
-                        if(data) {
+                    method: 'get',
+                    url: '/api/canOrderCar/' + email,
+                    success: function (data) {
+                        if (data) {
                             $('#orderCarCatalog').show();
                             $('#orderFreePoolCarCatalog').show();
                         }

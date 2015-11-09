@@ -1,25 +1,109 @@
 .container {
-  margin: 0 auto;
-  max-width: 960px;
+    margin: 0 auto;
+    max-width: 960px;
 }
 
 .rd-blue {
-  color: #009BD8;
+    color: #009BD8;
 
 }
 
 .rd-red {
-  color: #ED2B29;
+    color: #ED2B29;
 }
 
 .modal-header {
-  margin-top: 0;
-  padding-top: 0;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 #carOptionsForm .chosen-choices {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-height: 34px;
-  padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 34px;
+    padding: 6px 12px;
 }
+
+body {
+    background: url(../img/bg1.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#content {
+    position: fixed;
+    top: 71px;
+    left: 2.5%;
+    width: 95%;
+    height: 90%;
+    margin: 0;
+}
+
+#content-login-form {
+    position: fixed;
+    top: 71px;
+    left: 7.5%;
+    width: 85%;
+    height: 50%;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    margin-bottom: 2em;
+    min-height: 93.5%;
+    overflow: auto;
+    padding: 2em 3em 0 3em;
+    width: 100%;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.view-heading {
+    margin-bottom: 2em;
+    padding-left: 3px;
+}
+
+.navbar-fixed-top {
+    background: white;
+}
+
+@media (min-width: 768px) {
+    #content {
+        top: 71px;
+        left: 10%;
+        width: 80%;
+        height: 90%;
+        margin: 0;
+    }
+
+    #content-login-form {
+        position: fixed;
+        top: 71px;
+        left: 25%;
+        width: 50%;
+        height: 30%;
+        margin: 0;
+    }
+}
+
+@media (min-height: 400px) {
+    #content-login-form {
+        top: 30%;
+    }
+}
+
+@media (max-width: 768px) and (min-height: 400px) {
+    #content-login-form {
+        top: 25%;
+    }
+}
+
