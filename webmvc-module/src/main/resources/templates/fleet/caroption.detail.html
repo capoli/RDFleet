@@ -7,33 +7,35 @@
 <div id="content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="has-error" th:if="${error != null}">
-                    <span class="help-block" th:text="${error}"/>
-                </div>
+            <div class="view-heading">
+                <h1 th:if="${carOption.id == null}">Create an option</h1>
+                <h1 th:if="${carOption.id != null}">Edit option</h1>
+                <hr/>
+            </div>
+            <div th:replace="./fragments/general.fragment :: error(${error})"></div>
 
-                <h4 th:if="${carOption.id == null}">Create an option</h4>
-                <h4 th:if="${carOption.id != null}">Edit an option</h4>
+            <form id="edit-view" action="#" th:action="@{/fleet/options/}" method="post" th:object="${carOption}">
 
-                <form id="edit-view" action="#" th:action="@{/fleet/options/}" method="post" th:object="${carOption}">
+                <div class="form-group"
+                     th:class="${#fields.hasErrors('description')}? 'has-error form-group':'form-group'">
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('description')}">Description:</label>
 
-                    <div class="form-group" th:class="${#fields.hasErrors('description')}? 'has-error'">
-                        <label th:for="${#ids.next('description')}">Description:</label>
+                    <div class="col-sm-9">
                         <input type="text" th:field="*{description}" class="form-control"/>
                         <span th:if="${#fields.hasErrors('description')}" class="help-block"
                               th:errors="*{description}"></span>
                     </div>
+                </div>
 
-                    <input type="hidden" th:field="*{id}"/>
-                    <input type="hidden" th:field="*{version}"/>
-                <span th:if="${carOption.id == null}">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </span>
-                <span th:if="${carOption.id != null}">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </span>
-                </form>
-            </div>
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{version}"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button th:if="${carOption.id == null}" type="submit" class="btn btn-primary col-sm-4 btn-form form-button">Create</button>
+                        <button th:if="${carOption.id != null}" type="submit" class="btn btn-primary col-sm-4 btn-form form-button">Update</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

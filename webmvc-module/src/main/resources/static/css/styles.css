@@ -53,10 +53,10 @@ body {
 .container {
     background: white;
     margin-bottom: 2em;
-    min-height: 93.5%;
+    /*min-height: 93.5%;*/
     max-height: 95%;
     overflow: auto;
-    padding: 2em 3em 0 3em;
+    padding: 2em 3em 2em 3em;
     width: 100%;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
@@ -98,32 +98,33 @@ body {
     padding-left: 0;
 }
 
-.btn-form {
-    margin-bottom: 15px;
-}
+/*.btn-form {*/
+    /*margin-bottom: 15px;*/
+/*}*/
 
 @media (min-width: 768px) {
-}
-.control-label {
-    text-align: left;
-}
-#content {
-    top: 71px;
-    left: 10%;
-    width: 80%;
-    height: 90%;
-    margin: 0;
+    .control-label {
+        text-align: left;
+    }
 
-}
-#content-login-form {
-    position: fixed;
-    top: 71px;
-    left: 25%;
-    width: 50%;
-    height: 35%;
-    margin: 0;
-}
+    #content {
+        top: 71px;
+        left: 10%;
+        width: 80%;
+        height: 90%;
+        margin: 0;
 
+    }
+
+    #content-login-form {
+        position: fixed;
+        top: 71px;
+        left: 25%;
+        width: 50%;
+        height: 35%;
+        margin: 0;
+    }
+}
 
 @media (min-width: 1530px) {
     /*#content {*/
