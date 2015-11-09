@@ -20,7 +20,7 @@
 <div th:fragment="carDetailMain(car)">
     <h3 th:text="${car.model}"></h3>
 
-    <h4>Functional level: <span th:text="${car.functionalLevel}"></span></h4>
+    <h4><span th:text="#{msgCar.funcLvl}">Functional level</span>: <span th:text="${car.functionalLevel}"></span></h4>
 
     <br/>
     <table class="table table-striped">

@@ -298,6 +298,15 @@ public class EmployeeService {
         return checkIfEmployeeCanOrderCar(email);
     }
 
+    public boolean employeeCanOrderEmployeeCar(String email, Long employeeCarId) {
+        if (employeeCarId == null) throw new IllegalArgumentException("EmployeeCar id can not be null");
+        if (employeeCarId < 0) throw new IllegalArgumentException("EmployeeCar id can not be a negative number");
+        EmployeeCar employeeCar = employeeCarRepository.findOne(employeeCarId);
+        if (employeeCar == null) throw new IllegalArgumentException("EmployeeCar object can not be null");
+        return checkIfEmployeeCanOrderCar(email)
+                && employeeCar.getCarStatus() == CarStatus.NOT_USED;
+    }
+
     //TODO: test + look if orderable
     public boolean employeeCanOrderNewCar(String email, Long carId) {
         if (carId == null) throw new IllegalArgumentException("Car id can not be null");
