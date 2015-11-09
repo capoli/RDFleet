@@ -86,24 +86,41 @@ body {
  background: #cc0000;
 }
 
-@media (min-width: 768px) {
-    #content {
-        top: 71px;
-        left: 10%;
-        width: 80%;
-        height: 90%;
-        margin: 0;
-    }
-
-    #content-login-form {
-        position: fixed;
-        top: 71px;
-        left: 25%;
-        width: 50%;
-        height: 35%;
-        margin: 0;
-    }
+#edit-view .form-group .col-sm-9 {
+    margin-bottom: 10px;
 }
+
+.form-button {
+    margin-top: 20px;
+}
+
+.checkbox-label, .checkbox-input {
+    padding-left: 0;
+}
+
+@media (min-width: 768px) {
+}
+.control-label {
+    text-align: left;
+}
+#content {
+    top: 71px;
+    left: 10%;
+    width: 80%;
+    height: 90%;
+    margin: 0;
+
+}
+#content-login-form {
+    position: fixed;
+    top: 71px;
+    left: 25%;
+    width: 50%;
+    height: 35%;
+    margin: 0;
+}
+
+
 @media (min-width: 1530px) {
     /*#content {*/
         /*top: 71px;*/
