@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                     .antMatchers("/rd/**").hasAnyRole("RDEMPLOYEE", "FLEETEMPLOYEE")
                     .antMatchers("/fleet/**").hasRole("FLEETEMPLOYEE")
+                    .antMatchers("/index", "/").authenticated()
                     .anyRequest().permitAll()
                 .and()
                     .formLogin()
@@ -43,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/")
+                    .logoutSuccessUrl("/login")
                 .and()
                     .rememberMe();
     }
