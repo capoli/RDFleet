@@ -32,15 +32,8 @@
                     <span th:if="${#fields.hasErrors('name')}" class="help-block" th:errors="*{name}"></span>
                 </div>
 
-                <!--<table>-->
-                    <!--<tr th:each="item, rowStat : *{items}">-->
-                        <!--<td><input type="text" th:field="*{items[__${rowStat.index}__]}" placeholder="item..."/></td>-->
-                    <!--</tr>-->
-                <!--</table>-->
-
-
-                <div class="entry input-group col-xs-3">
-                    <div th:value="itemList" th:each="item, rowStat : *{items}">
+                <div class="input-group col-xs-3">
+                    <div class="entry" th:each="item, rowStat : *{items}">
                         <input class="form-control" name="fields[]" type="text" th:field="*{items[__${rowStat.index}__]}" placeholder="Add an item"/>
                         <span class="input-group-btn">
                             <button th:if="${rowStat.index == rowStat.size - 1}" class="btn btn-success btn-add" type="button">
@@ -51,17 +44,16 @@
                             </button>
                         </span>
                     </div>
+
+                    <div class="entry" th:if="${pack.items == null or pack.items.isEmpty()}">
+                        <input class="form-control" name="fields[]" type="text" th:field="${pack.items[0]}" placeholder="Add an item"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
                 </div>
-
-
-                <!--<div class="entry input-group col-xs-3">-->
-                    <!--<input class="form-control" name="fields[]" type="text" placeholder="Add an item"/>-->
-                    <!--<span class="input-group-btn">-->
-                        <!--<button class="btn btn-success btn-add" type="button">-->
-                            <!--<span class="glyphicon glyphicon-plus"></span>-->
-                        <!--</button>-->
-                    <!--</span>-->
-                <!--</div>-->
 
                 <input type="hidden" th:field="*{id}"/>
                 <input type="hidden" th:field="*{version}"/>
@@ -84,16 +76,21 @@
         $(document).on('click', '.btn-add', function (e) {
             e.preventDefault();
 
-//                var controlForm = $('.controls form:first'),
             var form = $('#pack'),
-                    currentEntry = $(this).parents('.entry:first'),
-//                        newEntry = $(currentEntry.clone()).appendTo($(this).parents('.entry:last').parent());
-                    newEntry = $(currentEntry.clone()).insertAfter($(this).parents('.entry:last'));
+                    currentEntry = $(this).parents('.entry'),
+                    newEntry = $(currentEntry.clone()).insertAfter(currentEntry);
             console.log(form);
             console.log(currentEntry);
             console.log(newEntry);
-            newEntry.find('input').val('');
-            form.find('.entry:not(:last) .btn-add')
+            var $input = newEntry.find('input');
+            var oldName = $input.attr('name');
+
+            var regexGroups = /^items\[(\d+)\]$/.exec(oldName);
+            var oldIndex = parseInt(regexGroups[1], 10);
+            $input.attr('name', 'items[' + ++oldIndex + ']');
+            $input.val('');
+
+            currentEntry.find('button')
                     .removeClass('btn-add').addClass('btn-remove')
                     .removeClass('btn-success').addClass('btn-danger')
                     .html('<span class="glyphicon glyphicon-minus"></span>');
@@ -104,14 +101,6 @@
             $(this).parent().parent().remove();
             console.log('removed');
         });
-//            .on('click', '.btn-remove', function(e)
-//            {
-//                e.target.
-////                $(this).parents('.entry:first').remove();
-//
-//                e.preventDefault();
-//                return false;
-//            });
     });
 </script>
 </body>

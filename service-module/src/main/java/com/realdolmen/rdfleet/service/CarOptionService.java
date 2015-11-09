@@ -14,7 +14,7 @@ public class CarOptionService {
     private CarOptionRepository carOptionRepository;
 
     @Autowired
-    public void setCarRepository(CarOptionRepository carOptionRepository) {
+    public void setCarOptionRepository(CarOptionRepository carOptionRepository) {
         this.carOptionRepository = carOptionRepository;
     }
 
