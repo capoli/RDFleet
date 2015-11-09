@@ -102,6 +102,39 @@ body {
     /*margin-bottom: 15px;*/
 /*}*/
 
+.entry .col-sm-8 {
+    padding-right: 0;
+    padding-left: 6px;
+}
+
+.entry .col-sm-1, .entry .col-sm-3 {
+    padding-left: 0;
+}
+
+.entry-margin-top {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .entry .col-sm-8 {
+        float:left;
+        min-width: 90%;
+        padding-left: 0;
+    }
+
+    .entry .col-sm-1 {
+        float: left;
+    }
+
+    .entry .control-label {
+        display: block;
+    }
+
+    .pack-items-btn {
+        clear: both;
+    }
+}
+
 @media (min-width: 768px) {
     .control-label {
         text-align: left;

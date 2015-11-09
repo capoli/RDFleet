@@ -16,68 +16,103 @@
 <div id="content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="has-error" th:if="${error != null}">
-                    <span class="help-block" th:text="${error}"/>
+            <div class="col-sm-12">
+                <div class="view-heading">
+                    <h1 th:if="${pack.id == null}">Create an item</h1>
+
+                    <h1 th:if="${pack.id != null}">Edit item</h1>
+                    <hr/>
                 </div>
+                <div th:replace="./fragments/general.fragment :: error(${error})"></div>
 
-            <h4 th:if="${pack.id == null}">Create an item</h4>
-            <h4 th:if="${pack.id != null}">Edit an item</h4>
+                <form id="edit-view" action="#" th:action="@{/fleet/packs/}" method="post" th:object="${pack}">
 
-            <form id="pack" action="#" th:action="@{/fleet/packs/}" method="post" th:object="${pack}">
+                    <div class="form-group"
+                         th:class="${#fields.hasErrors('name')}? 'has-error form-group':'form-group'">
+                        <label class="col-sm-3 control-label" th:for="${#ids.next('name')}">Name:</label>
 
-                <div class="form-group" th:class="${#fields.hasErrors('name')}? 'has-error'">
-                    <label th:for="${#ids.next('name')}">Name:</label>
-                    <input type="text" th:field="*{name}" class="form-control"/>
-                    <span th:if="${#fields.hasErrors('name')}" class="help-block" th:errors="*{name}"></span>
-                </div>
+                        <div class="col-sm-9">
+                            <input type="text" th:field="*{name}" class="form-control"/>
+                            <span th:if="${#fields.hasErrors('name')}" class="help-block" th:errors="*{name}"></span>
+                        </div>
+                    </div>
 
-                <div class="input-group col-xs-3">
-                    <div class="entry" th:each="item, rowStat : *{items}">
-                        <input class="form-control" name="fields[]" type="text" th:field="*{items[__${rowStat.index}__]}" placeholder="Add an item"/>
-                        <span class="input-group-btn">
-                            <button th:if="${rowStat.index == rowStat.size - 1}" class="btn btn-success btn-add" type="button">
+                    <div class="form-group col-sm-12">
+                        <div class="entry" th:each="item, rowStat : *{items}">
+                            <div th:class="${rowStat.index ne 0 ? 'entry-margin-top':''}">
+                                <label th:if="${rowStat.index eq 0}" class="control-label col-sm-3">Items:</label>
+
+                                <div th:class="${rowStat.index eq 0 ? 'col-sm-8':'col-sm-8 col-sm-offset-3'}">
+                                    <input class="form-control" name="fields[]" type="text"
+                                           th:field="*{items[__${rowStat.index}__]}" placeholder="Add an item"/>
+                                </div>
+                            <span class="col-sm-1 input-group-btn">
+                                <button th:if="${rowStat.index == rowStat.size - 1}" class="btn btn-success btn-add"
+                                type="button">
                                 <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                            <button th:if="${rowStat.index != rowStat.size - 1}" class="btn btn-danger btn-remove" type="button">
-                                <span class="glyphicon glyphicon-minus"></span>
-                            </button>
-                        </span>
+                                </button>
+                                <!--<button class="btn btn-danger btn-remove"-->
+                                <button th:if="${rowStat.index != rowStat.size - 1}" class="btn btn-danger btn-remove"
+                                        type="button">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+
+                        <div class="entry" th:if="${pack.items == null or pack.items.isEmpty()}">
+                        <!--<div class="entry">-->
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <input class="form-control" name="fields[]" type="text" th:field="${pack.items[0]}"
+                                       placeholder="Add an item" th:if="${pack.items == null or pack.items.isEmpty()}"/>
+                                <!--<input class="form-control" name="fields[]" type="text"-->
+                                       <!--placeholder="Add an item" th:if="${pack.items != null and !pack.items.isEmpty()}"/>-->
+                            </div>
+                            <span class="col-sm-1 input-group-btn">
+                                <button class="btn btn-success btn-add" type="button">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="entry" th:if="${pack.items == null or pack.items.isEmpty()}">
-                        <input class="form-control" name="fields[]" type="text" th:field="${pack.items[0]}" placeholder="Add an item"/>
-                        <span class="input-group-btn">
-                            <button class="btn btn-success btn-add" type="button">
-                                <span class="glyphicon glyphicon-plus"></span>
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{version}"/>
+
+                    <div class="form-group pack-items-btn">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button th:if="${pack.id == null}" type="submit"
+                                    class="btn btn-primary col-sm-4 form-button">Create
                             </button>
-                        </span>
+                            <button th:if="${pack.id != null}" type="submit"
+                                    class="btn btn-primary col-sm-4 form-button">Update
+                            </button>
+                        </div>
                     </div>
-                </div>
-
-                <input type="hidden" th:field="*{id}"/>
-                <input type="hidden" th:field="*{version}"/>
-
-                <div class="form-group" style="margin-top: 10px">
-                    <div>
-                        <button th:if="${pack.id == null}" type="submit" class="btn btn-primary">Create</button>
-                        <button th:if="${pack.id != null}" type="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
 
 
     </div>
 </div>
 <div th:replace="fragments/general.fragment :: div.scripts"></div>
-<script>
+<script type="text/javascript">
+//    $(document).ready(function() {
+//        var sizeOfEntry = $('.entry').size();
+//        if(sizeOfEntry > 1) {
+//            var indexForLast = sizeOfEntry - 1;
+//            $('.entry:last-child div').attr({
+//                'name': 'items['+indexForLast+']',
+//                'id': 'items'+indexForLast
+//            });
+//        }
+//    });
     $(function () {
         $(document).on('click', '.btn-add', function (e) {
             e.preventDefault();
 
-            var form = $('#pack'),
+            var form = $('#edit-view'),
                     currentEntry = $(this).parents('.entry'),
                     newEntry = $(currentEntry.clone()).insertAfter(currentEntry);
             console.log(form);
