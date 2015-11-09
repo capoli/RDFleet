@@ -3,142 +3,16 @@
 <head th:replace="fragments/general.fragment :: head"></head>
 <body>
 <div th:replace="fragments/general.fragment :: header"></div>
-
-<!--<div class="container">-->
-    <!--<div id="login-wraper">-->
-    <!--<form name="f" th:action="@{/login}" method="post" class="form login-form">-->
-    <!--<legend>Sign in to <span class="rd-red">RD</span><span class="rd-blue">Fleet</span></legend>-->
-
-    <!--<div class="body col-sm-12">-->
-    <!--<label class="col-sm-2 control-label">Email</label>-->
-    <!--<input type="email" name="username" class="col-sm-10 form-control"-->
-    <!--id="username" placeholder="enter your email" value=""/>-->
-
-    <!--<br/>-->
-
-    <!--<label class="col-sm-2 control-label">Password</label>-->
-    <!--<input type="password" name="password" class="col-sm-10 form-control"-->
-    <!--id="password" placeholder="enter your password" value=""/>-->
-    <!--</div>-->
-
-    <!--<div class="footer">-->
-
-    <!--&lt;!&ndash;<div class="footer">&ndash;&gt;-->
-    <!--&lt;!&ndash;<label class="checkbox inline">&ndash;&gt;-->
-    <!--&lt;!&ndash;<input type="checkbox" id="inlineCheckbox1" value="option1"/> Remember me&ndash;&gt;-->
-    <!--&lt;!&ndash;</label>&ndash;&gt;-->
-    <!--<label class="checkbox inline">-->
-    <!--<input type="checkbox" name="remember_me"-->
-    <!--id="inlineCheckbox1"/> Remember me-->
-    <!--</label>-->
-    <!--<button type="submit" class="btn btn-success" id="submit" name="submit">Login</button>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-    <!--&lt;!&ndash;<label for="username" class="col-sm-2 control-label">Email:</label>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<div class="col-sm-10">&ndash;&gt;-->
-    <!--&lt;!&ndash;<input type="email" name="username" class="form-control"&ndash;&gt;-->
-    <!--&lt;!&ndash;id="username" placeholder="enter your email" value=""/>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-    <!--&lt;!&ndash;<label for="username" class="col-sm-2 control-label">Password:</label>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<div class="col-sm-10">&ndash;&gt;-->
-    <!--&lt;!&ndash;<input type="password" name="password" class="form-control"&ndash;&gt;-->
-    <!--&lt;!&ndash;id="password" placeholder="enter your password" value=""/>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-sm-offset-2 col-sm-10">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="checkbox">&ndash;&gt;-->
-    <!--&lt;!&ndash;<label>&ndash;&gt;-->
-    <!--&lt;!&ndash;<input type="checkbox" name="remember_me"&ndash;&gt;-->
-    <!--&lt;!&ndash;id="remember_me"/> Remember me&ndash;&gt;-->
-    <!--&lt;!&ndash;</label>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-sm-offset-2 col-sm-10">&ndash;&gt;-->
-    <!--&lt;!&ndash;<button type="submit" class="btn btn-primary" id="submit" name="submit">Sign in</button>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--</form>-->
-    <!--<form class="form login-form">-->
-    <!--<legend>Sign in to <span class="rd-red">RD</span><span class="rd-blue">Fleet</span></legend>-->
-
-    <!--<div class="body">-->
-    <!--<label>Username</label>-->
-    <!--<input type="text"/>-->
-
-    <!--<label>Password</label>-->
-    <!--<input type="password"/>-->
-    <!--</div>-->
-
-    <!--<div class="footer">-->
-    <!--<label class="checkbox inline">-->
-    <!--<input type="checkbox" id="inlineCheckbox1" value="option1"/> Remember me-->
-    <!--</label>-->
-
-    <!--<button type="submit" class="btn btn-success">Login</button>-->
-    <!--</div>-->
-
-    <!--</form>-->
-<!--</div>-->
-<!--<div th:replace="fragments/general.fragment :: div#page-header"></div>-->
-<!--<div class="row">-->
-<!--<div class="col-sm-12 view-heading">-->
-<!--<h1>Login</h1>-->
-<!--<h4>Fill in your credentials below:</h4>-->
-<!--</div>-->
-<!--<form name="f" th:action="@{/login}" method="post" class="form-horizontal">-->
-<!--<div class="form-group">-->
-<!--<label for="username" class="col-sm-2 control-label">Email:</label>-->
-
-<!--<div class="col-sm-10">-->
-<!--<input type="email" name="username" class="form-control"-->
-<!--id="username" placeholder="enter your email" value=""/>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="username" class="col-sm-2 control-label">Password:</label>-->
-
-<!--<div class="col-sm-10">-->
-<!--<input type="password" name="password" class="form-control"-->
-<!--id="password" placeholder="enter your password" value=""/>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<div class="col-sm-offset-2 col-sm-10">-->
-<!--<div class="checkbox">-->
-<!--<label>-->
-<!--<input type="checkbox" name="remember_me"-->
-<!--id="remember_me"/> Remember me-->
-<!--</label>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<div class="col-sm-offset-2 col-sm-10">-->
-<!--<button type="submit" class="btn btn-primary" id="submit" name="submit">Sign in</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div>-->
-<!--<hr/>-->
-<!--</div>-->
 <div id="content-login-form">
     <div class="container">
         <div class="row">
             <div class="col-sm-offset-2 col-sm-10 view-heading">
                 <h1>Sign in to <span class="rd-red">RD</span><span class="rd-blue">Fleet</span></h1>
+                <hr/>
             </div>
             <form name="f" th:action="@{/login}" method="post" class="form-horizontal">
                 <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label">Email:</label>
+                    <label for="username" class="col-sm-2 control-label" style="text-align: left">Email:</label>
 
                     <div class="col-sm-10">
                         <input type="email" name="username" class="form-control"
@@ -146,7 +20,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label">Password:</label>
+                    <label for="username" class="col-sm-2 control-label" style="text-align: left">Password:</label>
 
                     <div class="col-sm-10">
                         <input type="password" name="password" class="form-control"
@@ -165,37 +39,10 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary" id="submit" name="submit">Sign in</button>
+                        <button type="submit" class="btn btn-primary col-sm-4" id="submit" name="submit">Sign in</button>
                     </div>
                 </div>
             </form>
-            <!--<form name="loginForm" class="form-horizontal" ng-submit="login()">-->
-
-                <!--<div class="form-group has-success"-->
-                     <!--ng-class="{'has-success':loginForm.email.$valid,'has-error':loginForm.email.$invalid}">-->
-                    <!--<label for="email" class="col-sm-2 control-label" translate="LOGIN_EMAIL"></label>-->
-
-                    <!--<div class="col-sm-10">-->
-                        <!--<input type="email" name="email" class="form-control"-->
-                               <!--id="email" ng-model="loginUser.email" placeholder="{{'LOGIN_EMAIL_PLACEHOLDER' | translate}}" required>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-group has-success"-->
-                     <!--ng-class="{'has-success':loginForm.password.$valid,'has-error':loginForm.password.$invalid}">-->
-                    <!--<label for="password" class="col-sm-2 control-label" translate="LOGIN_PASSWORD"></label>-->
-
-                    <!--<div class="col-sm-10">-->
-                        <!--<input type="password" name="password" class="form-control"-->
-                               <!--id="password" ng-model="loginUser.password" placeholder="{{'LOGIN_PASSWORD_PLACEHOLDER' | translate}}" required>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<div class="col-sm-offset-2 col-sm-10">-->
-                        <!--<button type="submit" class="btn btn-primary" id="submit" translate="LOGIN_LOGIN"></button>-->
-                        <!--<a ui-sref="app.register" class="btn btn-primary" role="button" translate="LOGIN_REGISTER"></a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</form>-->
         </div>
     </div>
 </div>

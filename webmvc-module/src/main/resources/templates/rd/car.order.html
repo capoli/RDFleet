@@ -4,23 +4,44 @@
 <head th:replace="./fragments/general.fragment :: head"></head>
 <body>
 <div th:replace="./fragments/general.fragment :: header"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="view-heading" th:class="${employeeCar.selectedCar.functionalLevel != functionalLevel} ? 'col-sm-8':'col-sm-12'">
-                <h1>Order for</h1>
-                <h2><span th:text="${employeeCar.selectedCar.make}"></span> <span th:text="${employeeCar.selectedCar.model}"></span></h2>
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <!--<div class="view-heading"-->
+            <!--th:class="${employeeCar.selectedCar.functionalLevel != functionalLevel} ? 'col-sm-8':'col-sm-12'">-->
+            <!--<h1>Order page</h1>-->
+
+            <!--<h2><span th:text="${employeeCar.selectedCar.make}"></span> <span-->
+            <!--th:text="${employeeCar.selectedCar.model}"></span></h2>-->
+
+            <!--<div th:replace="./fragments/general.fragment :: error(${error})"></div>-->
+            <!--</div>-->
+            <div class="view-heading">
+                <h1>Select car options</h1>
+                <hr/>
+            </div>
+            <div th:class="${employeeCar.selectedCar.functionalLevel != functionalLevel} ? 'col-sm-8':'col-sm-12'">
+                <h2>
+                    <span th:text="${employeeCar.selectedCar.make}"></span> <span th:text="${employeeCar.selectedCar.model}"></span>
+                </h2>
                 <div th:replace="./fragments/general.fragment :: error(${error})"></div>
             </div>
-            <div class="col-sm-4" style="padding-right: 0;" th:if="${employeeCar.selectedCar.functionalLevel != functionalLevel}">
+            <div class="col-sm-4" style="padding-right: 0;"
+                 th:if="${employeeCar.selectedCar.functionalLevel != functionalLevel}">
                 <div id="info" class="well">
                     <div th:if="${employeeCar.selectedCar.functionalLevel lt functionalLevel}">
                         <h4 class="modal-header">Amount for downgrade</h4>
-                        <h5 th:text="${employeeCar.selectedCar.amountDowngrade}"></h5>
+                        <h5>
+                            <span class="glyphicon glyphicon-eur"></span> <span
+                                th:text="${employeeCar.selectedCar.amountDowngrade}"></span>
+                        </h5>
                     </div>
                     <div th:if="${employeeCar.selectedCar.functionalLevel gt functionalLevel}">
                         <h4 class="modal-header">Amount for upgrade</h4>
-                        <h5 th:text="${employeeCar.selectedCar.amountUpgrade}"></h5>
+                        <h5>
+                            <span class="glyphicon glyphicon-eur"></span> <span
+                                th:text="${employeeCar.selectedCar.amountUpgrade}"></span>
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -30,7 +51,8 @@
                     <label class="col-sm-2 control-label">Select options</label>
 
                     <div class="col-sm-10">
-                        <select th:field="*{carOptions}" class="form-control chosen-select" name="carOptions" multiple="multiple"
+                        <select th:field="*{carOptions}" class="form-control chosen-select" name="carOptions"
+                                multiple="multiple"
                                 style="width: 100%;">
                             <option th:each="carOption : ${carOptions}" th:value="${carOption.id}"
                                     th:text="${carOption.description}"></option>
@@ -39,7 +61,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary" id="submit" name="submit">Confirm order</button>
+                        <button type="submit" class="btn btn-primary" id="submit" name="submit">Confirm order
+                        </button>
                     </div>
                 </div>
             </form>

@@ -13,58 +13,59 @@
 </style>
 <body>
 <div th:replace="fragments/general.fragment :: header"></div>
-<div class="container">
-    <div th:replace="fragments/general.fragment :: div#page-header"></div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="has-error" th:if="${error != null}">
-                <span class="help-block" th:text="${error}"/>
-            </div>
-
-            <h4 th:if="${pack.id == null}">Create an option</h4>
-            <h4 th:if="${pack.id != null}">Edit an option</h4>
-
-            <form id="pack" action="#" th:action="@{/fleet/packs/}" method="post" th:object="${pack}">
-
-                <div class="form-group" th:class="${#fields.hasErrors('name')}? 'has-error'">
-                    <label th:for="${#ids.next('name')}">Name:</label>
-                    <input type="text" th:field="*{name}" class="form-control"/>
-                    <span th:if="${#fields.hasErrors('name')}" class="help-block" th:errors="*{name}"></span>
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="has-error" th:if="${error != null}">
+                    <span class="help-block" th:text="${error}"/>
                 </div>
 
+                <h4 th:if="${pack.id == null}">Create an option</h4>
+                <h4 th:if="${pack.id != null}">Edit an option</h4>
 
-                <div class="form-group" th:class="${#fields.hasErrors('items')}? 'has-error'">
-                    <label th:for="${#ids.next('items')}">Items:</label>
+                <form id="pack" action="#" th:action="@{/fleet/packs/}" method="post" th:object="${pack}">
 
-                    <input type="text" th:field="*{items}" class="form-control"/>
+                    <div class="form-group" th:class="${#fields.hasErrors('name')}? 'has-error'">
+                        <label th:for="${#ids.next('name')}">Name:</label>
+                        <input type="text" th:field="*{name}" class="form-control"/>
+                        <span th:if="${#fields.hasErrors('name')}" class="help-block" th:errors="*{name}"></span>
+                    </div>
 
-                    <span th:if="${#fields.hasErrors('items')}" class="help-block" th:errors="*{items}"></span>
-                </div>
+
+                    <div class="form-group" th:class="${#fields.hasErrors('items')}? 'has-error'">
+                        <label th:for="${#ids.next('items')}">Items:</label>
+
+                        <input type="text" th:field="*{items}" class="form-control"/>
+
+                        <span th:if="${#fields.hasErrors('items')}" class="help-block" th:errors="*{items}"></span>
+                    </div>
 
 
-                <div class="entry input-group col-xs-3">
-                    <input class="form-control" name="fields[]" type="text" placeholder="Type something"/>
+                    <div class="entry input-group col-xs-3">
+                        <input class="form-control" name="fields[]" type="text" placeholder="Type something"/>
                     <span class="input-group-btn">
                         <button class="btn btn-success btn-add" type="button">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </span>
-                </div>
-
-                <input type="hidden" th:field="*{id}"/>
-                <input type="hidden" th:field="*{version}"/>
-
-                <div class="form-group" style="margin-top: 10px">
-                    <div>
-                        <button th:if="${pack.id == null}" type="submit" class="btn btn-primary">Create</button>
-                        <button th:if="${pack.id != null}" type="submit" class="btn btn-primary">Update</button>
                     </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <hr/>
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{version}"/>
+
+                    <div class="form-group" style="margin-top: 10px">
+                        <div>
+                            <button th:if="${pack.id == null}" type="submit" class="btn btn-primary">Create</button>
+                            <button th:if="${pack.id != null}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
 </div>
 <div th:replace="fragments/general.fragment :: div.scripts"></div>
 <script>

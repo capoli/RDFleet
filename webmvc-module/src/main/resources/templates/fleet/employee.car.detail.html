@@ -4,87 +4,91 @@
 <head th:replace="./fragments/general.fragment :: head"></head>
 <body>
 <div th:replace="./fragments/general.fragment :: header"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            
+<div id="content">
+    <div class="container">
+        <div class="row">
             <div class="col-lg-12">
-                <h4>Employee's car details</h4>
-                <table class="table table-striped">
-                    <tr>
-                        <td>Employee</td>
-                        <td><span th:text="${employee.firstName}"></span> <span th:text="${employee.lastName}"></span></td>
-                    </tr>
-                    <tr>
-                        <td>License plate</td>
-                        <td th:text="${employee.currentOrder.orderedCar.licensePlate}"></td>
-                    </tr>
-                    <tr>
-                        <td>Mileage</td>
-                        <td th:text="${employee.currentOrder.orderedCar.mileage}"></td>
-                    </tr>
-                    <tr>
-                        <td>Car Status</td>
-                        <td th:text="${employee.currentOrder.orderedCar.carStatus}"></td>
-                    </tr>
-                    <tr>
-                        <td>Car options</td>
-                        <td>
+
+                <div class="col-lg-12">
+                    <h4>Employee's car details</h4>
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Employee</td>
+                            <td><span th:text="${employee.firstName}"></span> <span
+                                    th:text="${employee.lastName}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>License plate</td>
+                            <td th:text="${employee.currentOrder.orderedCar.licensePlate}"></td>
+                        </tr>
+                        <tr>
+                            <td>Mileage</td>
+                            <td th:text="${employee.currentOrder.orderedCar.mileage}"></td>
+                        </tr>
+                        <tr>
+                            <td>Car Status</td>
+                            <td th:text="${employee.currentOrder.orderedCar.carStatus}"></td>
+                        </tr>
+                        <tr>
+                            <td>Car options</td>
+                            <td>
                             <span th:each="option : ${employee.currentOrder.orderedCar.carOptions}">
                                 <span th:text="${option.description}"></span><br/>
                             </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Date car was received</td>
-                        <td th:text="${{employee.currentOrder.dateReceived}}"></td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date car was received</td>
+                            <td th:text="${{employee.currentOrder.dateReceived}}"></td>
+                        </tr>
+                    </table>
 
-                <div class="has-error" th:if="${error != null}">
-                    <span class="help-block" th:text="${error}"/>
-                </div>
-
-                <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                    <div th:if="${employee.currentOrder.orderedCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
-                        <form action="#" th:action="@{/fleet/employees/car/status-in-use}" method="post" >
-
-                            <div class="form-group">
-                                <label>License Plate:</label>
-                                <input type="text" th:name="licensePlate" class="form-control"/>
-                            </div>
-
-                            <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
-                            <button type="submit" class="btn btn-info btn-lg">Employee has received the car</button>
-                        </form>
+                    <div class="has-error" th:if="${error != null}">
+                        <span class="help-block" th:text="${error}"/>
                     </div>
 
-                    <form action="#" th:action="@{/fleet/employees/car/move-free-pool}" method="post" >
-                        <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
-                        <button type="submit" class="btn btn-danger btn-lg">Move car to free pool</button>
-                    </form>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                        <div th:if="${employee.currentOrder.orderedCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
+                            <form action="#" th:action="@{/fleet/employees/car/status-in-use}" method="post">
 
-                    <form action="#" th:action="@{/fleet/employees/car/remove}" method="post" >
-                        <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
-                        <button type="submit" class="btn btn-danger btn-lg">Remove car from system</button>
-                    </form>
+                                <div class="form-group">
+                                    <label>License Plate:</label>
+                                    <input type="text" th:name="licensePlate" class="form-control"/>
+                                </div>
+
+                                <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
+                                <button type="submit" class="btn btn-info btn-lg">Employee has received the car</button>
+                            </form>
+                        </div>
+
+                        <form action="#" th:action="@{/fleet/employees/car/move-free-pool}" method="post">
+                            <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
+                            <button type="submit" class="btn btn-danger btn-lg">Move car to free pool</button>
+                        </form>
+
+                        <form action="#" th:action="@{/fleet/employees/car/remove}" method="post">
+                            <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
+                            <button type="submit" class="btn btn-danger btn-lg">Remove car from system</button>
+                        </form>
+                    </div>
                 </div>
+
+                <div class="col-lg-12">
+                    <h1 style="padding-left: 15px" th:text="${employee.currentOrder.orderedCar.selectedCar.make}"></h1>
+
+                    <div class="col-lg-7">
+                        <th:block
+                                th:replace="./fragments/car.detail.fragment :: carDetailMain(${employee.currentOrder.orderedCar.selectedCar})"/>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${employee.currentOrder.orderedCar.selectedCar})"></div>
+                        <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${employee.currentOrder.orderedCar.selectedCar})"></div>
+                    </div>
+                </div>
+
+
             </div>
-
-            <div class="col-lg-12">
-                <h1 style="padding-left: 15px" th:text="${employee.currentOrder.orderedCar.selectedCar.make}"></h1>
-
-                <div class="col-lg-7">
-                    <th:block th:replace="./fragments/car.detail.fragment :: carDetailMain(${employee.currentOrder.orderedCar.selectedCar})"/>
-                </div>
-
-                <div class="col-lg-5">
-                    <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${employee.currentOrder.orderedCar.selectedCar})"></div>
-                    <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${employee.currentOrder.orderedCar.selectedCar})"></div>
-                </div>
-            </div>
-
-
         </div>
     </div>
 </div>

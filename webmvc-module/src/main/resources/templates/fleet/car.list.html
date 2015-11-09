@@ -1,62 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="fragments/general.fragment :: head"></head>
 <body>
 <div th:replace="fragments/general.fragment :: header"></div>
-<div class="container">
-    <div th:replace="fragments/general.fragment :: div#page-header"></div>
-    <div class="row">
-        <div class="col-lg-12">
-            <h4>Car List</h4>
-            <div class="has-error" th:if="${error != null}">
-                <span class="help-block" th:text="${error}"/>
-            </div>
-            <table class="table table-striped table-hover" id="carTable">
-                <thead>
-                <tr>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>FunctionalLevel</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="car : ${carList}">
-                    <td th:text="${car.make}"></td>
-                    <td th:text="${car.model}"></td>
-                    <td th:text="${car.functionalLevel}"></td>
-                    <td class="text-right"><a class="btn btn-info btn-xs" th:href="${#mvc.url('CMC#goToEditPage').arg(0, car.id).build()}">Edit</a></td>
-                    <td class="text-right"><a class="btn btn-danger btn-xs" th:href="${#mvc.url('CMC#removeFromOrderList').arg(0, car.id).build()}">Remove from orderable list</a></td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>FunctionalLevel</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
-                </tr>
-                </tfoot>
-            </table>
-            <a class="btn btn-info btn-lg" th:href="${#mvc.url('CMC#createCar').build()}">Add a new car</a>
-        </div>
-    </div>
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Car List</h4>
 
-    <hr/>
+                <div class="has-error" th:if="${error != null}">
+                    <span class="help-block" th:text="${error}"/>
+                </div>
+                <table class="table table-striped table-hover" id="carTable">
+                    <thead>
+                    <tr>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>FunctionalLevel</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="car : ${carList}">
+                        <td th:text="${car.make}"></td>
+                        <td th:text="${car.model}"></td>
+                        <td th:text="${car.functionalLevel}"></td>
+                        <td class="text-right"><a class="btn btn-info btn-xs"
+                                                  th:href="${#mvc.url('CMC#goToEditPage').arg(0, car.id).build()}">Edit</a>
+                        </td>
+                        <td class="text-right"><a class="btn btn-danger btn-xs"
+                                                  th:href="${#mvc.url('CMC#removeFromOrderList').arg(0, car.id).build()}">Remove
+                            from orderable list</a></td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>FunctionalLevel</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+                    </tfoot>
+                </table>
+                <a class="btn btn-info btn-lg" th:href="${#mvc.url('CMC#createCar').build()}">Add a new car</a>
+            </div>
+        </div>
+
+
+    </div>
 </div>
 <div th:replace="fragments/general.fragment :: div.scripts"></div>
 <script>
-    $(document).ready( function () {
-        $('#carTable').dataTable( {
+    $(document).ready(function () {
+        $('#carTable').dataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
-        }).columnFilter({aoColumns: [
-            {},{},{}, null, null ]});
-    } );
+        }).columnFilter({
+            aoColumns: [
+                {}, {}, {}, null, null]
+        });
+    });
 </script>
 </body>
 </html>
