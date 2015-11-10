@@ -18,15 +18,13 @@ public class CarOptionService {
         this.carOptionRepository = carOptionRepository;
     }
 
-    //TODO: test
     public List<CarOption> findAllCarOptions() {
         List<CarOption> carOptions = carOptionRepository.findAll();
-        if (carOptions == null || carOptions.size() == 0)
+        if (carOptions.isEmpty())
             throw new IllegalArgumentException("There are no caroptions available");
         return carOptions;
     }
 
-    //TODO: test
     public List<CarOption> findAllCarOptionsByTowingBracketPossibility(boolean towingBracketPossibility) {
         List<CarOption> carOptions = findAllCarOptions();
         if (!towingBracketPossibility) {

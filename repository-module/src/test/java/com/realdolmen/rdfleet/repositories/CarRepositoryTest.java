@@ -18,6 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -34,10 +37,12 @@ public class CarRepositoryTest {
     @Autowired
     private CarRepository carRepository;
     private Car car;
+    private ArrayList<Car> cars;
 
     @Before
     public void initialize() {
         car = ValidDomainObjectFactory.createCar();
+        cars = new ArrayList<>(Collections.singletonList(car));
     }
 
     @Test
@@ -243,6 +248,51 @@ public class CarRepositoryTest {
         Car savedCar = carRepository.save(car);
         Car newCar = carRepository.findOne(savedCar.getId());
         assertEquals(2, newCar.getPacks().size());
+    }
+
+    @Test
+    public void testFindAllCarsByFunctionalLevelAndIsOrderableReturnsCorrectCarsOneExtraFuncLevel(){
+        car.setFunctionalLevel(5);
+        car.setOrderable(true);
+        carRepository.save(car);
+
+        assertEquals(cars, carRepository.findAllCarsByFunctionalLevelAndIsOrderable(6));
+    }
+
+    @Test
+    public void testFindAllCarsByFunctionalLevelAndIsOrderableReturnsCorrectCarsOneLessFuncLevel(){
+        car.setFunctionalLevel(5);
+        car.setOrderable(true);
+        carRepository.save(car);
+
+        assertEquals(cars, carRepository.findAllCarsByFunctionalLevelAndIsOrderable(4));
+    }
+
+    @Test
+    public void testFindAllCarsByFunctionalLevelAndIsOrderableReturnsCorrectCarsEqualFuncLevel(){
+        car.setFunctionalLevel(5);
+        car.setOrderable(true);
+        carRepository.save(car);
+
+        assertEquals(cars, carRepository.findAllCarsByFunctionalLevelAndIsOrderable(5));
+    }
+
+    @Test
+    public void testFindAllCarsByFunctionalLevelAndIsOrderableReturnsEmptyListWhenCarNotRightFunctionalLevel(){
+        car.setFunctionalLevel(2);
+        car.setOrderable(true);
+        carRepository.save(car);
+
+        assertEquals(0, carRepository.findAllCarsByFunctionalLevelAndIsOrderable(5).size());
+    }
+
+    @Test
+    public void testFindAllCarsByFunctionalLevelAndIsOrderableReturnsEmptyListWhenNotOrderable(){
+        car.setFunctionalLevel(5);
+        car.setOrderable(false);
+        carRepository.save(car);
+
+        assertEquals(0, carRepository.findAllCarsByFunctionalLevelAndIsOrderable(5).size());
     }
 
 }

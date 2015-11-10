@@ -36,14 +36,7 @@ public class CarOptionServiceTest {
         carOption1 = ValidDomainObjectFactory.createCarOption("Trekhaak");
         CarOption carOption2 = ValidDomainObjectFactory.createCarOption("Automatiek");
         carOptionList = new ArrayList<>(Arrays.asList(carOption1, carOption2));
-        when(carOptionRepositoryMock.findAll()).thenReturn(carOptionList);
         when(carOptionRepositoryMock.findOne(1l)).thenReturn(carOption1);
-    }
-
-    @Test
-    public void testFindAll(){
-        assertEquals(carOptionList, carOptionService.findAllCarOptions());
-        verify(carOptionRepositoryMock).findAll();
     }
 
     @Test
@@ -64,5 +57,46 @@ public class CarOptionServiceTest {
         verify(carOptionRepositoryMock).save(carOption1);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindAllCarOptionsNoneFound(){
+        carOptionService.findAllCarOptions();
+    }
 
+    @Test
+    public void testFindAllCarOptions(){
+        when(carOptionRepositoryMock.findAll()).thenReturn(carOptionList);
+
+        assertEquals(carOptionList, carOptionService.findAllCarOptions());
+        verify(carOptionRepositoryMock).findAll();
+    }
+
+
+    @Test
+    public void testFindAllCarOptionsByTowingBracketPossibilityTrue(){
+        when(carOptionRepositoryMock.findAll()).thenReturn(carOptionList);
+
+        List<CarOption> allCarOptionsByTowingBracketPossibility = carOptionService.findAllCarOptionsByTowingBracketPossibility(true);
+        assertEquals(carOptionList, allCarOptionsByTowingBracketPossibility);
+        assertEquals(2, allCarOptionsByTowingBracketPossibility.size());
+        verify(carOptionRepositoryMock).findAll();
+    }
+
+    @Test
+    public void testFindAllCarOptionsByTowingBracketPossibilityFalse(){
+        when(carOptionRepositoryMock.findAll()).thenReturn(carOptionList);
+
+        List<CarOption> allCarOptionsByTowingBracketPossibility = carOptionService.findAllCarOptionsByTowingBracketPossibility(false);
+        assertEquals(1, allCarOptionsByTowingBracketPossibility.size());
+        verify(carOptionRepositoryMock).findAll();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindAllCarOptionsByTowingBracketPossibilityTrueNoCarOptions(){
+        carOptionService.findAllCarOptionsByTowingBracketPossibility(true);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindAllCarOptionsByTowingBracketPossibilityFalseNoCarOptions(){
+        carOptionService.findAllCarOptionsByTowingBracketPossibility(false);
+    }
 }

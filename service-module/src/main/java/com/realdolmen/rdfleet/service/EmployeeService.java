@@ -155,11 +155,11 @@ public class EmployeeService {
             throw new IllegalArgumentException("The car is not in PENDING state.");
 
         String upperCaseLicensePlate = givenLicensePlate.toUpperCase();
-        if(!upperCaseLicensePlate.matches("^\\d-[A-Z]{3}-\\d{3}$"))
+        if (!upperCaseLicensePlate.matches("^\\d-[A-Z]{3}-\\d{3}$"))
             throw new IllegalArgumentException("The license plate is not valid. It must have the following pattern: 0-XXX-000");
 
         EmployeeCar byLicensePlateIgnoreCase = employeeCarRepository.findByLicensePlateIgnoreCase(upperCaseLicensePlate);
-        if(byLicensePlateIgnoreCase != null)
+        if (byLicensePlateIgnoreCase != null)
             throw new IllegalArgumentException("This license plate already exists in the system. Please provide a new one.");
 
         rdEmployee.getOrderHistory().add(rdEmployee.getCurrentOrder());
@@ -193,11 +193,12 @@ public class EmployeeService {
 
     /**
      * Helper method to combine duplicate code. It will set the status of the car based on the parameters.
+     *
      * @param rdEmployee the employee to save and manipulate
-     * @param status the status to set the car to
+     * @param status     the status to set the car to
      */
-    private void setEmployeeCarToStatus(RdEmployee rdEmployee, CarStatus status){
-        if(rdEmployee == null || rdEmployee.getId() == null)
+    private void setEmployeeCarToStatus(RdEmployee rdEmployee, CarStatus status) {
+        if (rdEmployee == null || rdEmployee.getId() == null)
             throw new IllegalArgumentException("Existing employee must be provided.");
 
         if (rdEmployee.getCurrentOrder() == null)
@@ -214,57 +215,59 @@ public class EmployeeService {
         rdEmployeeRepository.save(rdEmployee);
     }
 
-    public RdEmployee findEmployeeByLicensePlateOfCurrentCar(String licensePlate){
-        if(licensePlate == null || licensePlate.isEmpty())
+    public RdEmployee findEmployeeByLicensePlateOfCurrentCar(String licensePlate) {
+        if (licensePlate == null || licensePlate.isEmpty())
             throw new IllegalArgumentException("The license plate should be provided.");
 
         return rdEmployeeRepository.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(licensePlate);
     }
 
-    //TODO: test
+
     /**
-     * this will generate a licenseplate and call the assignOrderForEmployee
+     * this will call the assignOrderForEmployee
      * uses findCarByLicensePlate until it returns null to ensure licenseplate is unique
+     *
      * @param email of an rdemployee
      * @param order new car to order
      */
     public void createEmployeeCarAndDelegateOrderForEmployee(String email, Order order) {
         RdEmployee rdEmployee = findRdEmployeeByEmail(email);
-        if(order == null) throw new IllegalArgumentException("Order can not be null");
+        if (order == null) throw new IllegalArgumentException("Order can not be null");
         EmployeeCar employeeCar = order.getOrderedCar();
-        if(employeeCar == null) throw new IllegalArgumentException("EmployeeCar can not be null");
-        if(employeeCar.getSelectedCar() == null) throw new IllegalArgumentException("Car for employeeCar can not be null");
-        if(order.getAmountPaidByCompany() == null) throw new IllegalArgumentException("amountPaidByCompany can not be null");
-        if(order.getAmountPaidByEmployee() == null) throw new IllegalArgumentException("amountPaidByEmployee can not be null");
+        if (employeeCar == null) throw new IllegalArgumentException("EmployeeCar can not be null");
+        if (employeeCar.getSelectedCar() == null)
+            throw new IllegalArgumentException("Car for employeeCar can not be null");
+        if (order.getAmountPaidByCompany() == null)
+            throw new IllegalArgumentException("amountPaidByCompany can not be null");
+        if (order.getAmountPaidByEmployee() == null)
+            throw new IllegalArgumentException("amountPaidByEmployee can not be null");
         assignOrderToEmployee(rdEmployee, order);
     }
 
-    //TODO: test
-
     /**
      * find and return an rdemployee by email if email is not empty and find doesn't return an empty object
+     *
      * @param email of an rdemployee
      * @return rdEmployee if it isn't null else error
      */
     public RdEmployee findRdEmployeeByEmail(String email) {
-        if (email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
+        if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email can not be empty");
         RdEmployee rdEmployee = rdEmployeeRepository.findByEmailIgnoreCase(email);
         if (rdEmployee == null) throw new IllegalArgumentException("RdEmployee can not be empty");
         return rdEmployee;
     }
 
-    //TODO: test
-
     /**
      * uses getFunctionalLevelByEmail
      * find cars relevant for an employee by his current functional level + one above and one under his current level
+     *
      * @param email of an rdemployee
      * @return list of cars founded (func lvl, -1, +1), if empty error
      */
     public List<Car> findCarsForEmployeeByFunctionalLevel(String email) {
         int functionalLevel = getFunctionalLevelByEmail(email);
         List<Car> cars = carRepository.findAllCarsByFunctionalLevelAndIsOrderable(functionalLevel);
-        if (cars.size() == 0) throw new IllegalArgumentException("There are no cars to select from");
+        if (cars.isEmpty()) throw new IllegalArgumentException("There are no cars to select from");
         return cars;
     }
 
@@ -276,21 +279,21 @@ public class EmployeeService {
         return rdEmployeeRepository.findOne(id);
     }
 
-    //TODO: test
-
     /**
      * calls findRdEmployeeByEmail and gets functional level for the returned rdemployee
+     *
      * @param email of an rdemployee
      * @return functionallevel by given email
      */
     public int getFunctionalLevelByEmail(String email) {
-        return findRdEmployeeByEmail(email).getFunctionalLevel();
+        RdEmployee rdEmployeeByEmail = findRdEmployeeByEmail(email);
+        return rdEmployeeByEmail.getFunctionalLevel();
     }
 
-    //TODO: test
 
     /**
      * calls checkIfEmployeeCanOrderCar and return the returnvalue of that function
+     *
      * @param email of an rdemployee
      * @return returns true or false
      */
@@ -307,7 +310,7 @@ public class EmployeeService {
                 && employeeCar.getCarStatus() == CarStatus.NOT_USED;
     }
 
-    //TODO: test + look if orderable
+
     public boolean employeeCanOrderNewCar(String email, Long carId) {
         if (carId == null) throw new IllegalArgumentException("Car id can not be null");
         if (carId < 0) throw new IllegalArgumentException("Car id can not be a negative number");
@@ -317,22 +320,25 @@ public class EmployeeService {
         RdEmployee rdEmployee = findRdEmployeeByEmail(email);
         return canOrderCar
                 && car.getFunctionalLevel() <= rdEmployee.getFunctionalLevel() + 1
-                && car.getFunctionalLevel() >= rdEmployee.getFunctionalLevel() - 1;
+                && car.getFunctionalLevel() >= rdEmployee.getFunctionalLevel() - 1
+                && car.isOrderable();
     }
 
-    //TODO: test
+
     private boolean checkIfEmployeeCanOrderCar(String email) {
         RdEmployee rdEmployee = findRdEmployeeByEmail(email);
         LocalDate fourYearsAgo = LocalDate.now().minusYears(4);
         if (rdEmployee.getCurrentOrder() == null) return true;
-        if(rdEmployee.getCurrentOrder().getDateReceived() == null) {
-            if(rdEmployee.getCurrentOrder().getOrderedCar().getCarStatus() == CarStatus.PENDING) return false;
-            else if (rdEmployee.getCurrentOrder().getDateOrdered().isBefore(fourYearsAgo)) return true;
-        }
-        if(rdEmployee.getCurrentOrder().getOrderedCar() == null) return true;
+        if (rdEmployee.getCurrentOrder().getDateReceived() == null)
+            if (rdEmployee.getCurrentOrder().getOrderedCar().getCarStatus() == CarStatus.PENDING) return false;
+
+        if (rdEmployee.getCurrentOrder().getDateReceived() != null && rdEmployee.getCurrentOrder().getDateReceived().isBefore(fourYearsAgo))
+            return true;
+        if (rdEmployee.getCurrentOrder().getOrderedCar() == null) return true;
         if (rdEmployee.getCurrentOrder().getOrderedCar().getMileage() > 160000) return true;
         return false;
     }
+
 
     public Order createOrderForEmployee(String email, EmployeeCar employeeCar) {
         RdEmployee rdEmployee = findRdEmployeeByEmail(email);

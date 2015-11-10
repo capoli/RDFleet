@@ -12,7 +12,6 @@ import java.util.List;
 public interface EmployeeCarRepository extends JpaRepository<EmployeeCar, Long> {
     EmployeeCar findByLicensePlateIgnoreCase(String licensePlate);
 
-    //TODO: test
     @Query("select e from EmployeeCar e where e.carStatus = 'NOT_USED'")
     List<EmployeeCar> findAllIsNotUsed();
 }

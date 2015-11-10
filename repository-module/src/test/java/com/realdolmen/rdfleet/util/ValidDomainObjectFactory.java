@@ -61,8 +61,8 @@ public class ValidDomainObjectFactory {
         Order order = new Order();
         order.setAmountPaidByCompany(BigDecimal.valueOf(24000));
         order.setAmountPaidByEmployee(BigDecimal.valueOf(25343.22));
-        order.setDateOrdered(LocalDate.of(2012, 5, 5));
-        order.setDateReceived(LocalDate.of(2012, 8, 3));
+        order.setDateOrdered(LocalDate.now().minusMonths(8));
+        order.setDateReceived(LocalDate.now().minusMonths(3));
         order.setOrderedCar(createEmployeeCar());
         return order;
     }
