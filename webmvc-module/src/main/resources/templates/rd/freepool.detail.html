@@ -18,7 +18,9 @@
                 <div class="col-lg-5">
                     <form th:if="${canOrderFreePoolCar}" action="#" th:action="@{/rd/cars/order}"
                           style="margin-bottom: 10px;" method="post">
-                        <button type="submit" class="btn btn-info btn-lg btn-block">Order</button>
+                        <button type="submit" class="btn btn-info btn-lg btn-block">
+                            <span th:text="#{msgRdCarDetail.order}"></span>
+                        </button>
                     </form>
                     <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${car})"></div>
                     <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${car})"></div>

@@ -32,39 +32,53 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown" sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Browse<span class="caret"></span></a>
+                       aria-expanded="false"><span th:text="#{msgFragmentNavbar.browse}"></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')"
-                               th:href="@{/rd/cars}">Browse
-                            cars catalog</a></li>
+                               th:href="@{/rd/cars}">
+                            <span th:text="#{msgFragmentNavbar.browse_cars_catalog}"></span></a></li>
                         <li><a id="orderCarCatalog" sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')"
-                               th:href="@{/rd/cars?type=order}">Order cars catalog</a></li>
+                               th:href="@{/rd/cars?type=order}">
+                            <span th:text="#{msgFragmentNavbar.order_cars_catalog}"></span></a></li>
                         <li><a id="orderFreePoolCarCatalog"
                                sec:authorize="hasAnyRole('ROLE_RDEMPLOYEE', 'ROLE_FLEETEMPLOYEE')"
-                               th:href="@{/rd/cars/freepool}">Browse cars freepool</a></li>
+                               th:href="@{/rd/cars/freepool}">
+                            <span th:text="#{msgFragmentNavbar.browse_cars_freepool}"></span></a></li>
                     </ul>
                 </li>
                 <li class="dropdown" sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Manage<span class="caret"></span></a>
+                       aria-expanded="false"><span th:text="#{msgFragmentNavbar.manage}"></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">Car models</a>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/cars}">
+                            <span th:text="#{msgFragmentNavbar.car_models}"></span>
+                        </a>
                         </li>
-                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">Company cars</a>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/company-cars}">
+                            <span th:text="#{msgFragmentNavbar.company_cars}"></span>
+                        </a>
                         </li>
-                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/options}">Car options</a>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/options}">
+                            <span th:text="#{msgFragmentNavbar.car_options}"></span>
+                        </a>
                         </li>
-                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">Employees</a>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/employees}">
+                            <span th:text="#{msgFragmentNavbar.employees}"></span>
+                        </a>
                         </li>
-                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/packs}">Packs</a>
+                        <li><a sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')" th:href="@{/fleet/packs}">
+                            <span th:text="#{msgFragmentNavbar.packs}"></span>
+                        </a>
                         </li>
                     </ul>
                 </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></a></li>
-                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a></li>
+                <li><a sec:authorize="isAuthenticated()"><span th:text="#{msgFragmentNavbar.welcome}"></span>, <span sec:authentication="name"></span></a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">
+                    <span th:text="#{msgFragmentNavbar.logout}"></span>
+                </a></li>
             </ul>
         </div>
         <div style="visibility: hidden; width: 0; height: 0; margin: 0; padding: 0" sec:authorize="isAuthenticated()"><span id="useremail"

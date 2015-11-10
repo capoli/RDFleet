@@ -20,82 +20,82 @@
 <div th:fragment="carDetailMain(car)">
     <h3 th:text="${car.model}"></h3>
 
-    <h4><span th:text="#{msgCar.funcLvl}">Functional level</span>: <span th:text="${car.functionalLevel}"></span></h4>
+    <h4><span th:text="#{msgFragmentCarDetail.functional_level}"></span>: <span th:text="${car.functionalLevel}"></span></h4>
 
     <br/>
     <table class="table table-striped">
         <tr>
-            <td><h6>Tyre type:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.tyre_type}"></span>:</h6></td>
             <td th:text="${car.tyreType}"></td>
         </tr>
         <tr>
-            <td><h6>Fuel type:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.fuel_type}"></span>:</h6></td>
             <td th:text="${car.fuelType}"></td>
         </tr>
         <tr>
-            <td><h6>Towing bracket:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.towing_bracket}"></span>:</h6></td>
             <td>
                 <span th:if="${car.towingBracketPossibility}" class="glyphicon glyphicon-ok"></span>
                 <span th:if="${!car.towingBracketPossibility}" class="glyphicon glyphicon-remove"></span>
             </td>
         </tr>
         <tr>
-            <td><h6>Gps:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.gps}"></span>:</h6></td>
             <td>
                 <span th:if="${car.gps}" class="glyphicon glyphicon-ok"></span>
                 <span th:if="${!car.gps}" class="glyphicon glyphicon-remove"></span>
             </td>
         </tr>
         <tr>
-            <td><h6>Bluetooth:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.bluetooth}"></span>:</h6></td>
             <td>
                 <span th:if="${car.bluetooth}" class="glyphicon glyphicon-ok"></span>
                 <span th:if="${!car.bluetooth}" class="glyphicon glyphicon-remove"></span>
             </td>
         </tr>
         <tr>
-            <td><h6>co2:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.co2}"></span>:</h6></td>
             <td th:text="${car.co2}"></td>
         </tr>
         <tr>
-            <td><h6>Fiscal hp:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.fiscal_hp}"></span>:</h6></td>
             <td th:text="${car.fiscHp}"></td>
         </tr>
         <tr>
-            <td><h6>Ideal km:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.ideal_km}"></span>:</h6></td>
             <td th:text="${car.idealKm}"></td>
         </tr>
         <tr>
-            <td><h6>Max km:</h6></td>
+            <td><h6><span th:text="#{msgFragmentCarDetail.max_km}"></span>:</h6></td>
             <td th:text="${car.maxKm}"></td>
         </tr>
     </table>
 </div>
 
 <div id="info" class="well" th:fragment="carDetailInfo(car)">
-    <h3 class="modal-header">Additional info</h3>
-    <h4>Price:
+    <h3 class="modal-header" th:text="#{msgFragmentCarDetail.additional_info}"></h3>
+    <h4><span th:text="#{msgFragmentCarDetail.price}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
                 th:text="${car.listPrice}"></span></div>
     </h4>
-    <h4>Benefit:
+    <h4><span th:text="#{msgFragmentCarDetail.benefit}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
                 th:text="${car.benefit}"></span></div>
     </h4>
-    <h4>Amount for upgrade:
+    <h4><span th:text="#{msgFragmentCarDetail.amount_upgrade}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
                 th:text="${car.amountUpgrade}"></span></div>
     </h4>
-    <h4>Amount for downgrade:
+    <h4><span th:text="#{msgFragmentCarDetail.amount_downgrade}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
                 th:text="${car.amountDowngrade}"></span></div>
     </h4>
-    <h4>Time of delivery in days:
+    <h4><span th:text="#{msgFragmentCarDetail.time_of_delivery_days}"></span>:
         <div style="float: right"><span th:text="${car.timeOfDeliveryInDays.toDays()}"></span></div>
     </h4>
 </div>
 <div id="packs" class="well" th:fragment="carDetailPacks(car)" th:if="${car.packs != null and car.packs.size() > 0}">
-    <h3 class="modal-header">Packs</h3>
+    <h3 class="modal-header" th:text="#{msgFragmentCarDetail.packs}"></h3>
 
     <div th:each="pack : ${car.packs}">
         <h4 th:text="${pack.name}"></h4>
