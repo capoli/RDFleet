@@ -8,9 +8,9 @@
     <div class="container">
         <div class="row">
             <div class="view-heading">
-                <h1 class="rd-blue" th:if="${car.id == null}">Create a car</h1>
+                <h1 class="rd-blue" th:if="${car.id == null}" th:text="#{msgFleetCarDetail.title_create}"></h1>
 
-                <h1 class="rd-blue" th:if="${car.id != null}">Edit car</h1>
+                <h1 class="rd-blue" th:if="${car.id != null}" th:text="#{msgFleetCarDetail.title_edit}"></h1>
                 <hr/>
             </div>
             <div th:replace="./fragments/general.fragment :: error(${error})"></div>
@@ -18,7 +18,8 @@
             <form id="edit-view" action="#" th:action="@{/fleet/cars/}" method="post" th:object="${car}">
 
                 <div class="form-group" th:class="${#fields.hasErrors('make')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('make')}">Make:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('make')}">
+                        <span th:text="#{msgFleetCarDetail.make}"></span>:</label>
 
                     <div class="col-sm-9">
                         <input type="text" th:field="*{make}" class="form-control"/>
@@ -27,7 +28,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('model')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('model')}">Model:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('model')}">
+                        <span th:text="#{msgFleetCarDetail.model}"></span>:</label>
 
                     <div class="col-sm-9">
                         <input type="text" th:field="*{model}" class="form-control"/>
@@ -36,8 +38,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('functionalLevel')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('functionalLevel')}">Functional
-                        Level:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('functionalLevel')}">
+                        <span th:text="#{msgFleetCarDetail.functional_level}"></span>:</label>
 
                     <div class="col-sm-9">
                         <input type="number" th:field="*{functionalLevel}" class="form-control"/>
@@ -47,7 +49,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('description')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('description')}">Description:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('description')}">
+                        <span th:text="#{msgFleetCarDetail.description}"></span>:</label>
 
                     <div class="col-sm-9">
                         <input type="text" th:field="*{description}" class="form-control"/>
@@ -57,7 +60,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('packs')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('packs')}">Packs:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('packs')}">
+                        <span th:text="#{msgFleetCarDetail.packs}"></span>:</label>
 
                     <div class="col-sm-9">
                         <select th:field="*{packs}" class="form-control chosen-select" name="packs" multiple="multiple"
@@ -70,7 +74,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('tyreType')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('tyreType')}">Tyre Type::</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('tyreType')}">
+                        <span th:text="#{msgFleetCarDetail.tyre_type}"></span>:</label>
 
                     <div class="col-sm-9">
                         <select th:name="tyreType" class="form-control">
@@ -83,7 +88,8 @@
                     </div>
                 </div>
                 <div class="form-group" th:class="${#fields.hasErrors('fuelType')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('fuelType')}">Fuel Type:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('fuelType')}">
+                        <span th:text="#{msgFleetCarDetail.fuel_type}"></span>:</label>
 
                     <div class="col-sm-9">
                         <select th:name="fuelType" class="form-control">
@@ -97,7 +103,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('carType')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('carType')}">Car Type:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('carType')}">
+                        <span th:text="#{msgFleetCarDetail.car_type}"></span>:</label>
 
                     <div class="col-sm-9">
                         <select th:name="carType" class="form-control">
@@ -110,7 +117,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('idealKm')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('idealKm')}">Ideal Km:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('idealKm')}">
+                        <span th:text="#{msgFleetCarDetail.ideal_km}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number" th:field="*{idealKm}" class="form-control"/>
                                     <span th:if="${#fields.hasErrors('idealKm')}" class="help-block"
@@ -119,7 +127,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('maxKm')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('maxKm')}">Max Km:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('maxKm')}">
+                        <span th:text="#{msgFleetCarDetail.max_km}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number" th:field="*{maxKm}"
                                                   class="form-control"/>
@@ -129,8 +138,8 @@
                 </div>
 
                 <div class="form-group" th:class="${#fields.hasErrors('listPrice')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('listPrice')}">List
-                        price:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('listPrice')}">
+                        <span th:text="#{msgFleetCarDetail.list_price}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number" step="0.01" th:field="*{listPrice}"
                                                   class="form-control"/>
@@ -141,7 +150,8 @@
 
                 <div class="form-group" th:class="${#fields.hasErrors('benefit')}? 'has-error form-group':'form-group'">
                     <label class="col-sm-3 control-label"
-                           th:for="${#ids.next('benefit')}">Benefit:</label>
+                           th:for="${#ids.next('benefit')}">
+                        <span th:text="#{msgFleetCarDetail.benefit}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number" step="0.01"
                                                   th:field="*{benefit}" class="form-control"/>
@@ -153,7 +163,8 @@
                 <div class="form-group"
                      th:class="${#fields.hasErrors('amountUpgrade')}? 'has-error form-group':'form-group'">
                     <label class="col-sm-3 control-label"
-                           th:for="${#ids.next('amountUpgrade')}">Upgrading cost:</label>
+                           th:for="${#ids.next('amountUpgrade')}">
+                        <span th:text="#{msgFleetCarDetail.upgrading_cost}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number" step="0.01"
                                                   th:field="*{amountUpgrade}"
@@ -166,8 +177,8 @@
                 <div class="form-group"
                      th:class="${#fields.hasErrors('amountDowngrade')}? 'has-error form-group':'form-group'">
                     <label class="col-sm-3 control-label"
-                           th:for="${#ids.next('amountDowngrade')}">Downgrading
-                        cost:</label>
+                           th:for="${#ids.next('amountDowngrade')}">
+                        <span th:text="#{msgFleetCarDetail.downgrading_cost}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number" step="0.01"
                                                   th:field="*{amountDowngrade}"
@@ -180,7 +191,8 @@
                 <div class="form-group"
                      th:class="${#fields.hasErrors('co2')}? 'has-error form-group':'form-group'">
                     <label class="col-sm-3 control-label"
-                           th:for="${#ids.next('co2')}">CO2 emission:</label>
+                           th:for="${#ids.next('co2')}">
+                        <span th:text="#{msgFleetCarDetail.co2_emission}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number" th:field="*{co2}"
                                                   class="form-control"/>
@@ -192,7 +204,8 @@
                 <div class="form-group"
                      th:class="${#fields.hasErrors('fiscHp')}? 'has-error form-group':'form-group'">
                     <label class="col-sm-3 control-label"
-                           th:for="${#ids.next('fiscHp')}">Fisc HP:</label>
+                           th:for="${#ids.next('fiscHp')}">
+                        <span th:text="#{msgFleetCarDetail.fisc_hp}"></span>:</label>
 
                     <div class="col-sm-9"><input type="number"
                                                   th:field="*{fiscHp}"
@@ -205,8 +218,8 @@
                 <div class="form-group"
                      th:class="${#fields.hasErrors('timeOfDeliveryInDays')}? 'has-error form-group':'form-group'">
                     <label class="col-sm-3 control-label"
-                           th:for="${#ids.next('timeOfDeliveryInDays')}">Time
-                        of delivery in days:</label>
+                           th:for="${#ids.next('timeOfDeliveryInDays')}">
+                        <span th:text="#{msgFleetCarDetail.time_of_delivery_days}"></span>:</label>
 
                     <div class="col-sm-9"><input
                             th:field="*{timeOfDeliveryInDays}"
@@ -218,7 +231,7 @@
 
                 <div class="form-group" th:class="${#fields.hasErrors('towingBracketPossibility')}? 'has-error form-group col-sm-12':'form-group col-sm-12'">
                     <label class="col-sm-3 control-label checkbox-label" th:for="${#ids.next('towingBracketPossibility')}">
-                        Towing bracket available:
+                        <span th:text="#{msgFleetCarDetail.towing_bracket_available}"></span>:
                     </label>
                     <input class="checkbox col-sm-1 checkbox-input" type="checkbox" th:field="*{towingBracketPossibility}"/>
                     <span th:if="${#fields.hasErrors('towingBracketPossibility')}" class="help-block"
@@ -227,7 +240,7 @@
 
                 <div class="form-group" th:class="${#fields.hasErrors('gps')}? 'has-error form-group col-sm-12':'form-group col-sm-12'">
                     <label class="col-sm-3 control-label checkbox-label" th:for="${#ids.next('gps')}">
-                        Gps available:
+                        <span th:text="#{msgFleetCarDetail.gps_available}"></span>:
                     </label>
                     <input class="checkbox col-sm-1 checkbox-input" type="checkbox" th:field="*{gps}"/>
                     <span th:if="${#fields.hasErrors('gps')}" class="help-block"
@@ -236,7 +249,7 @@
 
                 <div class="form-group" th:class="${#fields.hasErrors('bluetooth')}? 'has-error form-group col-sm-12':'form-group col-sm-12'">
                     <label class="col-sm-3 control-label checkbox-label" th:for="${#ids.next('bluetooth')}">
-                        Bluetooth available:
+                        <span th:text="#{msgFleetCarDetail.bluetooth_available}"></span>:
                     </label>
                     <input class="checkbox col-sm-1 checkbox-input" type="checkbox" th:field="*{bluetooth}"/>
                     <span th:if="${#fields.hasErrors('bluetooth')}" class="help-block"
@@ -247,8 +260,12 @@
                 <input type="hidden" th:field="*{version}"/>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button th:if="${car.id == null}" type="submit" class="btn btn-primary col-sm-4 form-button">Create</button>
-                        <button th:if="${car.id != null}" type="submit" class="btn btn-primary col-sm-4 form-button">Update</button>
+                        <button th:if="${car.id == null}" type="submit" class="btn btn-primary col-sm-4 form-button">
+                            <span th:text="#{msgFleetCarDetail.create}"></span>
+                        </button>
+                        <button th:if="${car.id != null}" type="submit" class="btn btn-primary col-sm-4 form-button">
+                            <span th:text="#{msgFleetCarDetail.update}"></span>
+                        </button>
                     </div>
                 </div>
             </form>

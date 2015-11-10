@@ -18,9 +18,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="view-heading">
-                    <h1 class="rd-blue" th:if="${pack.id == null}">Create an item</h1>
+                    <h1 class="rd-blue" th:if="${pack.id == null}">Create a pack</h1>
 
-                    <h1 class="rd-blue" th:if="${pack.id != null}">Edit item</h1>
+                    <h1 class="rd-blue" th:if="${pack.id != null}">Edit pack</h1>
                     <hr/>
                 </div>
                 <div th:replace="./fragments/general.fragment :: error(${error})"></div>
@@ -47,11 +47,6 @@
                                            th:field="*{items[__${rowStat.index}__]}" placeholder="Add an item"/>
                                 </div>
                             <span class="col-sm-1 input-group-btn">
-                                <!--<button th:if="${rowStat.index == rowStat.size - 1}" class="btn btn-success btn-add"-->
-                                <!--type="button">-->
-                                <!--<span class="glyphicon glyphicon-plus"></span>-->
-                                <!--</button>-->
-                                <!--<button th:if="${rowStat.index != rowStat.size - 1}" class="btn btn-danger btn-remove"-->
                                 <button class="btn btn-danger btn-remove"
                                         type="button">
                                     <span class="glyphicon glyphicon-minus"></span>
@@ -60,13 +55,12 @@
                             </div>
                         </div>
 
-                        <!--<div class="entry" th:if="${pack.items == null or pack.items.isEmpty()}">-->
                         <div class="entry">
                             <div class="col-sm-8 col-sm-offset-3">
-                                <input class="form-control" name="fields[]" type="text" th:field="${pack.items[0]}"
-                                       placeholder="Add an item" th:if="${pack.items == null or pack.items.isEmpty()}"/>
                                 <input class="form-control" name="fields[]" type="text"
                                        placeholder="Add an item" th:if="${pack.items != null and !pack.items.isEmpty()}"/>
+                                <input class="form-control" name="fields[]" type="text" th:field="${pack.items[0]}"
+                                       placeholder="Add an item" th:if="${pack.items == null or pack.items.isEmpty()}"/>
                             </div>
                             <span class="col-sm-1 input-group-btn">
                                 <button class="btn btn-success btn-add" type="button">
