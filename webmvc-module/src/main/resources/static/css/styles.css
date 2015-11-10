@@ -32,7 +32,7 @@ body {
     background-size: cover;
 }
 
-#content {
+#content, #content-car-order {
     position: fixed;
     top: 71px;
     left: 2.5%;
@@ -41,7 +41,7 @@ body {
     margin: 0;
 }
 
-#content-login-form {
+#content-login-form, #content-error-page {
     position: fixed;
     top: 71px;
     left: 7.5%;
@@ -66,6 +66,10 @@ body {
     -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.container-car-order {
+    min-height: 93.5%;
 }
 
 .container::-webkit-scrollbar {
@@ -146,10 +150,9 @@ body {
         width: 80%;
         height: 90%;
         margin: 0;
-
     }
 
-    #content-login-form {
+    #content-login-form, #content-error-page {
         position: fixed;
         top: 71px;
         left: 25%;
@@ -160,15 +163,7 @@ body {
 }
 
 @media (min-width: 1530px) {
-    /*#content {*/
-        /*top: 71px;*/
-        /*left: 10%;*/
-        /*width: 80%;*/
-        /*height: 90%;*/
-        /*margin: 0;*/
-    /*}*/
-
-    #content-login-form {
+    #content-login-form, #content-error-page {
         position: fixed;
         top: 71px;
         left: 35%;
@@ -179,13 +174,19 @@ body {
 }
 
 @media (min-height: 400px) {
-    #content-login-form {
+    #content-login-form, #content-error-page {
         top: 30%;
     }
 }
 
+@media (min-height: 620px) {
+    .container-car-order {
+        min-height: 85%;
+    }
+}
+
 @media (max-width: 768px) and (min-height: 400px) {
-    #content-login-form {
+    #content-login-form, #content-error-page {
         top: 25%;
     }
 }

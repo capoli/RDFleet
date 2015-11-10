@@ -91,7 +91,7 @@ public class OrderCarController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Order orderForEmployee = employeeService.createOrderForEmployee(auth.getName(), employeeCar);
         order.setAmountPaidByCompany(orderForEmployee.getAmountPaidByCompany());
-        order.setAmountPaidByEmployee(orderForEmployee.getAmountPaidByCompany());
+        order.setAmountPaidByEmployee(orderForEmployee.getAmountPaidByEmployee());
         order.setOrderedCar(orderForEmployee.getOrderedCar());
         model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
         model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));

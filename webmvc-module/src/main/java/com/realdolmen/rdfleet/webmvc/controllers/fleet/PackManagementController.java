@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
@@ -49,6 +50,11 @@ public class PackManagementController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String editPack(@ModelAttribute Pack pack, BindingResult errors, Model model) {
+        Iterator<String> iterator = pack.getItems().iterator();
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            if(next != null && next.trim().isEmpty()) iterator.remove();
+        }
         validator.validate(pack, errors);
         if (errors.hasErrors()) {
             model.addAttribute(packService.findAllPacks());

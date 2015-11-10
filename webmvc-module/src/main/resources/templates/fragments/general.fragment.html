@@ -97,8 +97,10 @@
 
     <script type="text/javascript">
         $(document).load(function () {
+            console.log('test1');
             var email = $('#useremail').text();
             if (email !== '') {
+                console.log('test2');
                 $.ajax({
                     method: 'get',
                     url: '/api/canOrderCar/' + email,

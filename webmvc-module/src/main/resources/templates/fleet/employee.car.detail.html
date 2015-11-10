@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="view-heading">
-                    <h1>Employee's car details</h1>
+                    <h1 class="rd-blue">Employee's car details</h1>
                     <hr/>
                 </div>
                 <table class="table table-striped">
@@ -44,9 +44,9 @@
                     </tr>
                 </table>
 
-                <div th:replace="./fragments/general.fragment :: error(${error})"></div>
 
                 <hr/>
+                <div th:replace="./fragments/general.fragment :: error(${error})"></div>
                 <div th:if="${employee.currentOrder.orderedCar.carStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}">
                     <form action="#" th:action="@{/fleet/employees/car/status-in-use}" method="post">
 

@@ -8,8 +8,8 @@
     <div class="container">
         <div class="row">
             <div class="view-heading">
-                <h1 th:if="${carOption.id == null}">Create an option</h1>
-                <h1 th:if="${carOption.id != null}">Edit option</h1>
+                <h1 class="rd-blue" th:if="${carOption.id == null}">Create an option</h1>
+                <h1 class="rd-blue" th:if="${carOption.id != null}">Edit option</h1>
                 <hr/>
             </div>
             <div th:replace="./fragments/general.fragment :: error(${error})"></div>

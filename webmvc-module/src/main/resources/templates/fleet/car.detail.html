@@ -8,9 +8,9 @@
     <div class="container">
         <div class="row">
             <div class="view-heading">
-                <h1 th:if="${car.id == null}">Create a car</h1>
+                <h1 class="rd-blue" th:if="${car.id == null}">Create a car</h1>
 
-                <h1 th:if="${car.id != null}">Edit car</h1>
+                <h1 class="rd-blue" th:if="${car.id != null}">Edit car</h1>
                 <hr/>
             </div>
             <div th:replace="./fragments/general.fragment :: error(${error})"></div>
