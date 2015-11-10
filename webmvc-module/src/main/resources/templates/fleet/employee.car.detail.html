@@ -9,29 +9,29 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="view-heading">
-                    <h1 class="rd-blue">Employee's car details</h1>
+                    <h1 class="rd-blue" th:text="#{msgFleetEmployeeCarDetail.title}"></h1>
                     <hr/>
                 </div>
                 <table class="table table-striped">
                     <tr>
-                        <td>Employee</td>
+                        <td th:text="#{msgFleetEmployeeCarDetail.employee}"></td>
                         <td><span th:text="${employee.firstName}"></span> <span
                                 th:text="${employee.lastName}"></span></td>
                     </tr>
                     <tr>
-                        <td>License plate</td>
+                        <td th:text="#{msgFleetEmployeeCarDetail.license_plate}"></td>
                         <td th:text="${employee.currentOrder.orderedCar.licensePlate}"></td>
                     </tr>
                     <tr>
-                        <td>Mileage</td>
+                        <td th:text="#{msgFleetEmployeeCarDetail.mileage}"></td>
                         <td th:text="${employee.currentOrder.orderedCar.mileage}"></td>
                     </tr>
                     <tr>
-                        <td>Car Status</td>
+                        <td th:text="#{msgFleetEmployeeCarDetail.car_status}"></td>
                         <td th:text="${employee.currentOrder.orderedCar.carStatus}"></td>
                     </tr>
                     <tr>
-                        <td>Car options</td>
+                        <td th:text="#{msgFleetEmployeeCarDetail.car_options}"></td>
                         <td>
                             <span th:each="option : ${employee.currentOrder.orderedCar.carOptions}">
                                 <span th:text="${option.description}"></span><br/>
@@ -39,7 +39,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Date car was received</td>
+                        <td th:text="#{msgFleetEmployeeCarDetail.date_car_received}"></td>
                         <td th:text="${{employee.currentOrder.dateReceived}}"></td>
                     </tr>
                 </table>
@@ -51,7 +51,8 @@
                     <form action="#" th:action="@{/fleet/employees/car/status-in-use}" method="post">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">License Plate:</label>
+                            <label class="col-sm-2 control-label" th:text="#{msgFleetEmployeeCarDetail.license_plate}">
+                            </label>
 
                             <div class="col-sm-4">
                                 <input type="text" th:name="licensePlate" class="form-control"/>
@@ -60,9 +61,8 @@
                             <input type="hidden" th:name="employeeId" th:value="${employee.id}"/>
 
                             <div class="col-sm-6">
-                                <button type="submit" class="btn btn-info btn-lg col-sm-12 btn-form">Employee has
-                                    received
-                                    the car
+                                <button type="submit" class="btn btn-info btn-lg col-sm-12 btn-form">
+                                    <span th:text="#{msgFleetEmployeeCarDetail.employee_has_received_car}"></span>
                                 </button>
                             </div>
                         </div>
@@ -74,9 +74,8 @@
 
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <button type="submit" class="btn btn-danger btn-lg col-sm-12 btn-form form-button">Move car
-                                to
-                                free pool
+                            <button type="submit" class="btn btn-danger btn-lg col-sm-12 btn-form form-button">
+                                <span th:text="#{msgFleetEmployeeCarDetail.move_to_freepool}"></span>
                             </button>
                         </div>
                     </div>
@@ -87,8 +86,8 @@
 
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <button type="submit" class="btn btn-danger btn-lg col-sm-12 btn-form form-button">Remove car
-                                from system
+                            <button type="submit" class="btn btn-danger btn-lg col-sm-12 btn-form form-button">
+                                <span th:text="#{msgFleetEmployeeCarDetail.remove_from_system}"></span>
                             </button>
                         </div>
                     </div>

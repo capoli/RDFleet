@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="view-heading">
-                    <h1 class="rd-blue">Employee list</h1>
+                    <h1 class="rd-blue" th:text="#{msgFleetEmployeeList.title}"></h1>
                     <hr/>
                 </div>
                 <div th:replace="./fragments/general.fragment :: error(${error})"></div>
@@ -17,12 +17,12 @@
                 <table class="table table-striped table-hover" id="employeeTable">
                     <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>FunctionalLevel</th>
-                        <th>Current Car</th>
-                        <th class="text-right">Car History</th>
-                        <th class="text-right">Remove from service</th>
+                        <th th:text="#{msgFleetEmployeeList.first_name}"></th>
+                        <th th:text="#{msgFleetEmployeeList.last_name}"></th>
+                        <th th:text="#{msgFleetEmployeeList.functional_level}"></th>
+                        <th th:text="#{msgFleetEmployeeList.current_car}"></th>
+                        <th class="text-right" th:text="#{msgFleetEmployeeList.car_history}"></th>
+                        <th class="text-right" th:text="#{msgFleetEmployeeList.remove_from_service}"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,33 +39,35 @@
                         <td>
                             <div th:if="${rdEmployee.currentOrder != null}">
                                 <a th:href="${#mvc.url('ECMC#viewEmployeeCar').arg(0, rdEmployee.id).build()}"
-                                   title="View more information about the employee's car">
+                                   th:title="#{msgFleetEmployeeList.view_more_information_about_emp_car}">
                                     <span th:if="${rdEmployee.currentOrder.orderedCar.licensePlate != null and !rdEmployee.currentOrder.orderedCar.licensePlate.isEmpty()}"
                                           th:text="${rdEmployee.currentOrder.orderedCar.licensePlate}"></span>
                                     <span th:if="${rdEmployee.currentOrder.orderedCar.licensePlate == null or rdEmployee.currentOrder.orderedCar.licensePlate.isEmpty()}"
-                                          style="color: red">Pending request</span>
+                                          style="color: red" th:text="#{msgFleetEmployeeList.pending_request}"></span>
                                 </a>
                             </div>
                             <div th:if="${rdEmployee.currentOrder == null}">
-                                No car assigned
+                                <span th:text="#{msgFleetEmployeeList.no_car_assigned}"></span>
                             </div>
                         </td>
                         <td class="text-right"><a class="btn btn-info btn-xs"
-                                                  th:href="${#mvc.url('ECMC#viewEmployeeCarHistory').arg(0, rdEmployee.id).build()}">View
-                            history details</a></td>
+                                                  th:href="${#mvc.url('ECMC#viewEmployeeCarHistory').arg(0, rdEmployee.id).build()}">
+                            <span th:text="#{msgFleetEmployeeList.view_history_details}"></span>
+                        </a></td>
                         <td class="text-right"><a class="btn btn-danger btn-xs"
-                                                  th:href="${#mvc.url('REMC#removeFromService').arg(0, rdEmployee.id).build()}">Remove
-                            from service</a></td>
+                                                  th:href="${#mvc.url('REMC#removeFromService').arg(0, rdEmployee.id).build()}">
+                            <span th:text="#{msgFleetEmployeeList.remove_from_service}"></span>
+                        </a></td>
                     </tr>
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>FunctionalLevel</th>
-                        <th>Current Car</th>
-                        <th class="text-right">Car History</th>
-                        <th class="text-right">Remove from service</th>
+                        <th th:text="#{msgFleetEmployeeList.first_name}"></th>
+                        <th th:text="#{msgFleetEmployeeList.last_name}"></th>
+                        <th th:text="#{msgFleetEmployeeList.functional_level}"></th>
+                        <th th:text="#{msgFleetEmployeeList.current_car}"></th>
+                        <th class="text-right" th:text="#{msgFleetEmployeeList.car_history}"></th>
+                        <th class="text-right" th:text="#{msgFleetEmployeeList.remove_from_service}"></th>
                     </tr>
                     </tfoot>
                 </table>

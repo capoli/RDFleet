@@ -18,9 +18,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="view-heading">
-                    <h1 class="rd-blue" th:if="${pack.id == null}">Create a pack</h1>
+                    <h1 class="rd-blue" th:if="${pack.id == null}" th:text="#{msgFleetPackDetail.title_create}"></h1>
 
-                    <h1 class="rd-blue" th:if="${pack.id != null}">Edit pack</h1>
+                    <h1 class="rd-blue" th:if="${pack.id != null}" th:text="#{msgFleetPackDetail.title_edit}"></h1>
                     <hr/>
                 </div>
                 <div th:replace="./fragments/general.fragment :: error(${error})"></div>
@@ -29,7 +29,7 @@
 
                     <div class="form-group"
                          th:class="${#fields.hasErrors('name')}? 'has-error form-group':'form-group'">
-                        <label class="col-sm-3 control-label" th:for="${#ids.next('name')}">Name:</label>
+                        <label class="col-sm-3 control-label" th:for="${#ids.next('name')}"><span th:text="#{msgFleetPackDetail.name}"></span>:</label>
 
                         <div class="col-sm-9">
                             <input type="text" th:field="*{name}" class="form-control"/>
@@ -40,11 +40,11 @@
                     <div class="form-group col-sm-12">
                         <div class="entry" th:each="item, rowStat : *{items}">
                             <div th:class="${rowStat.index ne 0 ? 'entry-margin-top':''}">
-                                <label th:if="${rowStat.index eq 0}" class="control-label col-sm-3">Items:</label>
+                                <label th:if="${rowStat.index eq 0}" class="control-label col-sm-3"><span th:text="#{msgFleetPackDetail.items}"></span>:</label>
 
                                 <div th:class="${rowStat.index eq 0 ? 'col-sm-8':'col-sm-8 col-sm-offset-3'}">
                                     <input class="form-control" name="fields[]" type="text"
-                                           th:field="*{items[__${rowStat.index}__]}" placeholder="Add an item"/>
+                                           th:field="*{items[__${rowStat.index}__]}" th:placeholder="#{msgFleetPackDetail.add_an_item_placeholder}"/>
                                 </div>
                             <span class="col-sm-1 input-group-btn">
                                 <button class="btn btn-danger btn-remove"
@@ -58,9 +58,9 @@
                         <div class="entry">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <input class="form-control" name="fields[]" type="text"
-                                       placeholder="Add an item" th:if="${pack.items != null and !pack.items.isEmpty()}"/>
+                                       th:placeholder="#{msgFleetPackDetail.add_an_item_placeholder}" th:if="${pack.items != null and !pack.items.isEmpty()}"/>
                                 <input class="form-control" name="fields[]" type="text" th:field="${pack.items[0]}"
-                                       placeholder="Add an item" th:if="${pack.items == null or pack.items.isEmpty()}"/>
+                                       th:placeholder="#{msgFleetPackDetail.add_an_item_placeholder}" th:if="${pack.items == null or pack.items.isEmpty()}"/>
                             </div>
                             <span class="col-sm-1 input-group-btn">
                                 <button class="btn btn-success btn-add" type="button">
@@ -76,10 +76,12 @@
                     <div class="form-group pack-items-btn">
                         <div class="col-sm-offset-3 col-sm-9">
                             <button th:if="${pack.id == null}" type="submit"
-                                    class="btn btn-primary col-sm-4 form-button">Create
+                                    class="btn btn-primary col-sm-4 form-button">
+                                <span th:text="#{msgFleetPackDetail.create}"></span>
                             </button>
                             <button th:if="${pack.id != null}" type="submit"
-                                    class="btn btn-primary col-sm-4 form-button">Update
+                                    class="btn btn-primary col-sm-4 form-button">
+                                <span th:text="#{msgFleetPackDetail.update}"></span>
                             </button>
                         </div>
                     </div>
