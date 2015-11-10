@@ -8,8 +8,8 @@
     <div class="container">
         <div class="row">
             <div class="view-heading">
-                <h1 class="rd-blue" th:if="${carOption.id == null}">Create an option</h1>
-                <h1 class="rd-blue" th:if="${carOption.id != null}">Edit option</h1>
+                <h1 class="rd-blue" th:if="${carOption.id == null}" th:text="#{msgFleetCarOptionDetail.title_create}"></h1>
+                <h1 class="rd-blue" th:if="${carOption.id != null}" th:text="#{msgFleetCarOptionDetail.title_edit}"></h1>
                 <hr/>
             </div>
             <div th:replace="./fragments/general.fragment :: error(${error})"></div>
@@ -18,7 +18,8 @@
 
                 <div class="form-group"
                      th:class="${#fields.hasErrors('description')}? 'has-error form-group':'form-group'">
-                    <label class="col-sm-3 control-label" th:for="${#ids.next('description')}">Description:</label>
+                    <label class="col-sm-3 control-label" th:for="${#ids.next('description')}">
+                        <span th:text="#{msgFleetCarOptionDetail.description}"></span>:</label>
 
                     <div class="col-sm-9">
                         <input type="text" th:field="*{description}" class="form-control"/>
@@ -31,8 +32,12 @@
                 <input type="hidden" th:field="*{version}"/>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button th:if="${carOption.id == null}" type="submit" class="btn btn-primary col-sm-4 btn-form form-button">Create</button>
-                        <button th:if="${carOption.id != null}" type="submit" class="btn btn-primary col-sm-4 btn-form form-button">Update</button>
+                        <button th:if="${carOption.id == null}" type="submit" class="btn btn-primary col-sm-4 btn-form form-button">
+                            <span th:text="#{msgFleetCarOptionDetail.create}"></span>
+                        </button>
+                        <button th:if="${carOption.id != null}" type="submit" class="btn btn-primary col-sm-4 btn-form form-button">
+                            <span th:text="#{msgFleetCarOptionDetail.update}"></span>
+                        </button>
                     </div>
                 </div>
             </form>
