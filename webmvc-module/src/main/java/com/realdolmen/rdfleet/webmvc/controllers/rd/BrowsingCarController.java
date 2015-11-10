@@ -36,31 +36,37 @@ public class BrowsingCarController {
     public String getNewCars(@RequestParam(value = "type", required = false) String type, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Car> cars;
-
-        if (type != null) {
-            switch (type.toLowerCase()) {
-                case "order":
-                    if(employeeService.employeeCanOrderNewCar(auth.getName()))
-                        cars = employeeService.findCarsForEmployeeByFunctionalLevel(auth.getName());
-                    else
+        try {
+            if (type != null) {
+                switch (type.toLowerCase()) {
+                    case "order":
+                        if (employeeService.employeeCanOrderNewCar(auth.getName()))
+                            cars = employeeService.findCarsForEmployeeByFunctionalLevel(auth.getName());
+                        else
+                            cars = carService.findAllOrderableCars();
+                        break;
+                    default:
                         cars = carService.findAllOrderableCars();
-                    break;
-                default:
-                    cars = carService.findAllOrderableCars();
-                    break;
-            }
-        }
-        else cars = carService.findAllOrderableCars();
+                        break;
+                }
+            } else cars = carService.findAllOrderableCars();
 
-        model.addAttribute("carList", cars);
+            model.addAttribute("carList", cars);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "rd/car.list";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getNewCar(@PathVariable("id") Long id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("car", carService.findById(id));
-        model.addAttribute("canOrderNewCar", employeeService.employeeCanOrderNewCar(auth.getName(), id));
+        try {
+            model.addAttribute("car", carService.findById(id));
+            model.addAttribute("canOrderNewCar", employeeService.employeeCanOrderNewCar(auth.getName(), id));
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "rd/car.detail";
     }
 }

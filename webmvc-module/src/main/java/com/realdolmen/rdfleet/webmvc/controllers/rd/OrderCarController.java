@@ -44,26 +44,34 @@ public class OrderCarController {
 
     @RequestMapping(value = "/freepool", method = RequestMethod.GET)
     public String getCarsFromFreePool(Model model) {
-        model.addAttribute("employeeCars", employeeCarService.findAllIsNotUsed());
+        try {
+            model.addAttribute("employeeCars", employeeCarService.findAllIsNotUsed());
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "rd/freepool.list";
     }
 
     @RequestMapping(value = "/freepool/{id}", method = RequestMethod.GET)
     public String getFreePoolCar(@PathVariable("id") Long id, @ModelAttribute("employeeCar") EmployeeCar employeeCar, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean canOrderEmployeeCar = employeeService.employeeCanOrderEmployeeCar(auth.getName(), employeeCar.getId());
-        if(!canOrderEmployeeCar) return "redirect:/rd/cars/freepool";
-        EmployeeCar employeeCarFromService = employeeCarService.findById(id);
-        employeeCar.setCarOptions(employeeCarFromService.getCarOptions());
-        employeeCar.setCarStatus(employeeCarFromService.getCarStatus());
-        employeeCar.setLicensePlate(employeeCarFromService.getLicensePlate());
-        employeeCar.setSelectedCar(employeeCarFromService.getSelectedCar());
-        employeeCar.setMileage(employeeCarFromService.getMileage());
-        employeeCar.setId(employeeCarFromService.getId());
-        employeeCar.setVersion(employeeCarFromService.getVersion());
-        model.addAttribute("employeeCar", employeeCar);
-        model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
-        model.addAttribute("canOrderFreePoolCar", canOrderEmployeeCar);
+        try {
+            boolean canOrderEmployeeCar = employeeService.employeeCanOrderEmployeeCar(auth.getName(), employeeCar.getId());
+            if(!canOrderEmployeeCar) return "redirect:/rd/cars/freepool";
+            EmployeeCar employeeCarFromService = employeeCarService.findById(id);
+            employeeCar.setCarOptions(employeeCarFromService.getCarOptions());
+            employeeCar.setCarStatus(employeeCarFromService.getCarStatus());
+            employeeCar.setLicensePlate(employeeCarFromService.getLicensePlate());
+            employeeCar.setSelectedCar(employeeCarFromService.getSelectedCar());
+            employeeCar.setMileage(employeeCarFromService.getMileage());
+            employeeCar.setId(employeeCarFromService.getId());
+            employeeCar.setVersion(employeeCarFromService.getVersion());
+            model.addAttribute("employeeCar", employeeCar);
+            model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
+            model.addAttribute("canOrderFreePoolCar", canOrderEmployeeCar);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "rd/freepool.detail";
     }
 
@@ -71,11 +79,15 @@ public class OrderCarController {
     public String getOrderNewCar(@PathVariable("id") Long id, Model model, @ModelAttribute("employeeCar") EmployeeCar employeeCar) {
         if(!canOrderNewCar()) return "redirect:/index";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        employeeCar.setSelectedCar(carService.findByIdAndIsOrderable(id));
-        employeeCar.setCarOptions(new ArrayList<>());
-        model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
-        model.addAttribute("carOptions", carOptionService.findAllCarOptionsByTowingBracketPossibility(
-                employeeCar.getSelectedCar().isTowingBracketPossibility()));
+        try {
+            employeeCar.setSelectedCar(carService.findByIdAndIsOrderable(id));
+            employeeCar.setCarOptions(new ArrayList<>());
+            model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
+            model.addAttribute("carOptions", carOptionService.findAllCarOptionsByTowingBracketPossibility(
+                    employeeCar.getSelectedCar().isTowingBracketPossibility()));
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "rd/car.order";
     }
 
@@ -89,12 +101,16 @@ public class OrderCarController {
     public String getSummaryCar(@ModelAttribute("employeeCar") EmployeeCar employeeCar, @ModelAttribute("order") Order order, Model model) {
         if(!canOrderNewCar() || employeeCar == null) return "redirect:/index";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Order orderForEmployee = employeeService.createOrderForEmployee(auth.getName(), employeeCar);
-        order.setAmountPaidByCompany(orderForEmployee.getAmountPaidByCompany());
-        order.setAmountPaidByEmployee(orderForEmployee.getAmountPaidByEmployee());
-        order.setOrderedCar(orderForEmployee.getOrderedCar());
-        model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
-        model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
+        try {
+            Order orderForEmployee = employeeService.createOrderForEmployee(auth.getName(), employeeCar);
+            order.setAmountPaidByCompany(orderForEmployee.getAmountPaidByCompany());
+            order.setAmountPaidByEmployee(orderForEmployee.getAmountPaidByEmployee());
+            order.setOrderedCar(orderForEmployee.getOrderedCar());
+            model.addAttribute("functionalLevel", employeeService.getFunctionalLevelByEmail(auth.getName()));
+            model.addAttribute("car", carService.findById(employeeCar.getSelectedCar().getId()));
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "rd/car.summary";
     }
 
