@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.repositories;
 
 import com.realdolmen.rdfleet.config.JpaConfig;
+import com.realdolmen.rdfleet.domain.CarStatus;
 import com.realdolmen.rdfleet.domain.EmployeeCar;
 import com.realdolmen.rdfleet.util.ValidDomainObjectFactory;
 import org.junit.Before;
@@ -14,6 +15,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.validation.ConstraintViolationException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -106,4 +111,20 @@ public class EmployeeCarRepositoryTest {
         repository.save(employeeCar1);
     }
 
+    @Test
+    public void testFindAllNotUsedCars(){
+        EmployeeCar notUsedEmployeeCar = ValidDomainObjectFactory.createEmployeeCar();
+        notUsedEmployeeCar.setCarStatus(CarStatus.NOT_USED);
+
+        repository.save(notUsedEmployeeCar);
+
+        assertEquals(new ArrayList<>(Collections.singletonList(notUsedEmployeeCar)), repository.findAllIsNotUsed());
+    }
+
+    @Test
+    public void testFindAllNotUsedCarsNoneFound(){
+        repository.save(employeeCar);
+
+        assertEquals(0, repository.findAllIsNotUsed().size());
+    }
 }

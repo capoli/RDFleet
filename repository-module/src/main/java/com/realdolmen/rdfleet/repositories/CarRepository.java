@@ -13,10 +13,9 @@ import java.util.List;
  */
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-    //TODO: test
+
     @Query("select e from Car e where e.orderable = true and e.functionalLevel between (:funcLvl -1) and (:funcLvl +1)")
     List<Car> findAllCarsByFunctionalLevelAndIsOrderable(@Param("funcLvl") int funcLvl);
-    List<Car> findByFunctionalLevel(int functionalLevel);
 
     /**
      * Finds all cars that where orderable equals true in the database.

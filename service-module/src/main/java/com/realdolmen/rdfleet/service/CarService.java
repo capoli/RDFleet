@@ -52,7 +52,6 @@ public class CarService {
         carRepository.save(car);
     }
 
-    //TODO: test
     public Car findById(Long id) {
         if(id == null) throw new IllegalArgumentException("Car id can not be null");
         if(id < 0) throw new IllegalArgumentException("Car id can not be a negative number");
@@ -73,7 +72,6 @@ public class CarService {
         carRepository.save(car);
     }
 
-    //TODO: test
     public Car findByIdAndIsOrderable(Long id) {
         Car car = findById(id);
         if(!car.isOrderable()) throw new IllegalArgumentException("Car is not orderable");

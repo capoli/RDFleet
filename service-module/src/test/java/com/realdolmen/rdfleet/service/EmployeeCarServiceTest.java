@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.service;
 
 import com.realdolmen.rdfleet.config.JpaConfig;
+import com.realdolmen.rdfleet.domain.CarStatus;
 import com.realdolmen.rdfleet.domain.EmployeeCar;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.service.util.ValidDomainObjectFactory;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -23,10 +25,6 @@ import static org.mockito.Mockito.*;
 /**
  * Created by JSTAX29 on 2/11/2015.
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = JpaConfig.class)
-//@ActiveProfiles("test")
-//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(MockitoJUnitRunner.class)
 public class EmployeeCarServiceTest {
 
@@ -64,6 +62,37 @@ public class EmployeeCarServiceTest {
         assertEquals(employeeCar2, employeeCarService.findEmployeeCarByLicensePlate("1-PLC-879"));
 
         verify(employeeCarRepositoryMock).findByLicensePlateIgnoreCase("1-PLC-879");
+    }
+
+    @Test
+    public void testFindAllNotUsed(){
+        employeeCar2.setCarStatus(CarStatus.NOT_USED);
+        when(employeeCarRepositoryMock.findAllIsNotUsed()).thenReturn(new ArrayList<>(Collections.singletonList(employeeCar2)));
+
+        assertEquals(new ArrayList<>(Collections.singletonList(employeeCar2)), employeeCarService.findAllIsNotUsed());
+        verify(employeeCarRepositoryMock).findAllIsNotUsed();
+    }
+
+    @Test
+    public void testFindAllNotUsedNoneFound(){
+        assertEquals(new ArrayList<>(), employeeCarService.findAllIsNotUsed());
+        verify(employeeCarRepositoryMock).findAllIsNotUsed();
+    }
+
+    @Test
+    public void testFindById(){
+        when(employeeCarRepositoryMock.findOne(1l)).thenReturn(employeeCar2);
+
+        assertEquals(employeeCar2, employeeCarService.findById(1l));
+
+        verify(employeeCarRepositoryMock).findOne(1l);
+    }
+
+    @Test
+    public void testFindByIdNoneFound(){
+        assertEquals(null, employeeCarService.findById(1l));
+
+        verify(employeeCarRepositoryMock).findOne(1l);
     }
 
 }

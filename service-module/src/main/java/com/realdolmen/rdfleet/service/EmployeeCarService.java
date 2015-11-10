@@ -29,7 +29,6 @@ public class EmployeeCarService {
         return employeeCarRepository.findByLicensePlateIgnoreCase(licensePlate);
     }
 
-    //TODO: test
     public List<EmployeeCar> findAllIsNotUsed() {
         return employeeCarRepository.findAllIsNotUsed();
     }

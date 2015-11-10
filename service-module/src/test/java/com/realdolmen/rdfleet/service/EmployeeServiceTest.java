@@ -1,26 +1,21 @@
 package com.realdolmen.rdfleet.service;
 
-import com.realdolmen.rdfleet.config.JpaConfig;
-import com.realdolmen.rdfleet.domain.*;
+import com.realdolmen.rdfleet.domain.CarStatus;
+import com.realdolmen.rdfleet.domain.EmployeeCar;
+import com.realdolmen.rdfleet.domain.Order;
+import com.realdolmen.rdfleet.domain.RdEmployee;
 import com.realdolmen.rdfleet.repositories.EmployeeCarRepository;
 import com.realdolmen.rdfleet.repositories.RdEmployeeRepository;
 import com.realdolmen.rdfleet.service.util.ValidDomainObjectFactory;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -48,96 +43,8 @@ public class EmployeeServiceTest {
         dbRdEmployee = ValidDomainObjectFactory.createRdEmployee();
         dbRdEmployee.setId(1000l);
 
-        when(rdEmployeeRepositoryMock.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(dbRdEmployee.getCurrentOrder().getOrderedCar().getLicensePlate())).thenReturn(dbRdEmployee);
     }
 
-    // Assigning orders tests
-    @Test(expected = IllegalArgumentException.class)
-    public void testAssignOrderEmployeeIsNull() {
-        employeeService.assignOrderToEmployee(null, dbRdEmployee.getCurrentOrder());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAssignOrderEmployeeNotFromDb() {
-        employeeService.assignOrderToEmployee(ValidDomainObjectFactory.createRdEmployee(), dbRdEmployee.getCurrentOrder());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAssignOrderOrderIsNull() {
-        employeeService.assignOrderToEmployee(dbRdEmployee, null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAssignOrderOrderedCarIsNull() {
-        Order order = ValidDomainObjectFactory.createOrder();
-        order.setOrderedCar(null);
-
-        employeeService.assignOrderToEmployee(dbRdEmployee, order);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAssignOrderFunctionalLevelCarTooHighFunctionalLevel() {
-        dbRdEmployee.setFunctionalLevel(2);
-
-        employeeService.assignOrderToEmployee(dbRdEmployee, dbRdEmployee.getCurrentOrder());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testAssignOrderFunctionalLevelCarTooLowFunctionalLevel() {
-        dbRdEmployee.getCurrentOrder().getOrderedCar().getSelectedCar().setFunctionalLevel(6);
-
-        employeeService.assignOrderToEmployee(dbRdEmployee, dbRdEmployee.getCurrentOrder());
-    }
-
-    @Test
-    public void testAssignOrderFunctionalLevelCarTooHighButCarNotUsed() {
-        dbRdEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.NOT_USED);
-        dbRdEmployee.getCurrentOrder().getOrderedCar().getSelectedCar().setFunctionalLevel(6);
-
-        employeeService.assignOrderToEmployee(dbRdEmployee, dbRdEmployee.getCurrentOrder());
-    }
-
-    @Test
-    public void testAssignOrderEverythingOk() {
-        employeeService.assignOrderToEmployee(dbRdEmployee, dbRdEmployee.getCurrentOrder());
-
-        verify(rdEmployeeRepositoryMock, times(2)).save(dbRdEmployee);
-    }
-
-    @Test
-    public void testAssignOrderSetsCarStatusPending() {
-        employeeService.assignOrderToEmployee(dbRdEmployee, dbRdEmployee.getCurrentOrder());
-
-        assertEquals(CarStatus.PENDING, dbRdEmployee.getCurrentOrder().getOrderedCar().getCarStatus());
-    }
-
-    @Test
-    public void testAssignOrderSetsDateOrderedToday() {
-        employeeService.assignOrderToEmployee(dbRdEmployee, dbRdEmployee.getCurrentOrder());
-
-        assertEquals(LocalDate.now(), dbRdEmployee.getCurrentOrder().getDateOrdered());
-    }
-
-    @Test
-    public void testAssignOrderOrderIsSetOnEmployee() {
-        Order order = ValidDomainObjectFactory.createOrder();
-
-        employeeService.assignOrderToEmployee(dbRdEmployee, order);
-
-        assertEquals(order, dbRdEmployee.getCurrentOrder());
-    }
-
-    @Test
-    public void testAssignOrderOldCarIsSetToRemoved(){
-        EmployeeCar oldCar = dbRdEmployee.getCurrentOrder().getOrderedCar();
-        assertEquals(CarStatus.IN_USE, oldCar.getCarStatus());
-
-        Order newOrder = ValidDomainObjectFactory.createOrder();
-        employeeService.assignOrderToEmployee(dbRdEmployee, newOrder);
-
-        assertEquals(CarStatus.REMOVED, oldCar.getCarStatus());
-        assertEquals(CarStatus.PENDING, dbRdEmployee.getCurrentOrder().getOrderedCar().getCarStatus());
-    }
 
     //Removing employees tests
     @Test(expected = IllegalArgumentException.class)
@@ -170,6 +77,16 @@ public class EmployeeServiceTest {
 
     @Test
     public void testRemoveEmployeeCurrentOrderIsSetToNull() {
+        employeeService.removeEmployeeFromCompany(dbRdEmployee);
+
+        assertNull(dbRdEmployee.getCurrentOrder());
+
+        verify(rdEmployeeRepositoryMock).save(dbRdEmployee);
+    }
+
+    @Test
+    public void testRemoveEmployeeCurrentOrderCarIsSetToNull() {
+        dbRdEmployee.getCurrentOrder().setOrderedCar(null);
         employeeService.removeEmployeeFromCompany(dbRdEmployee);
 
         assertNull(dbRdEmployee.getCurrentOrder());
@@ -390,6 +307,8 @@ public class EmployeeServiceTest {
 
     @Test
     public void testFindEmployeeByLicensePlateAllOk(){
+        when(rdEmployeeRepositoryMock.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(dbRdEmployee.getCurrentOrder().getOrderedCar().getLicensePlate())).thenReturn(dbRdEmployee);
+
         String licensePlate = dbRdEmployee.getCurrentOrder().getOrderedCar().getLicensePlate();
         assertEquals(dbRdEmployee, employeeService.findEmployeeByLicensePlateOfCurrentCar(licensePlate));
         verify(rdEmployeeRepositoryMock).findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(licensePlate);
@@ -400,5 +319,25 @@ public class EmployeeServiceTest {
         String licensePlate = "0-XXX-000";
         assertNull(employeeService.findEmployeeByLicensePlateOfCurrentCar(licensePlate));
         verify(rdEmployeeRepositoryMock).findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(licensePlate);
+    }
+
+    //Tests findAllRdEmployeesInService & findRdEmployee
+    @Test
+    public void testFindAllRdEmployeesInServiceCallsRepository(){
+        List<RdEmployee> employees = new ArrayList<>(Collections.singletonList(dbRdEmployee));
+        when(rdEmployeeRepositoryMock.findAllEmployeesInService()).thenReturn(employees);
+
+        assertEquals(employees, employeeService.findAllRdEmployeesInService());
+
+        verify(rdEmployeeRepositoryMock).findAllEmployeesInService();
+    }
+
+    @Test
+    public void testFindRdEmployeeById(){
+        when(rdEmployeeRepositoryMock.findOne(1l)).thenReturn(dbRdEmployee);
+
+        assertEquals(dbRdEmployee, employeeService.findRdEmployee(1l));
+
+        verify(rdEmployeeRepositoryMock).findOne(1l);
     }
 }
