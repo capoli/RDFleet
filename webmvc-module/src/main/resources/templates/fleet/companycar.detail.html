@@ -9,24 +9,24 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="view-heading">
-                    <h1>Company car details</h1>
+                    <h1 th:text="#{msgFleetCompanyCarDetail.title}"></h1>
                     <hr/>
                 </div>
                 <table class="table table-striped">
                     <tr>
-                        <td>License plate</td>
+                        <td th:text="#{msgFleetCompanyCarDetail.license_plate}"></td>
                         <td th:text="${employeeCar.licensePlate}"></td>
                     </tr>
                     <tr>
-                        <td>Mileage</td>
+                        <td th:text="#{msgFleetCompanyCarDetail.mileage}"></td>
                         <td><span th:text="${employeeCar.mileage}"></span> km</td>
                     </tr>
                     <tr>
-                        <td>Car Status</td>
+                        <td th:text="#{msgFleetCompanyCarDetail.car_status}"></td>
                         <td th:text="${employeeCar.carStatus}"></td>
                     </tr>
                     <tr>
-                        <td>Car options</td>
+                        <td th:text="#{msgFleetCompanyCarDetail.car_options}"></td>
                         <td>
                             <span th:each="option : ${employeeCar.carOptions}">
                                 <span th:text="${option.description}"></span><br/>
