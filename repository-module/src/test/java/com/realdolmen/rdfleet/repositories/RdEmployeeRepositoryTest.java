@@ -1,6 +1,7 @@
 package com.realdolmen.rdfleet.repositories;
 
 import com.realdolmen.rdfleet.config.JpaConfig;
+import com.realdolmen.rdfleet.domain.CarStatus;
 import com.realdolmen.rdfleet.domain.RdEmployee;
 import com.realdolmen.rdfleet.util.ValidDomainObjectFactory;
 import org.junit.Assert;
@@ -15,6 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.validation.ConstraintViolationException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -181,6 +184,33 @@ public class RdEmployeeRepositoryTest {
     @Test
     public void testFindEmployeeByLicensePlateNull(){
         assertNull(repository.findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(null));
+    }
+
+    @Test
+    public void testFindAllEmployeesInServiceWithPendingRequestOrNoCar(){
+        RdEmployee inServiceWithPendingRequestEmployee = ValidDomainObjectFactory.createRdEmployee();
+        inServiceWithPendingRequestEmployee.setInService(true);
+        inServiceWithPendingRequestEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.PENDING);
+        inServiceWithPendingRequestEmployee.setEmail("pending@employee.com");
+        inServiceWithPendingRequestEmployee.getCurrentOrder().getOrderedCar().setLicensePlate("0-AAA-000");
+
+        RdEmployee inServiceWithNoOrderEmployee = ValidDomainObjectFactory.createRdEmployee();
+        inServiceWithNoOrderEmployee.setInService(true);
+        inServiceWithNoOrderEmployee.setCurrentOrder(null);
+        inServiceWithNoOrderEmployee.setEmail("noorder@employee.com");
+
+        RdEmployee notInServiceWithPendingRequestEmployee = ValidDomainObjectFactory.createRdEmployee();
+        notInServiceWithPendingRequestEmployee.setInService(false);
+        notInServiceWithPendingRequestEmployee.getCurrentOrder().getOrderedCar().setCarStatus(CarStatus.PENDING);
+
+        repository.saveAndFlush(inServiceWithPendingRequestEmployee);
+        repository.saveAndFlush(inServiceWithNoOrderEmployee);
+        repository.saveAndFlush(notInServiceWithPendingRequestEmployee);
+
+        List<RdEmployee> retrievableEmpoyees = new ArrayList<>(Arrays.asList(inServiceWithNoOrderEmployee, inServiceWithPendingRequestEmployee));
+
+        List<RdEmployee> allEmployeesInServiceWithPendingRequestOrNoCar = repository.findAllEmployeesInServiceWithPendingRequestOrNoCar();
+        assertEquals(retrievableEmpoyees, allEmployeesInServiceWithPendingRequestOrNoCar);
     }
 
     private RdEmployee createEmployee(int funcLevel, boolean inService, String fname, String lname, String mail, String pw) {
