@@ -360,4 +360,8 @@ public class EmployeeService {
         order.setOrderedCar(employeeCar);
         return order;
     }
+
+    public List<RdEmployee> findAllRdEmployeesInServiceWithPendingRequestOrNoCar() {
+        return rdEmployeeRepository.findAllEmployeesInServiceWithPendingRequestOrNoCar();
+    }
 }

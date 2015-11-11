@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -339,5 +340,21 @@ public class EmployeeServiceTest {
         assertEquals(dbRdEmployee, employeeService.findRdEmployee(1l));
 
         verify(rdEmployeeRepositoryMock).findOne(1l);
+    }
+
+    @Test
+    public void testFindAllRdEmployeesInServiceWithPendingRequestOrNoCarReturnsEmployees(){
+        List<RdEmployee> employees = new ArrayList<>(Arrays.asList(dbRdEmployee, dbRdEmployee));
+        when(rdEmployeeRepositoryMock.findAllEmployeesInServiceWithPendingRequestOrNoCar()).thenReturn(employees);
+
+        assertEquals(employees, employeeService.findAllRdEmployeesInServiceWithPendingRequestOrNoCar());
+
+        verify(rdEmployeeRepositoryMock).findAllEmployeesInServiceWithPendingRequestOrNoCar();
+    }
+
+    @Test
+    public void testFindAllRdEmployeesInServiceWithPendingRequestOrNoCarReturnsEmptyList(){
+        assertTrue(employeeService.findAllRdEmployeesInServiceWithPendingRequestOrNoCar().isEmpty());
+        verify(rdEmployeeRepositoryMock).findAllEmployeesInServiceWithPendingRequestOrNoCar();
     }
 }

@@ -3,6 +3,7 @@ package com.realdolmen.rdfleet.domain;
 import com.realdolmen.rdfleet.converters.DurationPersistenceConverter;
 import com.realdolmen.rdfleet.validation.PositiveDuration;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -25,8 +26,7 @@ public class Car extends BaseEntity {
     @NotNull
     @NotBlank
     private String model;
-    @Min(2)
-    @Max(7)
+    @Range(min = 2, max = 7)
     private int functionalLevel;
     private String description;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
