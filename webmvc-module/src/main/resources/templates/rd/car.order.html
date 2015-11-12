@@ -24,14 +24,14 @@
                         <h4 class="modal-header" th:text="#{msgRdCarOrder.amount_downgrade}"></h4>
                         <h5>
                             <span class="glyphicon glyphicon-eur"></span> <span
-                                th:text="${employeeCar.selectedCar.amountDowngrade}"></span>
+                                th:text="${#numbers.formatDecimal(employeeCar.selectedCar.amountDowngrade, 0, 'DEFAULT', 2, 'DEFAULT')}"></span>
                         </h5>
                     </div>
                     <div th:if="${employeeCar.selectedCar.functionalLevel gt functionalLevel}">
                         <h4 class="modal-header" th:text="#{msgRdCarOrder.amount_upgrade}"></h4>
                         <h5>
                             <span class="glyphicon glyphicon-eur"></span> <span
-                                th:text="${employeeCar.selectedCar.amountUpgrade}"></span>
+                                th:text="${#numbers.formatDecimal(employeeCar.selectedCar.amountUpgrade, 0, 'DEFAULT', 2, 'DEFAULT')}"></span>
                         </h5>
                     </div>
                 </div>

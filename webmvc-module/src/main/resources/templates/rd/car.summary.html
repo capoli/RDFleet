@@ -32,20 +32,20 @@
                     <h3 class="modal-header" th:text="#{msgRdCarSummary.additional_info}"></h3>
                     <h5><span th:text="#{msgRdCarSummary.price_company}"></span>:
                         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                                th:text="${order.amountPaidByCompany}"></span></div>
+                                th:text="${#numbers.formatDecimal(order.amountPaidByCompany, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
                     </h5>
                     <h5><span th:text="#{msgRdCarSummary.price_employee}"></span>:
                         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                                th:text="${order.amountPaidByEmployee}"></span></div>
+                                th:text="${#numbers.formatDecimal(order.amountPaidByEmployee, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
                     </h5>
                     <h5><span th:text="#{msgRdCarSummary.benefit}"></span>:
                         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                                th:text="${employeeCar.selectedCar.benefit}"></span></div>
+                                th:text="${#numbers.formatDecimal(employeeCar.selectedCar.benefit, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
                     </h5>
                     <h5 th:if="${functionalLevel > employeeCar.selectedCar.functionalLevel}">
                         <span th:text="#{msgRdCarSummary.budget_options}"></span>:
                         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                                th:text="${employeeCar.selectedCar.amountDowngrade}"></span></div>
+                                th:text="${#numbers.formatDecimal(employeeCar.selectedCar.amountDowngrade, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
                     </h5>
                     <h5><span th:text="#{msgRdCarSummary.time_of_delivery_days}"></span>:
                         <div style="float: right"><span

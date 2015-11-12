@@ -37,7 +37,7 @@
                             <a th:href="${#mvc.url('CCMC#viewCompanyCarWithEmployee').arg(0, order.orderedCar.licensePlate).build()}"><span
                                     th:text="${order.orderedCar.licensePlate}"></span></a>
                         </td>
-                        <td th:text="${order.orderedCar.mileage}"></td>
+                        <td th:text="${#numbers.formatDecimal(order.orderedCar.mileage, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
                         <td th:text="${order.orderedCar.carStatus}"></td>
                         <td th:text="${{order.dateReceived}}"></td>
                     </tr>

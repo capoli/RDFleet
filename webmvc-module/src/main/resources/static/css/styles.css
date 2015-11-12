@@ -3,6 +3,11 @@
     max-width: 960px;
 }
 
+.ui-widget-header {
+    border: 1px solid #46b8da;
+    background: #5bc0de url("jQueryUI-1.11.4/images/ui-bg_gloss-wave_35_f6a828_500x100.png") 50% 50% repeat-x;
+}
+
 .rd-blue {
     color: #009BD8;
 
@@ -25,11 +30,15 @@
 }
 
 body {
-    background: url(../img/bg1.png) no-repeat center center fixed;
+    background: url(../img/areal_dolmen14_2.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+.glyphicon {
+    font-size: 14px;
 }
 
 #content, #content-car-order {
