@@ -16,7 +16,7 @@ public interface RdEmployeeRepository extends JpaRepository<RdEmployee, Long> {
     RdEmployee findByEmailIgnoreCase(String email);
 
     RdEmployee findRdEmployeeByCurrentOrder_OrderedCar_LicensePlate(String licensePlate);
-
+// or e.currentOrder.orderedCar.carStatus = 'PENDING'
     @Query("select e from RdEmployee e where e.inService = true and (e.currentOrder is null or e.currentOrder.orderedCar.carStatus = 'PENDING')")
     List<RdEmployee> findAllEmployeesInServiceWithPendingRequestOrNoCar();
 }
