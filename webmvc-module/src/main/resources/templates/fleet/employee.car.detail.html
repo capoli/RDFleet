@@ -38,7 +38,7 @@
                             </span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr th:if="${employee.currentOrder.dateReceived != null}">
                         <td th:text="#{msgFleetEmployeeCarDetail.date_car_received}"></td>
                         <td th:text="${{employee.currentOrder.dateReceived}}"></td>
                     </tr>
