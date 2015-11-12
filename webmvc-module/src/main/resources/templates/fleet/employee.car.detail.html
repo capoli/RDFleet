@@ -74,7 +74,9 @@
 
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <button type="submit" class="btn btn-danger btn-lg col-sm-12 btn-form form-button">
+                            <button  th:class="${employee.currentOrder.orderedCar.CarStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING} ? 'disableClick'"
+                                     th:disabled="${employee.currentOrder.orderedCar.CarStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}"
+                                     type="submit" th:classappend="'btn btn-danger btn-lg col-sm-12 btn-form form-button'">
                                 <span th:text="#{msgFleetEmployeeCarDetail.move_to_freepool}"></span>
                             </button>
                         </div>

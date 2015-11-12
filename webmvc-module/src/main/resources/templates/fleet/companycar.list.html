@@ -75,7 +75,15 @@
             ]
         }).columnFilter({
             aoColumns: [
-                {}, {type: "checkbox", values: ['IN_USE', 'PENDING', 'NOT_USED', 'REMOVED']}, {}, {}, null]
+                {},
+                {
+                    type: "checkbox",
+                    bRegex: true,
+                    values: ['IN_USE', 'PENDING', 'NOT_USED', 'REMOVED']
+                },
+                {},
+                {},
+                null]
         });
     });
 </script>

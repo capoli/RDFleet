@@ -12,11 +12,11 @@
     <table class="table table-striped">
         <tr>
             <td><h6><span th:text="#{msgFragmentCarDetail.tyre_type}"></span>:</h6></td>
-            <td th:text="${car.tyreType}"></td>
+            <td th:text="#{${'msgFleetCompanyCarDetail.' + car.tyreType}}"></td>
         </tr>
         <tr>
             <td><h6><span th:text="#{msgFragmentCarDetail.fuel_type}"></span>:</h6></td>
-            <td th:text="${car.fuelType}"></td>
+            <td th:text="#{${'msgFleetCompanyCarDetail.' + car.fuelType}}"></td>
         </tr>
         <tr>
             <td><h6><span th:text="#{msgFragmentCarDetail.towing_bracket}"></span>:</h6></td>

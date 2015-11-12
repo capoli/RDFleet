@@ -81,7 +81,7 @@
                         <select th:name="tyreType" class="form-control">
                             <option th:field="*{tyreType}"
                                     th:each="tyreType : ${T(com.realdolmen.rdfleet.domain.TyreType).values()}"
-                                    th:value="${tyreType}" th:text="${tyreType}"></option>
+                                    th:value="${tyreType}" th:text="#{${'msgFleetCompanyCarDetail.' + tyreType}}"></option>
                         </select>
                         <span th:if="${#fields.hasErrors('tyreType')}" class="help-block"
                               th:errors="*{tyreType}"></span>
@@ -95,7 +95,7 @@
                         <select th:name="fuelType" class="form-control">
                             <option th:field="*{fuelType}"
                                     th:each="fuelType : ${T(com.realdolmen.rdfleet.domain.FuelType).values()}"
-                                    th:value="${fuelType}" th:text="${fuelType}"></option>
+                                    th:value="${fuelType}" th:text="#{${'msgFleetCompanyCarDetail.' + fuelType}}"></option>
                         </select>
                         <span th:if="${#fields.hasErrors('fuelType')}" class="help-block"
                               th:errors="*{fuelType}"></span>
@@ -110,7 +110,7 @@
                         <select th:name="carType" class="form-control">
                             <option th:field="*{carType}"
                                     th:each="carType : ${T(com.realdolmen.rdfleet.domain.CarType).values()}"
-                                    th:value="${carType}" th:text="${carType}"></option>
+                                    th:value="${carType}" th:text="#{${'msgFleetCompanyCarDetail.' + carType}}"></option>
                         </select>
                         <span th:if="${#fields.hasErrors('carType')}" class="help-block" th:errors="*{carType}"></span>
                     </div>
