@@ -1,10 +1,214 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html manifest="offline.manifest" lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="fragments/general.fragment :: head"></head>
 <body>
-<div th:replace="fragments/general.fragment :: header"></div>
+<style>
+    .confetti {
+        width: 60px;
+        height: 60px;
+        margin-top: -100px;
+        -moz-border-radius: 30px;
+        -webkit-border-radius: 30px;
+        border-radius: 30px;
+        position: relative;
+        animation: confetti 6s;
+        -webkit-animation: confetti 6s;
+        animation-iteration-count: infinite;
+        -moz-animation-iteration-count: infinite;
+        -webkit-animation-iteration-count: infinite;
+        -o-animation-iteration-count: infinite; /* Safari and Chrome */
+    }
 
+    @keyframes confetti {
+        0% {
+            top: 0px;
+        }
+        100% {
+            top: 1500px;
+        }
+    }
+
+    @-webkit-keyframes confetti /* Safari and Chrome */
+    {
+        0% {
+            top: 0px;
+        }
+        100% {
+            top: 1500px;
+        }
+    }
+
+    .confetti1, .confetti2, .confetti3, .confetti4 {
+        background-color: #a4b1a5;
+    }
+
+    .confetti1 .confetti12 {
+        animation-delay: 1s;
+        -webkit-animation-delay: 1s;
+    }
+
+    .confetti1 {
+        margin-left: 50px;
+    }
+
+    .confetti2 {
+        margin-left: 300px;
+    }
+
+    .confetti3, .confetti6, .confetti20 {
+        animation-delay: 1.5s;
+        -webkit-animation-delay: 1.5s;
+    }
+
+    .confetti3 {
+        margin-left: 800px;
+    }
+
+    .confetti4 {
+        margin-left: 600px;
+        animation-delay: 3s;
+        -webkit-animation-delay: 3s;
+    }
+
+    .confetti5, .confetti6, .confetti7 {
+        background-color: #fbfcfa;
+    }
+
+    .confetti5 {
+        margin-left: 700px;
+    }
+
+    .confetti6 {
+        margin-left: 200px;
+    }
+
+    .confetti7, .confetti8 {
+        animation-delay: 4.5s;
+        -webkit-animation-delay: 4.5s;
+    }
+
+    .confetti17 {
+        margin-left: 100px;
+    }
+
+    .confetti8, .confetti9, .confetti10, .confetti11 {
+        background-color: #5e625c;
+    }
+
+    .confetti8 {
+        margin-left: 200px;
+    }
+
+    .confetti9 {
+        margin-left: 900px;
+    }
+
+    .confetti10, .confetti14, .confetti18 {
+        animation-delay: 2.5s;
+        -webkit-animation-delay: 2.5s;
+    }
+
+    .confetti10 {
+        margin-left: 550px;
+    }
+
+    .confetti11 {
+        margin-left: 350;
+        animation-delay: 2s;
+        -webkit-animation-delay: 2s;
+    }
+
+    .confetti12, .confetti13, .confetti14 {
+        background-color: #f5d44d;
+    }
+
+    .confetti12 {
+        margin-left: 350;
+    }
+
+    .confetti13 {
+        margin-left: 620;
+        animation-delay: 4s;
+        -webkit-animation-delay: 4s;
+    }
+
+    .confetti14 {
+        margin-left: 570;
+    }
+
+    .confetti15, .confetti16, .confetti17, .confetti18 {
+        background-color: #e44301;
+    }
+
+    .confetti15 {
+        margin-left: 650px;
+    }
+
+    .confetti16 {
+        margin-left: 100px;
+        animation-delay: 4s;
+        -webkit-animation-delay: 4s;
+    }
+
+    .confetti17, .confetti21 {
+        animation-delay: .5s;
+        -webkit-animation-delay: .5s;
+    }
+
+    .confetti17 {
+        margin-left: 250px;
+    }
+
+    .confetti18 {
+        margin-left: 450px;
+    }
+
+    .confetti19, .confetti20, .confetti21 {
+        background-color: #a9954d;
+    }
+
+    .confetti19 {
+        margin-left: 450px;
+    }
+
+    .confetti20 {
+        margin-left: 850px;
+    }
+
+    .confetti21 {
+        margin-left: 200px;
+    }
+
+    #party {
+        z-index: 9999;
+    }
+</style>
+<div th:replace="fragments/general.fragment :: header"></div>
+<div id="party">
+    <div class="confetti confetti1"></div>
+    <div class="confetti confetti2"></div>
+    <div class="confetti confetti3"></div>
+    <div class="confetti confetti4"></div>
+    <div class="confetti confetti5"></div>
+    <div class="confetti confetti6"></div>
+    <div class="confetti confetti7"></div>
+    <div class="confetti confetti8"></div>
+    <div class="confetti confetti9"></div>
+    <div class="confetti confetti10"></div>
+    <div class="confetti confetti11"></div>
+    <div class="confetti confetti12"></div>
+    <div class="confetti confetti13"></div>
+    <div class="confetti confetti14"></div>
+    <div class="confetti confetti15"></div>
+    <div class="confetti confetti16"></div>
+    <div class="confetti confetti17"></div>
+    <div class="confetti confetti18"></div>
+    <div class="confetti confetti19"></div>
+    <div class="confetti confetti20"></div>
+    <div class="confetti confetti21"></div>
+    <div></div>
+</div>
 <div id="content">
     <div class="container">
         <div class="col-lg-12" sec:authorize="hasRole('ROLE_FLEETEMPLOYEE')">
@@ -84,6 +288,20 @@
 </div>
 <div th:replace="fragments/general.fragment :: div.scripts"></div>
 <script th:inline="javascript">
+    var isVisible = false;
+    $(document).ready(function() {
+        $('#party').hide();
+    });
+    $('#content').on('click', function() {
+        if(!isVisible) {
+            $('#party').show();
+            isVisible = true;
+        }
+        else {
+            $('#party').hide();
+            isVisible = false;
+        }
+    });
     $(document).ready(function () {
         $('#employeeTable').dataTable({
             dom: 'Bfrtip',
