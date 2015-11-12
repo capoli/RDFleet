@@ -29,7 +29,7 @@
                 <div th:if="${rdEmployee.currentOrder != null}">
                     <a th:href="${#mvc.url('ECMC#viewEmployeeCar').arg(0, rdEmployee.id).build()}"
                        th:title="#{msgFleetEmployeeList.view_more_information_about_emp_car}">
-                                    <span th:if="${rdEmployee.currentOrder.orderedCar.licensePlate != null and !rdEmployee.currentOrder.orderedCar.licensePlate.isEmpty()}"
+                                    <span th:style="${rdEmployee.currentOrder.orderedCar.CarStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING} ? 'color:red'" th:if="${rdEmployee.currentOrder.orderedCar.licensePlate != null and !rdEmployee.currentOrder.orderedCar.licensePlate.isEmpty()}"
                                           th:text="${rdEmployee.currentOrder.orderedCar.licensePlate}"></span>
                                     <span th:if="${rdEmployee.currentOrder.orderedCar.licensePlate == null or rdEmployee.currentOrder.orderedCar.licensePlate.isEmpty()}"
                                           style="color: red" th:text="#{msgFleetEmployeeList.pending_request}"></span>

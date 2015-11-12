@@ -38,6 +38,7 @@ public class InternationalizationConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
+
 }
 
 

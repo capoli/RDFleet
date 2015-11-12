@@ -54,7 +54,6 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 //
 //    @Override
 //    public void addInterceptors(List<EndpointInterceptor> interceptors) {
-//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 //        interceptors.add(wsSecurityInterceptor());
 //    }
 //
