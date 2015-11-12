@@ -19,7 +19,7 @@
                         <th th:text="#{msgRdCarList.make}"></th>
                         <th th:text="#{msgRdCarList.model}"></th>
                         <th th:text="#{msgRdCarList.functional_level}"></th>
-                        <th></th>
+                        <th class="text-right" th:text="#{msgFleetCompanyCarList.details}"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -35,6 +35,14 @@
                         </td>
                     </tr>
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th th:text="#{msgRdCarList.make}"></th>
+                        <th th:text="#{msgRdCarList.model}"></th>
+                        <th th:text="#{msgRdCarList.functional_level}"></th>
+                        <th class="text-right" th:text="#{msgFleetCompanyCarList.details}"></th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -48,6 +56,9 @@
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
+        }).columnFilter({
+            aoColumns: [
+                {}, {}, {}, null]
         });
     });
 </script>
