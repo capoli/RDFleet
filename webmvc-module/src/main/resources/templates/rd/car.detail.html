@@ -16,11 +16,15 @@
 
             <div class="col-lg-5">
                 <div th:replace="./fragments/car.detail.fragment :: carDetailImage(${car})"></div>
-                <a th:if="${canOrderNewCar}" class="btn btn-info btn-lg btn-block" style="clear: both; margin-bottom: 10px;"
+                <a th:if="${canOrderNewCar}" class="btn btn-info btn-lg btn-block"
+                   style="clear: both; margin-bottom: 10px;"
                    th:href="${#mvc.url('OCC#getOrderNewCar').arg(0, car.id).build()}">
                     <span th:text="#{msgRdCarDetail.order}"></span>
                 </a>
-                <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${car})"></div>
+
+                <div style="clear: both">
+                    <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${car})"></div>
+                </div>
                 <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${car})"></div>
             </div>
         </div>

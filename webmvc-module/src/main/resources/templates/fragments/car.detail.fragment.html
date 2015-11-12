@@ -4,9 +4,9 @@
 
 <body>
 <div th:fragment="carDetailMain(car)">
-    <h3 class="rd-darkred" th:text="${car.model}"></h3>
+    <h3 class="rd-red" th:text="${car.model}"></h3>
 
-    <h4 class="rd-darkred"><span th:text="#{msgFragmentCarDetail.functional_level}"></span>: <span th:text="${car.functionalLevel}"></span></h4>
+    <h4 class="rd-red"><span th:text="#{msgFragmentCarDetail.functional_level}"></span>: <span th:text="${car.functionalLevel}"></span></h4>
 
     <br/>
     <table class="table table-striped">

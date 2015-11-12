@@ -74,9 +74,10 @@
 
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <button  th:class="${employee.currentOrder.orderedCar.CarStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING} ? 'disableClick'"
-                                     th:disabled="${employee.currentOrder.orderedCar.CarStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}"
-                                     type="submit" th:classappend="'btn btn-danger btn-lg col-sm-12 btn-form form-button'">
+                            <button th:class="${employee.currentOrder.orderedCar.CarStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING} ? 'disableClick'"
+                                    th:disabled="${employee.currentOrder.orderedCar.CarStatus == T(com.realdolmen.rdfleet.domain.CarStatus).PENDING}"
+                                    type="submit"
+                                    th:classappend="'btn btn-danger btn-lg col-sm-12 btn-form form-button'">
                                 <span th:text="#{msgFleetEmployeeCarDetail.move_to_freepool}"></span>
                             </button>
                         </div>
@@ -97,16 +98,20 @@
             </div>
         </div>
         <div class="row">
+            <hr/>
             <div class="col-lg-12">
-                <h2 style="padding-left: 15px" th:text="${employee.currentOrder.orderedCar.selectedCar.make}"></h2>
 
                 <div class="col-lg-7">
+                    <h2 class="rd-blue" style="margin-top: 0;" th:text="${employee.currentOrder.orderedCar.selectedCar.make}"></h2>
                     <th:block
                             th:replace="./fragments/car.detail.fragment :: carDetailMain(${employee.currentOrder.orderedCar.selectedCar})"/>
                 </div>
 
                 <div class="col-lg-5">
-                    <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${employee.currentOrder.orderedCar.selectedCar})"></div>
+                    <div th:replace="./fragments/car.detail.fragment :: carDetailImage(${employee.currentOrder.orderedCar.selectedCar})"></div>
+                    <div style="clear: both;">
+                        <div th:replace="./fragments/car.detail.fragment :: carDetailInfo(${employee.currentOrder.orderedCar.selectedCar})"></div>
+                    </div>
                     <div th:replace="./fragments/car.detail.fragment :: carDetailPacks(${employee.currentOrder.orderedCar.selectedCar})"></div>
                 </div>
             </div>
