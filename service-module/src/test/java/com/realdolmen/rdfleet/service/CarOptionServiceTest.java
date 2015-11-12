@@ -16,9 +16,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by JSTAX29 on 9/11/2015.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class CarOptionServiceTest {
     private CarOptionRepository carOptionRepositoryMock;

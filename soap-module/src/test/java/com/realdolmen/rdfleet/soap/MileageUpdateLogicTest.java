@@ -23,9 +23,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by JSTAX29 on 29/10/2015.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class MileageUpdateLogicTest {
 

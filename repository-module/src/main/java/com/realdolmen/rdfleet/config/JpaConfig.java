@@ -18,9 +18,6 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 
-/**
- * Created by cda5732 on 14/04/2015.
- */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.realdolmen.rdfleet")

@@ -12,9 +12,6 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Arrays;
 
-/**
- * Created by JSTAX29 on 28/10/2015.
- */
 @SpringBootApplication
 @ComponentScan("com.realdolmen.rdfleet")
 public class Application {

@@ -23,9 +23,6 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-/**
- * Created by JSTAX29 on 29/10/2015.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JpaConfig.class)
 @ActiveProfiles("test")

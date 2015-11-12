@@ -15,9 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.validation.ConstraintViolationException;
 
-/**
- * Created by JSTAX29 on 30/10/2015.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JpaConfig.class)
 @ActiveProfiles("test")

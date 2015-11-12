@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
 
-/**
- * Created by JSTAX29 on 4/11/2015.
- */
 @Controller
 @RequestMapping("/fleet/employees/car")
 public class EmployeeCarManagementController {

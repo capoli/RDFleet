@@ -9,9 +9,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Created by cda5732 on 14/04/2015.
- */
 @Configuration
 @Profile("test")
 public class TestConfig {

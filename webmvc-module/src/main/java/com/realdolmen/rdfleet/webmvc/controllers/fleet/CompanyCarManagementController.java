@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
 
-/**
- * Created by JSTAX29 on 5/11/2015.
- */
+
 @Controller
 @RequestMapping("/fleet/company-cars")
 public class CompanyCarManagementController {

@@ -6,9 +6,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by JSTAX29 on 27/10/2015.
- */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class User extends BaseEntity {

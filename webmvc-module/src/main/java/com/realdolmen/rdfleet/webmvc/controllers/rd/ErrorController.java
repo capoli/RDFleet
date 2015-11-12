@@ -4,9 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Created by OCPAX79 on 9/11/2015.
- */
 @Controller
 @RequestMapping("/error")
 public class ErrorController {

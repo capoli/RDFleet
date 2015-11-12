@@ -6,9 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 28/10/2015.
- */
 public interface EmployeeCarRepository extends JpaRepository<EmployeeCar, Long> {
     EmployeeCar findByLicensePlateIgnoreCase(String licensePlate);
 

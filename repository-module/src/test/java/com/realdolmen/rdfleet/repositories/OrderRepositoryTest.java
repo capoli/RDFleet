@@ -20,9 +20,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-/**
- * Created by JSTAX29 on 29/10/2015.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JpaConfig.class)
 @ActiveProfiles("test")

@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 6/11/2015.
- */
 @Service
 public class PackService {
     private PackRepository packRepository;

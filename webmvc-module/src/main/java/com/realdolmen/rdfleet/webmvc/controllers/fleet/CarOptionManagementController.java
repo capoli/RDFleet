@@ -1,6 +1,5 @@
 package com.realdolmen.rdfleet.webmvc.controllers.fleet;
 
-import com.realdolmen.rdfleet.domain.Car;
 import com.realdolmen.rdfleet.domain.CarOption;
 import com.realdolmen.rdfleet.service.CarOptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
 
-/**
- * Created by JSTAX29 on 5/11/2015.
- */
+
 @Controller
 @RequestMapping("/fleet/options")
 public class CarOptionManagementController {

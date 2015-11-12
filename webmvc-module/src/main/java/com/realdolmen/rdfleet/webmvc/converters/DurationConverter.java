@@ -7,9 +7,6 @@ import java.text.ParseException;
 import java.time.Duration;
 import java.util.Locale;
 
-/**
- * Created by JSTAX29 on 4/11/2015.
- */
 public class DurationConverter implements Formatter<Duration> {
     @Override
     public Duration parse(String s, Locale locale) throws ParseException {

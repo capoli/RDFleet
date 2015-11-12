@@ -1,24 +1,19 @@
 package com.realdolmen.rdfleet.webmvc.controllers.fleet;
 
 import com.realdolmen.rdfleet.domain.Car;
-import com.realdolmen.rdfleet.domain.RdEmployee;
-import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.*;
-
-import javax.transaction.Transactional;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
 
-/**
- * Created by JSTAX29 on 3/11/2015.
- */
 @Controller
 @RequestMapping("/fleet/cars")
 public class CarManagementController {

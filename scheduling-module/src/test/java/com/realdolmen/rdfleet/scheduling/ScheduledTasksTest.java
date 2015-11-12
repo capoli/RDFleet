@@ -23,9 +23,6 @@ import java.util.Collections;
 
 import static org.mockito.Mockito.*;
 
-/**
- * Created by JSTAX29 on 30/10/2015.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class ScheduledTasksTest {
 

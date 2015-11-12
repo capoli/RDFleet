@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 1/11/2015.
- */
 @Service
 public class EmployeeCarService {
     private EmployeeCarRepository employeeCarRepository;

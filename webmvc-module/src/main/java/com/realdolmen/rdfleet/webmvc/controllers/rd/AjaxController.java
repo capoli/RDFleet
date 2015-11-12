@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-/**
- * Created by OCPAX79 on 4/11/2015.
- */
 @Controller
 @RequestMapping("/api")
 public class AjaxController {

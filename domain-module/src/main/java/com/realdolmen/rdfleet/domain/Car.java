@@ -15,9 +15,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 27/10/2015.
- */
 @Entity
 public class Car extends BaseEntity {
     @NotNull

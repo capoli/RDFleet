@@ -10,9 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 1/11/2015.
- */
 @Service
 public class CarService {
     private CarRepository carRepository;

@@ -19,9 +19,6 @@ import java.util.List;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
 
-/**
- * Created by JSTAX29 on 6/11/2015.
- */
 @Controller
 @RequestMapping("/fleet/packs")
 public class PackManagementController {

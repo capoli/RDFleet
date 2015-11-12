@@ -1,21 +1,14 @@
 package com.realdolmen.rdfleet.service;
 
-import com.realdolmen.rdfleet.config.JpaConfig;
 import com.realdolmen.rdfleet.domain.Car;
 import com.realdolmen.rdfleet.domain.Pack;
 import com.realdolmen.rdfleet.repositories.CarRepository;
 import com.realdolmen.rdfleet.repositories.PackRepository;
 import com.realdolmen.rdfleet.service.util.ValidDomainObjectFactory;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +17,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by JSTAX29 on 2/11/2015.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class CarServiceTest {
 

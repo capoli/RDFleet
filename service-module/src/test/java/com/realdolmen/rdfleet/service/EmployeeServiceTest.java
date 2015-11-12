@@ -21,9 +21,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by JSTAX29 on 1/11/2015.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class EmployeeServiceTest {
     private EmployeeCarRepository employeeCarRepositoryMock;

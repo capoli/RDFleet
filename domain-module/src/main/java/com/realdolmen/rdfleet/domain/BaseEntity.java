@@ -3,9 +3,6 @@ package com.realdolmen.rdfleet.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by JSTAX29 on 27/10/2015.
- */
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -13,9 +13,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/**
- * Created by JSTAX29 on 28/10/2015.
- */
 @Entity(name = "CarOrder")
 public class Order extends BaseEntity {
     @NotNull

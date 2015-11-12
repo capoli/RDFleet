@@ -14,9 +14,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
-/**
- * Created by JSTAX29 on 22/10/2015.
- */
 @Configuration
 @EnableWebMvcSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -47,8 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login")
                 .and()
-                    .rememberMe();
+                    .rememberMe()
+        .and().requestMatchers().antMatchers("/rd/**", "/fleet/**", "/index", "/", "/login", "/logout");
     }
+
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {

@@ -13,9 +13,6 @@ import java.util.Optional;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMappingName;
 
-/**
- * Created by JSTAX29 on 2/11/2015.
- */
 @Controller
 @RequestMapping("/fleet/employees")
 public class RdEmployeeManagementController {

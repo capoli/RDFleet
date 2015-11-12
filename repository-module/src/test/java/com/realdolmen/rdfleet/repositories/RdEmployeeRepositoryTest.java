@@ -23,9 +23,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by JSTAX29 on 28/10/2015.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = JpaConfig.class)
 @ActiveProfiles("test")

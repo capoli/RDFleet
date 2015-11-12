@@ -17,9 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 28/10/2015.
- */
 @Component
 public class ScheduledTasks {
     private RdEmployeeRepository rdEmployeeRepository;

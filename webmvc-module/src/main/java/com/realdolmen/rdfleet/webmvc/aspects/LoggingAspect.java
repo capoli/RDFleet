@@ -8,9 +8,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
-/**
- * Created by JSTAX29 on 1/11/2015.
- */
 @Component
 @Aspect
 public class LoggingAspect {

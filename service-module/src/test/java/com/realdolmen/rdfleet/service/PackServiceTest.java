@@ -17,9 +17,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by JSTAX29 on 9/11/2015.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class PackServiceTest {
     private PackRepository packRepositoryMock;

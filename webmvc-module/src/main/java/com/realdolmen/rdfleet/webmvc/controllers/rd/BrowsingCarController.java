@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by cda5732 on 16/04/2015.
- */
 @Controller
 @RequestMapping("/rd/cars")
 @Secured({"RdEmployee", "FleetEmployee"})

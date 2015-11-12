@@ -9,9 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 27/10/2015.
- */
 @Entity
 public class Pack extends BaseEntity {
     @NotNull

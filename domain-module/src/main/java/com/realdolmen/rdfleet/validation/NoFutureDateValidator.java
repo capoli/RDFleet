@@ -4,9 +4,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 
-/**
- * Created by JSTAX29 on 30/10/2015.
- */
 public class NoFutureDateValidator implements ConstraintValidator<NoFutureDate, LocalDate> {
     @Override
     public void initialize(NoFutureDate constraintAnnotation) {

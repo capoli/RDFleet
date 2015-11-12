@@ -11,9 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Created by JSTAX29 on 1/11/2015.
- */
 @Service
 public class EmployeeService {
     private RdEmployeeRepository rdEmployeeRepository;

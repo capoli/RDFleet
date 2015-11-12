@@ -13,9 +13,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-/**
- * Created by JSTAX29 on 28/10/2015.
- */
 @SpringBootApplication
 @ComponentScan("com.realdolmen.rdfleet")
 public class Main {
