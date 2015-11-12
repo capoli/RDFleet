@@ -8,6 +8,21 @@
     background: #5bc0de url("jQueryUI-1.11.4/images/ui-bg_gloss-wave_35_f6a828_500x100.png") 50% 50% repeat-x;
 }
 
+.btn-info {
+    background-color: #009cd9;
+}
+
+.btn-info:hover {
+    background-color: #0080b3;
+}
+
+.btn-danger {
+    background-color: #ED2B29;
+}
+.btn-danger:hover {
+    background-color: #d41412;
+}
+
 .rd-blue {
     color: #009BD8;
 
@@ -15,6 +30,14 @@
 
 .rd-red {
     color: #ED2B29;
+}
+
+.rd-darkred {
+    color: #cc0000;
+}
+
+.rd-softred {
+    color: #f06663;
 }
 
 .modal-header {

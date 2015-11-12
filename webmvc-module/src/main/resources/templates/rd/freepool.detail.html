@@ -16,6 +16,7 @@
                 </div>
 
                 <div class="col-lg-5">
+                    <div th:replace="./fragments/car.detail.fragment :: carDetailImage(${car})"></div>
                     <form th:if="${canOrderFreePoolCar}" action="#" th:action="@{/rd/cars/order}"
                           style="margin-bottom: 10px;" method="post">
                         <button type="submit" class="btn btn-info btn-lg btn-block">

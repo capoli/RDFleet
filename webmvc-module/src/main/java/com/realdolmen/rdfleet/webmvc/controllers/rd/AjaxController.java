@@ -14,7 +14,6 @@ public class AjaxController {
     @Autowired
     private EmployeeService employeeService;
 
-    //TODO: .com wordt niet meegenomen
     @RequestMapping(value = "/canOrderCar/{email}", method = RequestMethod.GET)
     public @ResponseBody boolean getCanOrderCar(@PathVariable("email") String email) {
         return employeeService.employeeCanOrderNewCar(String.format("%s.com", email));

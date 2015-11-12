@@ -4,9 +4,9 @@
 
 <body>
 <div th:fragment="carDetailMain(car)">
-    <h3 th:text="${car.model}"></h3>
+    <h3 class="rd-darkred" th:text="${car.model}"></h3>
 
-    <h4><span th:text="#{msgFragmentCarDetail.functional_level}"></span>: <span th:text="${car.functionalLevel}"></span></h4>
+    <h4 class="rd-darkred"><span th:text="#{msgFragmentCarDetail.functional_level}"></span>: <span th:text="${car.functionalLevel}"></span></h4>
 
     <br/>
     <table class="table table-striped">
@@ -59,7 +59,9 @@
 </div>
 
 <div id="info" class="well" th:fragment="carDetailInfo(car)">
-    <h3 class="modal-header" th:text="#{msgFragmentCarDetail.additional_info}"></h3>
+    <h3 class="modal-header">
+        <span th:text="#{msgFragmentCarDetail.additional_info}"></span> <span
+            class="glyphicon glyphicon-info-sign" style="font-size: 18px;"></span></h3>
     <h4><span th:text="#{msgFragmentCarDetail.price}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
                 th:text="${#numbers.formatDecimal(car.listPrice, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
@@ -90,6 +92,10 @@
             <h6 th:text="${item}"></h6>
         </div>
     </div>
+</div>
+<div th:fragment="carDetailImage(car)" th:remove="tag">
+    <img th:src="@{/images/} + ${car.make} + _ + ${car.model.split(' ')[0].equalsIgnoreCase('new') ? car.model.split(' ')[1] : car.model.split(' ')[0]} + .jpg" class="img-rounded col-lg-12"
+         style="padding-left: 0;padding-right: 0; margin-bottom: 10px; width: 100%;"/>
 </div>
 </body>
 </html>

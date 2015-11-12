@@ -18,6 +18,7 @@
             </div>
 
             <div class="col-lg-5">
+                <div th:replace="./fragments/car.detail.fragment :: carDetailImage(${car})"></div>
                 <form action="#" th:action="@{/rd/cars/submitOrder}" style="margin-bottom: 10px;" method="post">
                     <button type="submit" class="btn btn-info btn-block btn-lg">
                         <span th:text="#{msgRdCarSummary.confirm}"></span>
@@ -29,7 +30,8 @@
                     </button>
                 </form>
                 <div id="info" class="well">
-                    <h3 class="modal-header" th:text="#{msgRdCarSummary.additional_info}"></h3>
+                    <h3><span th:text="#{msgRdCarSummary.additional_info}"></span> <span
+                        class="glyphicon glyphicon-info-sign" style="font-size: 18px;"></span></h3>
                     <h5><span th:text="#{msgRdCarSummary.price_company}"></span>:
                         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
                                 th:text="${#numbers.formatDecimal(order.amountPaidByCompany, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>

@@ -122,7 +122,7 @@ public class OrderCarController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         employeeService.createEmployeeCarAndDelegateOrderForEmployee(auth.getName(), order);
         status.setComplete();
-        return "redirect:/index"; //TODO: success page mss
+        return "redirect:/index";
     }
 
     @RequestMapping(value="/cancelOrder", method = RequestMethod.POST)

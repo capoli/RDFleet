@@ -15,7 +15,8 @@
             </div>
 
             <div class="col-lg-5">
-                <a th:if="${canOrderNewCar}" class="btn btn-info btn-lg btn-block" style="margin-bottom: 10px;"
+                <div th:replace="./fragments/car.detail.fragment :: carDetailImage(${car})"></div>
+                <a th:if="${canOrderNewCar}" class="btn btn-info btn-lg btn-block" style="clear: both; margin-bottom: 10px;"
                    th:href="${#mvc.url('OCC#getOrderNewCar').arg(0, car.id).build()}">
                     <span th:text="#{msgRdCarDetail.order}"></span>
                 </a>
