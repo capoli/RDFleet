@@ -49,11 +49,11 @@
         </tr>
         <tr>
             <td><h6><span th:text="#{msgFragmentCarDetail.ideal_km}"></span>:</h6></td>
-            <td th:text="${car.idealKm}"></td>
+            <td th:text="${#numbers.formatDecimal(car.idealKm, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
         </tr>
         <tr>
             <td><h6><span th:text="#{msgFragmentCarDetail.max_km}"></span>:</h6></td>
-            <td th:text="${car.maxKm}"></td>
+            <td th:text="${#numbers.formatDecimal(car.maxKm, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
         </tr>
     </table>
 </div>
@@ -62,19 +62,19 @@
     <h3 class="modal-header" th:text="#{msgFragmentCarDetail.additional_info}"></h3>
     <h4><span th:text="#{msgFragmentCarDetail.price}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                th:text="${car.listPrice}"></span></div>
+                th:text="${#numbers.formatDecimal(car.listPrice, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
     </h4>
     <h4><span th:text="#{msgFragmentCarDetail.benefit}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                th:text="${car.benefit}"></span></div>
+                th:text="${#numbers.formatDecimal(car.benefit, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
     </h4>
     <h4><span th:text="#{msgFragmentCarDetail.amount_upgrade}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                th:text="${car.amountUpgrade}"></span></div>
+                th:text="${#numbers.formatDecimal(car.amountUpgrade, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
     </h4>
     <h4><span th:text="#{msgFragmentCarDetail.amount_downgrade}"></span>:
         <div style="float: right"><span class="glyphicon glyphicon-eur"></span> <span
-                th:text="${car.amountDowngrade}"></span></div>
+                th:text="${#numbers.formatDecimal(car.amountDowngrade, 0, 'DEFAULT', 2, 'DEFAULT')}"></span></div>
     </h4>
     <h4><span th:text="#{msgFragmentCarDetail.time_of_delivery_days}"></span>:
         <div style="float: right"><span th:text="${car.timeOfDeliveryInDays.toDays()}"></span></div>

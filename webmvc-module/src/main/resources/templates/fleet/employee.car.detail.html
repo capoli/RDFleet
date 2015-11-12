@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <td th:text="#{msgFleetEmployeeCarDetail.mileage}"></td>
-                        <td th:text="${employee.currentOrder.orderedCar.mileage}"></td>
+                        <td th:text="${#numbers.formatDecimal(employee.currentOrder.orderedCar.mileage, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
                     </tr>
                     <tr>
                         <td th:text="#{msgFleetEmployeeCarDetail.car_status}"></td>
