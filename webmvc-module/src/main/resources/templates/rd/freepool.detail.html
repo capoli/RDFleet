@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="rd-blue" style="padding-left: 15px" th:text="${car.make}"></h1>
-
+                <hr/>
                 <div class="col-lg-7">
                     <div th:replace="./fragments/general.fragment :: error(${error})"></div>
                     <th:block th:replace="./fragments/car.detail.fragment :: carDetailMain(${car})"/>
