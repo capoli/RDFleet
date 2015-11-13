@@ -73,7 +73,7 @@
                     <td th:text="${order.orderedCar.selectedCar.make}"></td>
                     <td th:text="${order.orderedCar.selectedCar.model}"></td>
                     <td th:text="${order.orderedCar.licensePlate}"></td>
-                    <td th:text="${order.orderedCar.mileage}"></td>
+                    <td th:text="${#numbers.formatDecimal(order.orderedCar.mileage, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
                     <td th:text="${order.orderedCar.carStatus}"></td>
                     <td th:text="${{order.dateReceived}}"></td>
                 </tr>
