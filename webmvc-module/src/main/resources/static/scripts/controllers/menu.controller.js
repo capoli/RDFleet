@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('app.controllers')
-        .controller('MenuCtrl', ['$scope', '$state', 'AuthorizationFactory', 'UserFactory',
-            function ($scope, $state, AuthorizationFactory, UserFactory) {
+        .controller('MenuCtrl', ['$scope', '$state', 'UserFactory',
+            function ($scope, $state, UserFactory) {
                 $scope.menu = {
                     about: 'app.about',
                     home: 'app.home',
@@ -18,7 +18,7 @@
                 };
 
                 $scope.user = UserFactory.user;
-                $scope.permissionModel = AuthorizationFactory.permissionModel;
+                //$scope.permissionModel = AuthorizationFactory.permissionModel;
 
                 $scope.logout = function () {
                     UserFactory.logout().then(function () {

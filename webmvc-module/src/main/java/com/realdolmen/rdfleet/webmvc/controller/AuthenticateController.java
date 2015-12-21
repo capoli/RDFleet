@@ -9,11 +9,11 @@ import java.security.Principal;
 /**
  * Created by OCPAX79 on 30/10/2015.
  */
-//@RestController
-//@RequestMapping("/api/authenticate")
-//public class AuthenticateController {
-//    @RequestMapping(value = "/login", method = RequestMethod.GET)
-//    public Principal login(Principal user) {
-//        return user;
-//    }
-//}
+@RestController
+@RequestMapping("/api/authenticate")
+public class AuthenticateController {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public Principal login(Principal user) {
+        return user;
+    }
+}
