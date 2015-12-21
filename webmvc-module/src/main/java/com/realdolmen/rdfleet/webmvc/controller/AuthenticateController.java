@@ -1,6 +1,5 @@
 package com.realdolmen.rdfleet.webmvc.controller;
 
-import com.realdolmen.rdfleet.webmvc.viewmodel.Login;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
